@@ -1,4 +1,6 @@
 package com.example.topgmeals;
 
-public class Rhombus {
+public class Rhombus extends Shape{
+
+
 }
