@@ -3,8 +3,5 @@ pratham2 PrathamArora20 - Second
 htta mac-op - Thirid
 htta mac-op - Third
 gandhi kgandhi31 - Fourth
-<<<<<<< HEAD
 muneer1 almer18 - Fifth
-=======
-Jaspreet jdhami1 - Fifth
->>>>>>> 6608f5be293f3ae351456de291302db9730ae639
+Jaspreet jdhami1 - Sixth
