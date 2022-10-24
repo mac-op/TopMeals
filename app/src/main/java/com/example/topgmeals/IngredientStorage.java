@@ -23,6 +23,8 @@ public class IngredientStorage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_storage);
 
+        setTitle("Ingredient Storage");
+
         IngredientStorage currentClass = IngredientStorage.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
@@ -80,4 +82,5 @@ public class IngredientStorage extends AppCompatActivity {
         ingredientList.add(new Ingredient("6", new Date(), "l", 3, "e", "test"));
 
     }
+
 }
