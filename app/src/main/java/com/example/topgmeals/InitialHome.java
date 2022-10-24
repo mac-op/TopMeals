@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class IngredientStorage extends AppCompatActivity {
+public class InitialHome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingredient_storage);
+        setContentView(R.layout.activity_initial_home);
 
-        IngredientStorage currentClass = IngredientStorage.this;
+
+        InitialHome currentClass = InitialHome.this;
         //region ButtonSwapping
-        Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
+        Button IngredientButton = (Button) findViewById(R.id.homeIngredientStorage);
         IngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -25,7 +26,7 @@ public class IngredientStorage extends AppCompatActivity {
             }
         });
 
-        Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
+        Button ShoppingButton = (Button) findViewById(R.id.homeShoppingList);
 
         ShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +36,7 @@ public class IngredientStorage extends AppCompatActivity {
             }
         });
 
-        Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
+        Button MealPlanButton = (Button) findViewById(R.id.homeMealPlanner);
 
         MealPlanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,9 +46,9 @@ public class IngredientStorage extends AppCompatActivity {
             }
         });
 
-        Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
+        Button RecipesButton = (Button) findViewById(R.id.homeRecipesBook);
 
-        RecipiesButton.setOnClickListener(new View.OnClickListener() {
+        RecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, Recipes.class);
@@ -55,7 +56,5 @@ public class IngredientStorage extends AppCompatActivity {
             }
         });
         //endregion
-
-
     }
 }
