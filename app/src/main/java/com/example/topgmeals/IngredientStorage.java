@@ -1,13 +1,22 @@
 package com.example.topgmeals;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class IngredientStorage extends AppCompatActivity {
+
+    private ArrayList<Ingredient> ingredientList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,19 @@ public class IngredientStorage extends AppCompatActivity {
         });
         //endregion
 
+        ingredientList = new ArrayList<>();
+//        ingredientAdapter = new CustomArrayAdapter(this, ingredientList);
+        RecyclerView ingredientView = findViewById(R.id.ingredient_list);
+        CustomAdapter adapter = new CustomAdapter(ingredientList);
+        ingredientView.setAdapter(adapter);
+        ingredientView.setLayoutManager(new LinearLayoutManager(this));
+
+        ingredientList.add(new Ingredient("1", new Date(), "l", 3, "e", "test"));
+        ingredientList.add(new Ingredient("2", new Date(), "l", 3, "e", "test"));
+        ingredientList.add(new Ingredient("3", new Date(), "l", 3, "e", "test"));
+        ingredientList.add(new Ingredient("4", new Date(), "l", 3, "e", "test"));
+        ingredientList.add(new Ingredient("5", new Date(), "l", 3, "e", "test"));
+        ingredientList.add(new Ingredient("6", new Date(), "l", 3, "e", "test"));
 
     }
 }
