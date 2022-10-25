@@ -33,7 +33,7 @@
             android:textSize="30sp"
             android:background="@drawable/round_btn"
             app:backgroundTint="@color/purple_700"
-            android:text="Sign In"
+            android:text="SIGN IN"
             android:textColor="@color/white"
             android:fontFamily="@font/lemonmilk_medium"
             android:drawableLeft="@drawable/google_icon"
