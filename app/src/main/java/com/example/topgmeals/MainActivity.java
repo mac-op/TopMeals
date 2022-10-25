@@ -30,8 +30,31 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class MainActivity extends AppCompatActivity {
     private Button googleSignInBtn;
     private GoogleSignInClient mGoogleSignInClient;
-    private ActivityResultLauncher<Intent> signInLauncher;
     private FirebaseAuth mAuth;
+
+    ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+                        new ActivityResultContracts.StartActivityForResult(),
+                        new ActivityResultCallback<ActivityResult>() {
+                            @Override
+                            public void onActivityResult(ActivityResult result) {
+                            // Result returned from launching the Intent from GoogleSignInIntent
+                                if (result.getResultCode() == Activity.RESULT_OK) {
+                                    Intent data = result.getData();
+                                    Task<GoogleSignInAccount> task =
+                                            GoogleSignIn.getSignedInAccountFromIntent(data);
+                                    try {
+                                        // Google Sign In was successful, authenticate with Firebase
+                                        GoogleSignInAccount account =
+                                                task.getResult(ApiException.class);
+                                        firebaseAuthWithGoogle(account);
+                                    } catch (ApiException e) {
+                                        // Google Sign In failed
+                                        Toast.makeText(getApplication().getBaseContext(),
+                                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    });
 
     @Override
     protected void onStart() {
@@ -58,31 +81,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                //signInLauncher.launch(signInIntent);
-                startActivityForResult(signInIntent, 1000);
-                signInLauncher = registerForActivityResult(
-                        new ActivityResultContracts.StartActivityForResult(),
-                        new ActivityResultCallback<ActivityResult>() {
-                            @Override
-                            public void onActivityResult(ActivityResult result) {
-                                // Result returned from launching the Intent from GoogleSignInIntent
-                                if (result.getResultCode() == Activity.RESULT_OK) {
-                                    Intent data = result.getData();
-                                    Task<GoogleSignInAccount> task =
-                                            GoogleSignIn.getSignedInAccountFromIntent(data);
-                                    try {
-                                        // Google Sign In was successful, authenticate with Firebase
-                                        GoogleSignInAccount account =
-                                                task.getResult(ApiException.class);
-                                        firebaseAuthWithGoogle(account);
-                                    } catch (ApiException e) {
-                                        // Google Sign In failed
-                                        Toast.makeText(getApplication().getBaseContext(),
-                                                e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        });
+                signInLauncher.launch(signInIntent);
+                //startActivityForResult(signInIntent, 1000);
             }
         });
     }
