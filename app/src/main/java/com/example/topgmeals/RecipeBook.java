@@ -5,16 +5,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
-public class Recipes extends AppCompatActivity {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+public class RecipeBook extends AppCompatActivity {
+
+    ListView recipeBookList;
+    ArrayAdapter<Recipe> recipeAdapter;
+    ArrayList<Recipe> recipes;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipies);
 
-        Recipes currentClass = Recipes.this;
+        recipeBookList = findViewById(R.id.recipe_book);
+        recipes = new ArrayList<>();
+
+        RecipeBook currentClass = RecipeBook.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
         IngredientButton.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +64,7 @@ public class Recipes extends AppCompatActivity {
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, Recipes.class);
+                Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
             }
         });

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         mealPlanMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, InitialHome.class);
+                Intent intent = new Intent(MainActivity.this, HomeDisplay.class);
                 startActivity(intent);
             }
         });

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class InitialHome extends AppCompatActivity {
+public class HomeDisplay extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class InitialHome extends AppCompatActivity {
         setContentView(R.layout.activity_initial_home);
 
 
-        InitialHome currentClass = InitialHome.this;
+        HomeDisplay currentClass = HomeDisplay.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.homeIngredientStorage);
         IngredientButton.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class InitialHome extends AppCompatActivity {
         RecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, Recipes.class);
+                Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
             }
         });
