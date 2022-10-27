@@ -15,18 +15,16 @@ import java.util.ArrayList;
 
 public class RecipeBook extends AppCompatActivity {
 
-    ListView recipeBookList;
-    ArrayAdapter<Recipe> recipeAdapter;
-    ArrayList<Recipe> recipes;
-    int index;
+    private ArrayList<Recipe> recipeBookList;
+    private RecipeAdapter recipeAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipies);
 
-        recipeBookList = findViewById(R.id.recipe_book);
-        recipes = new ArrayList<>();
+
 
         RecipeBook currentClass = RecipeBook.this;
         //region ButtonSwapping

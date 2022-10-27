@@ -2,7 +2,9 @@ package com.example.topgmeals;
 
 import android.widget.ImageView;
 
-public class Recipe {
+import java.io.Serializable;
+
+public class Recipe implements Serializable {
     private String title;
     private String prepTime;
     private int servings;
@@ -10,15 +12,16 @@ public class Recipe {
     private String comments;
     private ImageView picture;
 
-    public Recipe (String title, String prepTime, int servings, String category, String comments, ImageView picture) {
+    public Recipe (String title, String prepTime, int servings, String category, String comments) {
         this.title = title;
         this.prepTime = prepTime;
         this.servings = servings;
         this.category = category;
         this.comments = comments;
-        this.picture = picture;
+        //this.picture = picture;
 
     }
+
 
     public String getTitle() {
         return title;
