@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/option_background"
+    tools:context=".MainOptions">
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/lemonmilk_medium"
+        android:text="Welcome" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:textColor="@color/purple_500"
+        android:fontFamily="@font/satoshi_regular"
+        android:text="Username" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnOptionIngredientStorage"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="50dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/lemonmilk_regular"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/grocery_64"
+            android:backgroundTint="@color/purple_500"
+            android:text="Ingredient Storage"/>
+
+        <Button
+            android:id="@+id/btnOptionShoppingList"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/lemonmilk_regular"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/shopping_list_64"
+            android:backgroundTint="@color/purple_500"
+            android:text="Shopping List"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnOptionMealPlanner"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="30dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/lemonmilk_regular"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/meal_plan_64"
+            android:backgroundTint="@color/purple_500"
+            android:text="Meal Planner"/>
+
+        <Button
+            android:id="@+id/btnOptionRecipesBook"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/lemonmilk_regular"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/recipe_book_64"
+            android:backgroundTint="@color/purple_500"
+            android:text="Recipes Book"/>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignOut"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:background="@drawable/round_btn"
+        app:backgroundTint="@color/design_default_color_error"
+        android:text="SIGN OUT"
+        android:textColor="@color/white"
+        android:fontFamily="@font/lemonmilk_regular"
+        />
+
+</LinearLayout>
