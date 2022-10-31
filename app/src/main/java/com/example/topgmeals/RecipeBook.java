@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class RecipeBook extends AppCompatActivity {
+public class RecipeBook extends AppCompatActivity  {
 
     ListView recipeList;
     ArrayList<Recipe> recipeBook;
@@ -43,12 +44,13 @@ public class RecipeBook extends AppCompatActivity {
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
                 Integer servings = recipeBook.get(i).getServings();
+                String s_servings=servings.toString();
                 String category = recipeBook.get(i).getCategory();
                 String comments = recipeBook.get(i).getComments();
 
                 intent.putExtra("TITLE",title);
                 intent.putExtra("PREP_TIME",prep_time);
-                intent.putExtra("SERVINGS",servings);
+                intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
 

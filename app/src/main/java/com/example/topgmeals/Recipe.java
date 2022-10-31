@@ -3,8 +3,10 @@ package com.example.topgmeals;
 import android.widget.ImageView;
 
 import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Recipe implements Serializable {
+public class Recipe implements Parcelable {
     private String title;
     private String prepTime;
     private int servings;
@@ -21,6 +23,26 @@ public class Recipe implements Serializable {
         //this.picture = picture;
 
     }
+    protected Recipe(Parcel in) {
+        title = in.readString();
+        prepTime=in.readString();
+        servings=in.readInt();
+        category=in.readString();
+        comments=in.readString();
+
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
 
     public String getTitle() {
@@ -72,7 +94,18 @@ public class Recipe implements Serializable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(prepTime);
+        parcel.writeInt(servings);
+        parcel.writeString(category);
+        parcel.writeString(comments);
 
-
+    }
 }
