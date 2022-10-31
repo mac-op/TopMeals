@@ -19,6 +19,7 @@ public class RecipeBook extends AppCompatActivity  {
 
     ListView recipeList;
     ArrayList<Recipe> recipeBook;
+    Boolean check=Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,16 @@ public class RecipeBook extends AppCompatActivity  {
 
         RecipeBook currentClass = RecipeBook.this;
 
+
+
+
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Intent new_intent=getIntent();
+
+
+
                 Intent intent = new Intent(currentClass, RecipeDisplay.class);
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
@@ -88,15 +96,33 @@ public class RecipeBook extends AppCompatActivity  {
             }
         });
 
+        Button add_recipe=(Button) findViewById(R.id.add_button);
+
+        add_recipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(currentClass, addEditRecipe.class);
+                startActivity(intent);
+            }
+        });
+
         Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
 
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, RecipeBook.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                check=Boolean.TRUE;
                 startActivity(intent);
+
             }
         });
+        System.out.println(check);
+        Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
+        if (new_recipe!=null){
+            recipeBook.add(new_recipe);
+        }
         //endregion
 
     }

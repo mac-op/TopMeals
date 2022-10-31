@@ -83,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add New Recipee"
-                android:layout_marginLeft="100dp">
+                android:layout_marginLeft="100dp"
+                android:id="@+id/add_button">
 
             </Button>
             <TextView
