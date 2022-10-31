@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/back_button_ingredient_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back">
@@ -145,7 +146,7 @@
 
             android:hint="Category "
             android:textAlignment="center"
-            android:id="@+id/Category_editText">
+            android:id="@+id/category_editText">
 
         </EditText>
 
@@ -170,6 +171,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/add_ingredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"

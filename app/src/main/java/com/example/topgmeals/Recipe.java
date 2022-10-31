@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Recipe implements Serializable {
     private String title;
     private String prepTime;
-    private int servings;
+    private Integer servings;
     private String category;
     private String comments;
     private ImageView picture;
@@ -39,7 +39,7 @@ public class Recipe implements Serializable {
         this.prepTime = prepTime;
     }
 
-    public int getServings() {
+    public Integer getServings() {
         return servings;
     }
 
