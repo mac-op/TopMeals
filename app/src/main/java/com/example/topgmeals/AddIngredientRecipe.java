@@ -21,31 +21,36 @@ public class AddIngredientRecipe extends AppCompatActivity {
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intentAddIngredient = new Intent(AddIngredientRecipe.this)
-                EditText name = (EditText) findViewById(R.id.name_editText);
+                Intent intentAddIngredient = new Intent(currentClass, IngredientRecipe.class);
                 EditText description = (EditText) findViewById(R.id.description_editText);
-                EditText quantity = (EditText) findViewById(R.id.quantity_editText);
+                EditText amount = (EditText) findViewById(R.id.amount_editText);
+                EditText unit = (EditText) findViewById(R.id.unit_editText);
                 EditText category = (EditText) findViewById(R.id.category_editText);
 
-                String nameText = name.getText().toString();
                 String descriptionText = description.getText().toString();
-                Integer quantityText = Integer.parseInt(quantity.getText().toString());
+                Float amountText = Float.parseFloat(amount.getText().toString());
+                String unitText = unit.getText().toString();
                 String categoryText = category.getText().toString();
 
-                IngredientRecipe newIngredient = new IngredientRecipe(nameText, descriptionText, quantityText, categoryText);
+                Ingredient new_ingredient = new Ingredient(descriptionText,new java.util.Date(System.currentTimeMillis()),null,amountText,unitText,categoryText);
+                intentAddIngredient.putExtra("NEW", new_ingredient);
+                startActivity(intentAddIngredient);
+
+
 
 
 
             }
         });
 
-        Button back = findViewById(R.id.back_button_ingredient_recipe);
+        Button back = findViewById(R.id.back_button_ingredients);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
 
 
     }

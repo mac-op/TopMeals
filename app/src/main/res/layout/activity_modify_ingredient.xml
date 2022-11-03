@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/back_button_modify_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back">
@@ -41,31 +42,7 @@
         </TextView>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Name"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:id="@+id/name">
-
-        </TextView>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/name_editText">
-
-        </EditText>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,11 +78,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Quantity"
+            android:text="Amount"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:id="@+id/Quantity">
+            android:id="@+id/Amount">
 
         </TextView>
 
@@ -113,7 +90,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:id="@+id/quantity_editText">
+            android:id="@+id/amount_editText">
+
+        </EditText>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Unit"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:id="@+id/Unit">
+
+        </TextView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:id="@+id/unit_editText">
 
         </EditText>
 
@@ -169,6 +171,7 @@
         android:gravity="center"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/delete_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete Ingredient"
@@ -177,6 +180,7 @@
 
         </Button>
         <Button
+            android:id="@+id/update_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Update Ingredient"
