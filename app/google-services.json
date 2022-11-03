@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "189526908504-vl99i4sk4u5ltkbckv4bt31343di5cf6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.topgmeals",
+            "certificate_hash": "b8db41bc5ee20355f8784b4e2a727f8468ca6821"
+          }
+        },
+        {
           "client_id": "189526908504-g7l8o3n38gqgndj3h03jke957qknnahu.apps.googleusercontent.com",
           "client_type": 3
         }
