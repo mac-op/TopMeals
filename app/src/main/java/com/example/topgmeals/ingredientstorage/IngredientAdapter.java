@@ -13,7 +13,7 @@ import com.example.topgmeals.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     private ArrayList<Ingredient> ingredientList;
     private static View.OnClickListener onItemClickListener;
@@ -23,7 +23,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
 
-    public CustomAdapter(ArrayList<Ingredient> ingredientList) {
+    public IngredientAdapter(ArrayList<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
     }
 

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             editor.putString("Installation ID",task.getResult());
                             editor.apply();
+//                            Toast.makeText(getBaseContext(), task.getResult(), Toast.LENGTH_LONG).show();
                             Log.d("Installations", "Installation ID: " + task.getResult());
                         } else {
                             Log.e("Installations", "Unable to get Installation ID");
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ID", sharedPreferences.getString("Installation ID", "111"));
         Button mealPlanMealButton = (Button) findViewById(R.id.mealplan);
 
-//        Toast.makeText(this, sharedPreferences.getString("Installation ID", "111"), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, sharedPreferences.getString("Installation ID", "111"), Toast.LENGTH_LONG).show();
         mealPlanMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

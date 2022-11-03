@@ -22,29 +22,29 @@ import com.example.topgmeals.MealPlan;
 import com.example.topgmeals.R;
 import com.example.topgmeals.Recipes;
 import com.example.topgmeals.ShoppingList;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class IngredientStorage extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
-    private CustomAdapter adapter;
+    private IngredientAdapter adapter;
     FirebaseApp app;
     SharedPreferences sharedPreferences;
     private String id;
+    private ArrayList<String> refList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class IngredientStorage extends AppCompatActivity {
 
         ingredientList = new ArrayList<>();
         RecyclerView ingredientView = findViewById(R.id.ingredient_list);
-        adapter = new CustomAdapter(ingredientList);
+        adapter = new IngredientAdapter(ingredientList);
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -112,9 +112,23 @@ public class IngredientStorage extends AppCompatActivity {
                         Intent deleteIntent = result.getData();
                         int pos = deleteIntent.getIntExtra("delete_position", -1);
                         assert (pos!=-1);
-                        ingredientList.remove(pos);
-                        adapter.notifyItemRemoved(pos);
+//                        ingredientList.remove(pos);
+//                        adapter.notifyItemRemoved(pos);
 
+                        String deleteRef = refList.get(pos);
+                        ingredientsDb.document(deleteRef).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d("Delete item", "Delete success");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("Delete item", "Delete failed");
+                                    }
+                                });
                     }
                     // EDIT
                     else if (result.getResultCode() == Activity.RESULT_OK){
@@ -122,8 +136,13 @@ public class IngredientStorage extends AppCompatActivity {
                         Ingredient ingredient = editIntent.getParcelableExtra("edited_ingredient");
                         int pos = editIntent.getIntExtra("edited_position", -1);
                         assert (pos != -1);
-                        ingredientList.set(pos, ingredient);
-                        adapter.notifyItemChanged(pos);
+
+                        String editRef = refList.get(pos);
+                        HashMap<String,Object> edited = toHashMap(ingredient);
+                        ingredientsDb.document(editRef).set(edited);
+
+//                        ingredientList.set(pos, ingredient);
+//                        adapter.notifyItemChanged(pos);
                     }
                 });
 
@@ -154,21 +173,13 @@ public class IngredientStorage extends AppCompatActivity {
                         Intent data = result.getData();
                         assert data != null;
                         Ingredient ingredient = data.getParcelableExtra("added_ingredient");
-//                        ingredientList.add(ingredient);
-//                        adapter.notifyItemInserted(ingredientList.size()-1);
 
-                        HashMap<String,Object> added = new HashMap<>();
-                        added.put("id", id);
-                        added.put("description", ingredient.getDescription());
-                        added.put("bestBefore", ingredient.getBestBefore());
-                        added.put("amount", ingredient.getAmount());
-                        added.put("unit", ingredient.getUnit());
-                        added.put("category", ingredient.getCategory());
-                        added.put("location", ingredient.getLocation());
+                        HashMap<String,Object> added = toHashMap(ingredient);
 //                        added.put("id", id);
 //                        added.put("ingredient", ingredient);
-                        ingredientsDb.document()
-                                .set(added)
+
+                        DocumentReference addedRef = ingredientsDb.document();
+                        addedRef.set(added)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -181,6 +192,7 @@ public class IngredientStorage extends AppCompatActivity {
                                         Log.d("failure", "failed");
                                     }
                                 });
+                        refList.add(addedRef.getId());
                     }
                 });
 
@@ -189,8 +201,10 @@ public class IngredientStorage extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         ingredientList.clear();
+                        refList.clear();
                         assert value != null;
                         for (QueryDocumentSnapshot doc : value){
+                            refList.add(doc.getId());
                             Ingredient ingredient = doc.toObject(Ingredient.class);
                             ingredientList.add(ingredient);
                         }
@@ -204,8 +218,18 @@ public class IngredientStorage extends AppCompatActivity {
             intent.putExtra("purpose", "ADD");
             addActivityResultLauncher.launch(intent);
         });
-
     }
 
-//dbBo4TSeTXq2RAAjYZa7Tp
+    private HashMap<String, Object> toHashMap(Ingredient ingredient){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("description", ingredient.getDescription());
+        map.put("bestBefore", ingredient.getBestBefore());
+        map.put("amount", ingredient.getAmount());
+        map.put("unit", ingredient.getUnit());
+        map.put("category", ingredient.getCategory());
+        map.put("location", ingredient.getLocation());
+
+        return map;
+    }
 }
