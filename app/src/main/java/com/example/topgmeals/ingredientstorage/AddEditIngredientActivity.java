@@ -1,24 +1,24 @@
-package com.example.topgmeals;
+package com.example.topgmeals.ingredientstorage;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.topgmeals.DateFormat;
+import com.example.topgmeals.R;
 
 public class AddEditIngredientActivity extends AppCompatActivity {
     private EditText description;

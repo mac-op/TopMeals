@@ -42,7 +42,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IngredientStorage"
+            android:name=".ingredientstorage.IngredientStorage"
             android:exported="false"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
@@ -52,8 +52,8 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddEditIngredientActivity"
-            android:parentActivityName=".IngredientStorage"
+            android:name=".ingredientstorage.AddEditIngredientActivity"
+            android:parentActivityName=".ingredientstorage.IngredientStorage"
             android:exported="false">
             <meta-data
                 android:name="android.support.IngredientStorage"
