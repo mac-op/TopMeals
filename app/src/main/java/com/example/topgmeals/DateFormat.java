@@ -1,5 +1,6 @@
 package com.example.topgmeals;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -13,5 +14,9 @@ public class DateFormat {
 
     public String parse(Date date){
         return dateFormat.format(date);
+    }
+
+    public Date toDate(String date) throws ParseException {
+        return dateFormat.parse(date);
     }
 }

@@ -13,6 +13,9 @@ public class Ingredient implements Parcelable {
     private String unit;
     private String category;
 
+    public Ingredient(){
+        super();
+    }
 
     public Ingredient(String description, Date bestBefore, String location, float amount, String unit,
                       String category) {

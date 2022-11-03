@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +42,9 @@ public class IngredientStorage extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private CustomAdapter adapter;
-    private String id;
     FirebaseApp app;
+    SharedPreferences sharedPreferences;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,9 @@ public class IngredientStorage extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
         final DateFormat format = new DateFormat();
-
+        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        id = sharedPreferences.getString("Installation ID", "");
+        Log.d("IngID", id);
         setTitle("Ingredient Storage");
 
         IngredientStorage currentClass = IngredientStorage.this;
@@ -98,7 +103,7 @@ public class IngredientStorage extends AppCompatActivity {
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));
 
-        getInstallationID();
+//        getInstallationID();
         ActivityResultLauncher<Intent> editActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -119,8 +124,6 @@ public class IngredientStorage extends AppCompatActivity {
                         assert (pos != -1);
                         ingredientList.set(pos, ingredient);
                         adapter.notifyItemChanged(pos);
-
-
                     }
                 });
 
@@ -157,12 +160,13 @@ public class IngredientStorage extends AppCompatActivity {
                         HashMap<String,Object> added = new HashMap<>();
                         added.put("id", id);
                         added.put("description", ingredient.getDescription());
-                        added.put("best before date", format.parse(ingredient.getBestBefore()));
-                        added.put("amount", String.valueOf(ingredient.getAmount()));
+                        added.put("bestBefore", ingredient.getBestBefore());
+                        added.put("amount", ingredient.getAmount());
                         added.put("unit", ingredient.getUnit());
                         added.put("category", ingredient.getCategory());
                         added.put("location", ingredient.getLocation());
-
+//                        added.put("id", id);
+//                        added.put("ingredient", ingredient);
                         ingredientsDb.document()
                                 .set(added)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -203,19 +207,5 @@ public class IngredientStorage extends AppCompatActivity {
 
     }
 
-    private void getInstallationID() {
-        FirebaseInstallations.getInstance(app).getId()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (task.isSuccessful()) {
-                            id = task.getResult();
-                            Log.d("Installations", "Installation ID: " + task.getResult());
-                        } else {
-                            Log.e("Installations", "Unable to get Installation ID");
-                        }
-                    }
-                });
-    }
 //dbBo4TSeTXq2RAAjYZa7Tp
 }
