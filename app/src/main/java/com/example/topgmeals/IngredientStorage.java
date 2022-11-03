@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,41 +20,61 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.google.firebase.installations.FirebaseInstallations;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class IngredientStorage extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private CustomAdapter adapter;
+    private String id;
+    FirebaseApp app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_storage);
 
+        app = FirebaseApp.initializeApp(IngredientStorage.this);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference ingredientsDb = db.collection("ingredients");
+        final DateFormat format = new DateFormat();
+
         setTitle("Ingredient Storage");
 
         IngredientStorage currentClass = IngredientStorage.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, IngredientStorage.class);
-                startActivity(intent);
-            }
+        IngredientButton.setOnClickListener(view -> {
+            Intent intent = new Intent(currentClass, IngredientStorage.class);
+            startActivity(intent);
         });
 
         Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
 
-        ShoppingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, ShoppingList.class);
-                startActivity(intent);
-                finish();
-            }
+        ShoppingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(currentClass, ShoppingList.class);
+            startActivity(intent);
+            finish();
         });
 
         Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
@@ -83,6 +104,7 @@ public class IngredientStorage extends AppCompatActivity {
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));
 
+        getInstallationID();
         ActivityResultLauncher<Intent> editActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -93,6 +115,7 @@ public class IngredientStorage extends AppCompatActivity {
                         assert (pos!=-1);
                         ingredientList.remove(pos);
                         adapter.notifyItemRemoved(pos);
+
                     }
                     // EDIT
                     else if (result.getResultCode() == Activity.RESULT_OK){
@@ -102,6 +125,8 @@ public class IngredientStorage extends AppCompatActivity {
                         assert (pos != -1);
                         ingredientList.set(pos, ingredient);
                         adapter.notifyItemChanged(pos);
+
+
                     }
                 });
 
@@ -132,8 +157,46 @@ public class IngredientStorage extends AppCompatActivity {
                         Intent data = result.getData();
                         assert data != null;
                         Ingredient ingredient = data.getParcelableExtra("added_ingredient");
-                        ingredientList.add(ingredient);
-                        adapter.notifyItemInserted(ingredientList.size()-1);
+//                        ingredientList.add(ingredient);
+//                        adapter.notifyItemInserted(ingredientList.size()-1);
+
+                        HashMap<String,Object> added = new HashMap<>();
+                        added.put("id", id);
+                        added.put("description", ingredient.getDescription());
+                        added.put("best before date", format.parse(ingredient.getBestBefore()));
+                        added.put("amount", String.valueOf(ingredient.getAmount()));
+                        added.put("unit", ingredient.getUnit());
+                        added.put("category", ingredient.getCategory());
+                        added.put("location", ingredient.getLocation());
+
+                        ingredientsDb.document()
+                                .set(added)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d("success", "Added successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("failure", "failed");
+                                    }
+                                });
+                    }
+                });
+
+        ingredientsDb.whereEqualTo("id", id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ingredientList.clear();
+                        assert value != null;
+                        for (QueryDocumentSnapshot doc : value){
+                            Ingredient ingredient = doc.toObject(Ingredient.class);
+                            ingredientList.add(ingredient);
+                        }
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
@@ -146,4 +209,19 @@ public class IngredientStorage extends AppCompatActivity {
 
     }
 
+    private void getInstallationID() {
+        FirebaseInstallations.getInstance(app).getId()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            id = task.getResult();
+                            Log.d("Installations", "Installation ID: " + task.getResult());
+                        } else {
+                            Log.e("Installations", "Unable to get Installation ID");
+                        }
+                    }
+                });
+    }
+//dbBo4TSeTXq2RAAjYZa7Tp
 }
