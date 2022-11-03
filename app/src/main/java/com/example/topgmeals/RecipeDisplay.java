@@ -31,6 +31,7 @@ public class RecipeDisplay extends AppCompatActivity {
         Integer servingsToDisplay = intent.getExtras().getInt("SERVINGS");
         String categoryToDisplay = intent.getExtras().getString("CATEGORY");
         String commentsToDisplay = intent.getExtras().getString("COMMENTS");
+        int position = intent.getIntExtra("POSITION",-1);
 
         title.setText(titleToDisplay);
         prepTime.setText(prepTimeToDisplay);
@@ -53,9 +54,12 @@ public class RecipeDisplay extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, IngredientRecipe.class);
+                Intent intent = new Intent();
+                intent.putExtra("POSITION", position);
+                setResult(2,intent);
+                finish();
 
-                startActivity(intent);
+
             }
         });
 

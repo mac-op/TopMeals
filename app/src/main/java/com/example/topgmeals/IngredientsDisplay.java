@@ -1,7 +1,11 @@
 package com.example.topgmeals;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +32,7 @@ public class IngredientsDisplay extends AppCompatActivity {
         String amountToDisplay = intent.getExtras().getString("AMOUNT");
         String unitToDisplay = intent.getExtras().getString("UNIT");
         String categoryToDisplay = intent.getExtras().getString("CATEGORY");
+        int position = intent.getIntExtra("POSITION",-1);
 
         description.setText(descriptionToDisplay);
         amount.setText(amountToDisplay);
@@ -52,18 +57,21 @@ public class IngredientsDisplay extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
-
-
                 startActivity(intent);
             }
         });
+
 
         Button delete = (Button) findViewById(R.id.delete_ingredient);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, IngredientRecipe.class);
-                startActivity(intent);
+                Intent intent = new Intent();
+                intent.putExtra("POSITION", position);
+                setResult(2,intent);
+                finish();
+
+
             }
         });
 

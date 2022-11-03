@@ -1,5 +1,7 @@
 package com.example.topgmeals;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +43,20 @@ public class RecipeBook extends AppCompatActivity  {
         RecipeBook currentClass = RecipeBook.this;
 
 
+        ActivityResultLauncher<Intent> viewRecipe = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == 2){
+                        Intent intent = result.getData();
+                        int position = intent.getIntExtra("POSITION", -1);
+                        assert (position != -1);
+                        recipeBook.remove(position);
+                        recipeListAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+        );
 
 
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,10 +79,13 @@ public class RecipeBook extends AppCompatActivity  {
                 intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
+                intent.putExtra("POSITION",i);
 
 
 
-                startActivity(intent);
+                //startActivity(intent);
+                viewRecipe.launch(intent);
+
             }
         });
 
@@ -119,6 +138,7 @@ public class RecipeBook extends AppCompatActivity  {
                 //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 check=Boolean.TRUE;
                 startActivity(intent);
+
 
             }
         });

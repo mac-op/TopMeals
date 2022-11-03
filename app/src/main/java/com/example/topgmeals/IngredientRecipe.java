@@ -1,5 +1,7 @@
 package com.example.topgmeals;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +36,21 @@ public class IngredientRecipe extends AppCompatActivity {
 
         IngredientRecipe currentClass = IngredientRecipe.this;
 
+        ActivityResultLauncher<Intent> viewIngredient = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == 2){
+                        Intent intent = result.getData();
+                        int position = intent.getIntExtra("POSITION", -1);
+                        assert (position != -1);
+                        ingredientsRecipeBook.remove(position);
+                        ingredientListAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+        );
+
         ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -54,13 +71,16 @@ public class IngredientRecipe extends AppCompatActivity {
                 intent.putExtra("AMOUNT",s_amount);
                 intent.putExtra("UNIT",unit);
                 intent.putExtra("CATEGORY",category);
+                intent.putExtra("POSITION",i);
 
 
 
 
-                startActivity(intent);
+                //startActivity(intent);
+                viewIngredient.launch(intent);
             }
         });
+
 
 
 
