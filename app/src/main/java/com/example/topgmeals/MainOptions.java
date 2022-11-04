@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * This class handles the menu after the user successfully logs in, where they can choose between 4 Activities
+ */
 public class MainOptions extends AppCompatActivity {
     private TextView txtUsername;
     private Button btnSignOut;
@@ -34,20 +37,24 @@ public class MainOptions extends AppCompatActivity {
     private GoogleSignInAccount account;
     private FirebaseUser curUser;
 
+    /**
+     * This class handles the layout and logic of the Activity. Called on Activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_options);
 
+        //Check if user is already logged in
         account = GoogleSignIn.getLastSignedInAccount(this);
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         txtUsername = findViewById(R.id.txtName);
         if (curUser != null) {
-
             txtUsername.setText(curUser.getEmail());
         }
 
 
+        // 4 buttons that point to Ingredient Storage, Shopping List, Meal Planner and Recipe Book respectively
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +91,7 @@ public class MainOptions extends AppCompatActivity {
             }
         });
 
+        //Sign out button
         btnSignOut = findViewById(R.id.btnSignOut);
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
