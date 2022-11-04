@@ -56,18 +56,14 @@ public class IngredientRecipe extends AppCompatActivity {
         ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Intent new_intent=getIntent();
-
 
                 Intent intent = new Intent(currentClass, IngredientsDisplay.class);
-                //String name = recipeBook.get(i).getTitle();
+
                 String description = ingredientsRecipeBook.get(i).getDescription();
                 Float amount = ingredientsRecipeBook.get(i).getAmount();
                 String s_amount = amount.toString();
                 String unit = ingredientsRecipeBook.get(i).getUnit();
                 String category = ingredientsRecipeBook.get(i).getCategory();
-
-
 
                 intent.putExtra("DESCRIPTION",description);
                 intent.putExtra("AMOUNT",s_amount);
@@ -75,10 +71,6 @@ public class IngredientRecipe extends AppCompatActivity {
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("POSITION",i);
 
-
-
-
-                //startActivity(intent);
                 viewIngredient.launch(intent);
             }
         });

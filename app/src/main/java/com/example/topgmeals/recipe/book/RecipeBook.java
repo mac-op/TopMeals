@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.meal.plan.MealPlan;
@@ -38,6 +40,20 @@ public class RecipeBook extends AppCompatActivity  {
         recipeList.setAdapter(recipeListAdapter);
 
         RecipeBook currentClass = RecipeBook.this;
+        ActivityResultLauncher<Intent> viewRecipe = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == 2){
+                        Intent intent = result.getData();
+                        int position = intent.getIntExtra("POSITION", -1);
+                        assert (position != -1);
+                        recipeBook.remove(position);
+                        recipeListAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+        );
 
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,8 +73,8 @@ public class RecipeBook extends AppCompatActivity  {
                 intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
-
-                startActivity(intent);
+                intent.putExtra("POSITION",i);
+                viewRecipe.launch(intent);
             }
         });
 
@@ -114,7 +130,6 @@ public class RecipeBook extends AppCompatActivity  {
 
             }
         });
-        System.out.println(check);
         Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
         if (new_recipe!=null){
             recipeBook.add(new_recipe);
