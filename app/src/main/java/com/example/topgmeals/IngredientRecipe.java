@@ -68,7 +68,7 @@ public class IngredientRecipe extends AppCompatActivity {
                                     rData.get("description").toString(),
                                     new SimpleDateFormat("dd/MM/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
                                     rData.get("location").toString(),
-                                    (float)(double)rData.get("amount"),
+                                    (float)(long)rData.get("amount"),
                                     rData.get("unit").toString(),
                                     rData.get("category").toString(),
                                     doc.getId());
@@ -143,6 +143,7 @@ public class IngredientRecipe extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(currentClass, AddIngredientRecipe.class);
+                intent.putExtra("rID", RecipeID);
                 startActivity(intent);
             }
         });
