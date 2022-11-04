@@ -52,7 +52,7 @@ public class ShoppingList extends AppCompatActivity {
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, Recipes.class);
+                Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
             }
         });
