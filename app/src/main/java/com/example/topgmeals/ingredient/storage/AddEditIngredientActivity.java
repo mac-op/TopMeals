@@ -31,11 +31,12 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     private Button save;
 
     private Intent intent;
-    final Calendar myCalendar= Calendar.getInstance();
-    DateFormat format = new DateFormat();
-    //TODO: Separate classes for unit, category, location
-    String[] unitArray = new String[]{"test unit1", "test unit2"};
+    final private Calendar myCalendar = Calendar.getInstance();
+    private DateFormat format = new DateFormat();
 
+    //TODO: Separate classes for unit, category, location
+
+    String[] unitArray = new String[]{"test unit1", "test unit2"};
     String[] categoryArray = new String[]{"category1", "category2"};
 
     @Override
@@ -71,7 +72,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         }
     }
 
-    public void editMenu(int pos){
+    public void editMenu(int pos) {
         setTitle("Edit Ingredient");
         cancel.setText("Delete");
         save.setText("Save");
@@ -119,7 +120,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         });
     }
 
-    public void addMenu(){
+    private void addMenu(){
         setTitle("Add Ingredient");
         cancel.setText("Cancel");
         save.setText("Save");
@@ -176,7 +177,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     }
 
     //    https://stackoverflow.com/a/14933515
-    private void updateLabel(){
+    private void updateLabel() {
         bestBefore.setText(format.parse(myCalendar.getTime()));
     }
 

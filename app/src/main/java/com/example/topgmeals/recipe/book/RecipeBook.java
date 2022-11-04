@@ -13,14 +13,16 @@ import com.example.topgmeals.meal.plan.MealPlan;
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredient.storage.IngredientStorage;
 import com.example.topgmeals.shopping.list.ShoppingList;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class RecipeBook extends AppCompatActivity  {
 
-    ListView recipeList;
-    ArrayList<Recipe> recipeBook;
-    Boolean check=Boolean.FALSE;
+    private ListView recipeList;
+    private ArrayList<Recipe> recipeBook;
+    private Boolean check = Boolean.FALSE;
+    private FirebaseFirestore recipesDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

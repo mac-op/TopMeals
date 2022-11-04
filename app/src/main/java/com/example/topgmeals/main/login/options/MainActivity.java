@@ -37,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private Button googleSignInBtn;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button emailSignInBtn;
+    private Button createAccountBtn;
 
-    ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(),
                         new ActivityResultCallback<ActivityResult>() {
                             @Override
@@ -67,22 +71,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b = (Button) findViewById(R.id.main_login);
-
-        b.setOnClickListener(new View.OnClickListener() {
+        emailSignInBtn = findViewById(R.id.main_login);
+        emailSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText emailT = (EditText) findViewById(R.id.main_email);
-                EditText pwdT = (EditText) findViewById(R.id.main_password);
-                String ema = emailT.getText().toString();
-                String pwd = pwdT.getText().toString();
-                signIn(ema, pwd);
-
+                emailEditText = findViewById(R.id.main_email);
+                passwordEditText = findViewById(R.id.main_password);
+                signInViaEmail(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
 
-        Button create_account = (Button) findViewById(R.id.main_Create_Account);
-        create_account.setOnClickListener(new View.OnClickListener() {
+        createAccountBtn = findViewById(R.id.main_Create_Account);
+        createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText emailT = (EditText) findViewById(R.id.main_email);
@@ -93,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
@@ -112,14 +108,13 @@ public class MainActivity extends AppCompatActivity {
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("SUI", "Clicky");
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 signInLauncher.launch(signInIntent);
             }
         });
     }
 
-    private void createAccount(String email, String password){
+    private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -142,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void signIn(String email, String password) {
+    private void signInViaEmail(String email, String password) {
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

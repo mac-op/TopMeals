@@ -38,12 +38,8 @@ public class MainOptions extends AppCompatActivity {
         curUser = FirebaseAuth.getInstance().getCurrentUser();
         txtUsername = findViewById(R.id.txtName);
         if (curUser != null) {
-
-            txtUsername.setText(curUser.getEmail());
+            txtUsername.setText(curUser.getDisplayName());
         }
-
-//        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        Log.d("iddddddddddddddd", id);
 
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {

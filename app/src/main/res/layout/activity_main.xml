@@ -26,27 +26,29 @@
         <EditText
             android:id="@+id/main_email"
             android:layout_width="214dp"
-            android:hint="email"
-            android:layout_height="64dp"
-            android:editable="true" />
+            android:layout_gravity="center"
+            android:hint="Email"
+            android:layout_height="64dp" />
 
         <EditText
             android:id="@+id/main_password"
             android:layout_width="214dp"
-            android:hint="password"
-            android:layout_height="65dp"
-            android:editable="true" />
+            android:layout_gravity="center"
+            android:hint="Password"
+            android:layout_height="65dp" />
 
         <Button
             android:id="@+id/main_login"
             android:layout_width="203dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:text="Sign In" />
 
         <Button
             android:id="@+id/main_Create_Account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:text="Create Account" />
 
         <com.google.android.material.button.MaterialButton

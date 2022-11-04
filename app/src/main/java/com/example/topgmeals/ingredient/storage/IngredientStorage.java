@@ -37,11 +37,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class IngredientStorage extends AppCompatActivity {
-
     private ArrayList<Ingredient> ingredientList;
     private IngredientAdapter adapter;
-    FirebaseApp app;
-    SharedPreferences sharedPreferences;
+    private FirebaseApp app;
     private String id;
     private ArrayList<String> refList = new ArrayList<>();
 
@@ -52,7 +50,7 @@ public class IngredientStorage extends AppCompatActivity {
 
         app = FirebaseApp.initializeApp(IngredientStorage.this);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference ingredientsDb = db.collection("ingredients");
+        final CollectionReference ingredientsDb = db.collection("recipes");
         final DateFormat format = new DateFormat();
 //        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 //        id = sharedPreferences.getString("Installation ID", "");
@@ -104,7 +102,6 @@ public class IngredientStorage extends AppCompatActivity {
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));
 
-//        getInstallationID();
         ActivityResultLauncher<Intent> editActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

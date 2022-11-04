@@ -13,7 +13,7 @@ public class Ingredient implements Parcelable {
     private String unit;
     private String category;
 
-    public Ingredient(){
+    public Ingredient() {
         super();
     }
 
