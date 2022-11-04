@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Object to format Date into MM/dd/yyyy
+ * Helper Object to format Date into MM/dd/yyyy
  */
 public class DateFormat {
     private String format = "MM/dd/yyyy";

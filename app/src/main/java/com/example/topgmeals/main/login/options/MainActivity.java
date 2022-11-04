@@ -32,7 +32,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
+/**
+ * This Activity is the first entry point to the app. Allows the user to log in or create an account.
+ */
 public class MainActivity extends AppCompatActivity {
     private Button googleSignInBtn;
     private GoogleSignInClient mGoogleSignInClient;
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
+    /**
+     * This method handles the layout and logic of the Activity. Called on Activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

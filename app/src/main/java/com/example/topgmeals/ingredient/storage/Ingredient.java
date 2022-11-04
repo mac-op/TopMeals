@@ -5,18 +5,51 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+/**
+ * This is a class to represent an ingredient. It implements interface {@link Parcelable} to be sent
+ * between Activities.
+ */
 public class Ingredient implements Parcelable {
+    /**
+     * The Ingredient's description.
+     */
     private String description;
+
+    /**
+     * The Ingredient's best before date.
+     */
     private Date bestBefore;
+
+    /**
+     * The Ingredient's location
+     */
     private String location;
+
+    /**
+     * Amount of the Ingredient
+     */
     private float amount;
+
+    /**
+     * Unit of the Ingredient
+     */
     private String unit;
+
+    /**
+     * The Ingredient's category
+     */
     private String category;
 
+    /**
+     * No-argument constructor for Ingredient
+     */
     public Ingredient() {
-        super();
+
     }
 
+    /**
+     * Constructor for {@link Ingredient}
+     */
     public Ingredient(String description, Date bestBefore, String location, float amount, String unit,
                       String category) {
         this.description = description;
@@ -27,7 +60,9 @@ public class Ingredient implements Parcelable {
         this.category = category;
     }
 
-
+    /**
+     * Method to unpack the {@link Parcel} to get an {@link Ingredient}
+     */
     protected Ingredient(Parcel in) {
         description = in.readString();
         bestBefore = new Date(in.readLong());
@@ -102,6 +137,9 @@ public class Ingredient implements Parcelable {
         return 0;
     }
 
+    /**
+     * Method to convert the Ingredient into a Parcel
+     */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(description);
