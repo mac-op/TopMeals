@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_recipies">
+    tools:showIn="@layout/activity_recipies"
+    android:gravity="bottom">
 
     <Button
         android:id="@+id/switchToIngredientStorage"
@@ -18,9 +19,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:text="Ingredients"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="10sp" />
 
     <Button
         android:id="@+id/switchToShoppingList"
@@ -37,8 +36,7 @@
         android:text="Shop List"
         android:textSize="10sp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/switchToIngredientStorage" />
+        />
 
     <Button
         android:id="@+id/switchToMealPlan"
@@ -55,8 +53,7 @@
         android:text="Meal Plan"
         android:textSize="10sp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/switchToShoppingList" />
+        />
 
     <Button
         android:id="@+id/switchToRecipes"
@@ -73,8 +70,7 @@
         android:text="Recipes"
         android:textSize="10sp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/switchToMealPlan" />
+        />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
