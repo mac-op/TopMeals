@@ -37,7 +37,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Recipies"
+            android:name=".Recipes"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
