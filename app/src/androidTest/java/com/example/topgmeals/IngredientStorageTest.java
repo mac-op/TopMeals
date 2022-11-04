@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
-import com.example.topgmeals.ingredientstorage.Ingredient;
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.ingredient.storage.AddEditIngredientActivity;
+import com.example.topgmeals.ingredient.storage.Ingredient;
+import com.example.topgmeals.ingredient.storage.IngredientStorage;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;

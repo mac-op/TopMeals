@@ -10,6 +10,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.topgmeals.main.login.options.MainActivity;
+import com.example.topgmeals.main.login.options.MainOptions;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
@@ -52,13 +54,13 @@ public class LogInTest {
     public void LogIn(){
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         //Enter email
-        solo.enterText((EditText) solo.getView(R.id.main_email), "testemail@gmail.com");
+        solo.enterText((EditText) solo.getView(R.id.main_email), "testNewemail@gmail.com");
         //Enter password
         solo.enterText((EditText) solo.getView(R.id.main_password), "randompass");
         //Click on Create Account
-        solo.clickOnButton("Create Account");
+        solo.clickOnButton("Sign In");
 
         // Now in Main Options
-        solo.assertCurrentActivity("Not in Main Options",MainOptions.class);
+        solo.assertCurrentActivity("Not in Main Options", MainOptions.class);
     }
 }
