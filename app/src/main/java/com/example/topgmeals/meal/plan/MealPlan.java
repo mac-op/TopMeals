@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.meal.plan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,14 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Recipes extends AppCompatActivity {
+import com.example.topgmeals.R;
+import com.example.topgmeals.ingredient.storage.IngredientStorage;
+import com.example.topgmeals.recipe.book.RecipeBook;
+import com.example.topgmeals.shopping.list.ShoppingList;
+
+public class MealPlan extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipies);
+        setContentView(R.layout.activity_meal_plan);
 
-        Recipes currentClass = Recipes.this;
+        MealPlan currentClass = MealPlan.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
         IngredientButton.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +55,12 @@ public class Recipes extends AppCompatActivity {
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, Recipes.class);
+                Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
             }
         });
         //endregion
+
 
     }
 }

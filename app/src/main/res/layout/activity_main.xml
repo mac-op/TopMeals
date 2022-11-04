@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/top_g_background"
     android:padding="24dp"
-    tools:context=".MainActivity">
+    tools:context=".main.login.options.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,29 +14,57 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:src="@drawable/top_g_meals_logo_transparent"/>
+        android:src="@drawable/top_g_meals_logo_transparent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/main_email"
+            android:layout_width="214dp"
+            android:layout_gravity="center"
+            android:hint="Email"
+            android:layout_height="64dp" />
+
+        <EditText
+            android:id="@+id/main_password"
+            android:layout_width="214dp"
+            android:layout_gravity="center"
+            android:hint="Password"
+            android:layout_height="65dp" />
+
+        <Button
+            android:id="@+id/main_login"
+            android:layout_width="203dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Sign In" />
+
+        <Button
+            android:id="@+id/main_Create_Account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Create Account" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
             android:layout_width="250dp"
             android:layout_height="60dp"
-            android:layout_marginTop="60dp"
             android:layout_gravity="center"
-            android:textSize="30sp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/round_btn"
-            app:backgroundTint="@color/purple_700"
+            android:drawableLeft="@drawable/google_icon"
+            android:fontFamily="@font/lemonmilk_medium"
             android:text="SIGN IN"
             android:textColor="@color/white"
-            android:fontFamily="@font/lemonmilk_medium"
-            android:drawableLeft="@drawable/google_icon"
-            />
+            android:textSize="30sp"
+            app:backgroundTint="@color/purple_700" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,4 +1,6 @@
-package com.example.topgmeals;
+package com.example.topgmeals.main.login.options;
+
+import static android.content.ContentValues.TAG;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -13,8 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.topgmeals.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,13 +32,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
+/**
+ * This Activity is the first entry point to the app. Allows the user to log in or create an account.
+ */
 public class MainActivity extends AppCompatActivity {
     private Button googleSignInBtn;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button emailSignInBtn;
+    private Button createAccountBtn;
 
-    ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(),
                         new ActivityResultCallback<ActivityResult>() {
                             @Override
@@ -58,10 +68,36 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
+    /**
+     * This method handles the layout and logic of the Activity. Called on Activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        emailSignInBtn = findViewById(R.id.main_login);
+        emailSignInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emailEditText = findViewById(R.id.main_email);
+                passwordEditText = findViewById(R.id.main_password);
+                signInViaEmail(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            }
+        });
+
+        createAccountBtn = findViewById(R.id.main_Create_Account);
+        createAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText emailT = (EditText) findViewById(R.id.main_email);
+                EditText pwdT = (EditText) findViewById(R.id.main_password);
+                String ema = emailT.getText().toString();
+                String pwd = pwdT.getText().toString();
+                createAccount(ema, pwd);
+
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
@@ -81,6 +117,54 @@ public class MainActivity extends AppCompatActivity {
                 signInLauncher.launch(signInIntent);
             }
         });
+    }
+
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
+                            startActivity(intent);
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void signInViaEmail(String email, String password) {
+        // [START sign_in_with_email]
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
+                            startActivity(intent);
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+        // [END sign_in_with_email]
     }
 
     private void createRequest() {

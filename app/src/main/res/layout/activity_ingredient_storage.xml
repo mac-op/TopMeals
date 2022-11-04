@@ -4,21 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IngredientStorage">
+    tools:context=".ingredient.storage.IngredientStorage">
 
-    <include layout="@layout/activity_bottomswitchbuttons"/>
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/ingredientsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ingredient Storage"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="40dp"
-        android:textStyle="bold"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Add"
+            android:textSize="16sp"
+            android:textAlignment="viewStart"
+            android:drawableLeft="@drawable/plus_fit"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+        />
+
+        <Spinner
+            android:id="@+id/spinner"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/include4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+
+    <include
+        android:id="@+id/include4"
+        layout="@layout/activity_bottomswitchbuttons"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_list"
+    />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
