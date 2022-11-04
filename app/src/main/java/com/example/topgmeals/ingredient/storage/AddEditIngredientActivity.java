@@ -121,7 +121,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             //TODO: Input validation
 
-            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
             Intent editIntent = new Intent();
             editIntent.putExtra("edited_ingredient", ingredient1);
             editIntent.putExtra("edited_position", pos);
@@ -178,7 +178,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             //TODO: Input validation
 
             /* Create a new Ingredient and return it to IngredientStorage to be added */
-            Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
+            Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
             Intent saveIntent = new Intent();
             saveIntent.putExtra("added_ingredient", ingredient);
             setResult(RESULT_OK, saveIntent);

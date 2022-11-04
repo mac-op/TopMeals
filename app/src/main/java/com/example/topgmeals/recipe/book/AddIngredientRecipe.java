@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredient.storage.Ingredient;
-import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

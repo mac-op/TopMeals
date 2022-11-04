@@ -11,11 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.topgmeals.ingredient.storage.AddEditIngredientActivity;
 import com.example.topgmeals.ingredient.storage.Ingredient;
 import com.example.topgmeals.ingredient.storage.IngredientStorage;
 import com.robotium.solo.Solo;

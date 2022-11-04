@@ -2,6 +2,7 @@ package com.example.topgmeals.recipe.book;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,8 +15,6 @@ import android.widget.ListView;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredient.storage.Ingredient;
-import com.example.topgmeals.ingredientstorage.Ingredient;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
