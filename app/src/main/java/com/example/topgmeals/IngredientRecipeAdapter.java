@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.topgmeals.ingredientstorage.Ingredient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,4 +56,3 @@ public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
         return convertView;
     }
 }
-

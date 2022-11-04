@@ -7,14 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class IngredientStorage extends AppCompatActivity {
+import com.example.topgmeals.ingredientstorage.IngredientStorage;
+
+public class Recipes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingredient_storage);
+        setContentView(R.layout.activity_recipies);
 
-        IngredientStorage currentClass = IngredientStorage.this;
+        Recipes currentClass = Recipes.this;
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
         IngredientButton.setOnClickListener(new View.OnClickListener() {
@@ -50,12 +52,11 @@ public class IngredientStorage extends AppCompatActivity {
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
+                Intent intent = new Intent(currentClass, Recipes.class);
                 startActivity(intent);
             }
         });
         //endregion
-
 
     }
 }

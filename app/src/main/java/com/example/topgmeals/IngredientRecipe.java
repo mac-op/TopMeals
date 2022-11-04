@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.topgmeals.ingredientstorage.Ingredient;
+
 import java.util.ArrayList;
 
 public class IngredientRecipe extends AppCompatActivity {

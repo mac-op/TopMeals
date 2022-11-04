@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.topgmeals.ingredientstorage.IngredientStorage;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,6 +32,7 @@ public class MainOptions extends AppCompatActivity {
     private Button btnMealPlanner;
     private Button btnRecipesBook;
     private GoogleSignInAccount account;
+    private FirebaseUser curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,11 @@ public class MainOptions extends AppCompatActivity {
         setContentView(R.layout.activity_main_options);
 
         account = GoogleSignIn.getLastSignedInAccount(this);
-
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
         txtUsername = findViewById(R.id.txtName);
-        if (account != null) {
-            txtUsername.setText(account.getDisplayName());
+        if (curUser != null) {
+
+            txtUsername.setText(curUser.getEmail());
         }
 
 //        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();

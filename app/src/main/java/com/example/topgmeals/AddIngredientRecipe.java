@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.topgmeals.ingredientstorage.Ingredient;
+
 public class AddIngredientRecipe extends AppCompatActivity {
 
     @Override
