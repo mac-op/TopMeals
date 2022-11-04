@@ -1,14 +1,24 @@
 package com.example.topgmeals.recipe.book;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.topgmeals.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class RecipeDisplay extends AppCompatActivity {
 
@@ -31,6 +41,7 @@ public class RecipeDisplay extends AppCompatActivity {
         Integer servingsToDisplay = intent.getExtras().getInt("SERVINGS");
         String categoryToDisplay = intent.getExtras().getString("CATEGORY");
         String commentsToDisplay = intent.getExtras().getString("COMMENTS");
+        String recipeID = intent.getExtras().getString("ID");
         int position = intent.getIntExtra("POSITION",-1);
 
         title.setText(titleToDisplay);
@@ -46,19 +57,39 @@ public class RecipeDisplay extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
+
+                intent.putExtra("RECIPE_ID", recipeID);
                 startActivity(intent);
+
+
             }
         });
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Button delete = (Button) findViewById(R.id.delete_recipe);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("POSITION", position);
-                setResult(2,intent);
-                finish();
+                db.collection("recipes").document(recipeID)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
 
+
+                Intent intent = new Intent(currentClass, RecipeBook.class);
+                startActivity(intent);
 
             }
         });

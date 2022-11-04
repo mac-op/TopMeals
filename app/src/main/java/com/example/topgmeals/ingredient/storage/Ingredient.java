@@ -39,6 +39,7 @@ public class Ingredient implements Parcelable {
      * The Ingredient's category
      */
     private String category;
+    private String id;
 
     /**
      * No-argument constructor for Ingredient
@@ -51,13 +52,14 @@ public class Ingredient implements Parcelable {
      * Constructor for {@link Ingredient}
      */
     public Ingredient(String description, Date bestBefore, String location, float amount, String unit,
-                      String category) {
+                      String category, String id) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
         this.amount = amount;
         this.unit = unit;
         this.category = category;
+        this.id = id;
     }
 
     /**

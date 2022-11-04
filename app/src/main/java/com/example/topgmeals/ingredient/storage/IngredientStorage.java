@@ -229,16 +229,20 @@ public class IngredientStorage extends AppCompatActivity {
 
         // SnapshotListener to update the list everytime the documents with the user's ID are changed
         ingredientsDb.whereEqualTo("id", id)
-                .addSnapshotListener((value, error) -> {
-                    ingredientList.clear();
-                    refList.clear();
-                    assert value != null;
-                    for (QueryDocumentSnapshot doc : value){
-                        refList.add(doc.getId());
-                        Ingredient ingredient = doc.toObject(Ingredient.class);
-                        ingredientList.add(ingredient);
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ingredientList.clear();
+                        refList.clear();
+                        Log.e("temp", "REE");
+                        assert value != null;
+                        for (QueryDocumentSnapshot doc : value){
+                            refList.add(doc.getId());
+                            Ingredient ingredient = doc.toObject(Ingredient.class);
+                            ingredientList.add(ingredient);
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 });
 
     }

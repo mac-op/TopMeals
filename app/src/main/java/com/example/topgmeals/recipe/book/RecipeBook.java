@@ -2,6 +2,8 @@ package com.example.topgmeals.recipe.book;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,8 +16,23 @@ import com.example.topgmeals.R;
 import com.example.topgmeals.ingredient.storage.IngredientStorage;
 import com.example.topgmeals.shopping.list.ShoppingList;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class RecipeBook extends AppCompatActivity  {
 
@@ -31,12 +48,46 @@ public class RecipeBook extends AppCompatActivity  {
 
         recipeList = (ListView) findViewById(R.id.recipe_book);
         recipeBook = new ArrayList<>();
-        Recipe burger = new Recipe("Burger","Half Hour", 2 , "Fast Food", "Follow the instruction as is");
-        Recipe pizza = new Recipe("Pizza","15 mins", 3, "fastfood", "Follow instructions");
-        recipeBook.add(burger);
-        recipeBook.add(pizza);
 
-        RecipeAdapter recipeListAdapter = new RecipeAdapter(this, R.layout.recipee_book_content, recipeBook);
+        recipeListAdapter = new RecipeAdapter(this, R.layout.recipee_book_content, recipeBook);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        //getCurrentUserRecipes(uid, db);
+
+        final CollectionReference RecipeRef = db.collection("recipes");
+
+        RecipeRef.whereEqualTo("id", uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (QueryDocumentSnapshot doc : value){
+                    // refList.add(doc.getId());
+                    Map<String, Object> rData = doc.getData();
+                    Recipe curRecipe = new Recipe(rData.get("title").toString(),
+                            rData.get("prepTime").toString(),
+                            (int)(long)rData.get("servings") ,
+                            rData.get("category").toString(),
+                            rData.get("comments").toString(),
+                            doc.getId());
+
+                    recipeBook.add(curRecipe);
+
+                }
+                recipeList.setAdapter(recipeListAdapter);
+                Log.e("v", "" +value.size());
+            }
+        });
+        Log.e("her", "ho");
+
+
+//        Recipe burger = new Recipe("a","Half Hour", 2 , "Fast Food", "Follow the instruction as is");
+//        Recipe pizza = new Recipe("Pizza","15 mins", 3, "fastfood", "Follow instructions");
+//        recipeBook.add(burger);
+//        recipeBook.add(pizza);
+
         recipeList.setAdapter(recipeListAdapter);
 
         RecipeBook currentClass = RecipeBook.this;
@@ -59,6 +110,7 @@ public class RecipeBook extends AppCompatActivity  {
                 intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
+                intent.putExtra("ID", recipeBook.get(i).getUid());
 
                 startActivity(intent);
             }
@@ -123,4 +175,45 @@ public class RecipeBook extends AppCompatActivity  {
         }
         //endregion
     }
+
+    private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
+        CollectionReference RecipeRef = db.collection("recipes");
+        RecipeRef.whereEqualTo("id", uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Log.e("SUI", "here");
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                        Log.e("END", "sor");
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+        Log.e("her", "ho");
+
+//        RecipeRef
+//            .whereEqualTo("id", uid)
+//            .get()
+//            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        Log.e("SUI", "here");
+//
+//                        for (QueryDocumentSnapshot document : task.getResult()) {
+//                            Log.d(TAG, document.getId() + " => " + document.getData());
+//                        }
+//                        Log.e("END", "sor");
+//                    } else {
+//                        Log.d(TAG, "Error getting documents: ", task.getException());
+//                    }
+//                }
+//            });
+
+    }
+
 }
