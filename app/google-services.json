@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "189526908504",
+    "project_id": "topgmeals",
+    "storage_bucket": "topgmeals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189526908504:android:a6860ebd74164cd906f42d",
+        "android_client_info": {
+          "package_name": "com.example.topgmeals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189526908504-vl99i4sk4u5ltkbckv4bt31343di5cf6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.topgmeals",
+            "certificate_hash": "b8db41bc5ee20355f8784b4e2a727f8468ca6821"
+          }
+        },
+        {
+          "client_id": "189526908504-g7l8o3n38gqgndj3h03jke957qknnahu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt2fRphWfGsEVLLoJhwl2pY4rgE4Zdf4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189526908504-g7l8o3n38gqgndj3h03jke957qknnahu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

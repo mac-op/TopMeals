@@ -14,7 +14,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="4dp"
         android:drawableTop="@drawable/grocery"
-
         android:foregroundGravity="fill"
         android:gravity="center_horizontal"
         android:paddingLeft="0dp"
