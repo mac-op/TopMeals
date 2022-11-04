@@ -23,6 +23,20 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".RecipeDisplay"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".addEditRecipe"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ShoppingList"
             android:exported="false">
             <meta-data
@@ -37,7 +51,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Recipies"
+            android:name=".RecipeBook"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
