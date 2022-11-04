@@ -25,6 +25,7 @@ import com.example.topgmeals.ShoppingList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -55,8 +56,10 @@ public class IngredientStorage extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
         final DateFormat format = new DateFormat();
-        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        id = sharedPreferences.getString("Installation ID", "");
+//        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+//        id = sharedPreferences.getString("Installation ID", "");
+
+        id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d("IngID", id);
         setTitle("Ingredient Storage");
 
