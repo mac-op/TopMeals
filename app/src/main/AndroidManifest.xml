@@ -23,21 +23,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IngredientsDisplay"
-            android:exported="false" />
-        <activity
-            android:name=".IngredientRecipeAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".IngredientRecipe"
-            android:exported="false" />
-        <activity
-            android:name=".AddRecipe"
-            android:exported="false" />
-        <activity
-            android:name=".AddIngredientRecipe"
-            android:exported="false" />
-        <activity
             android:name=".RecipeDisplay"
             android:exported="false">
             <meta-data
@@ -45,7 +30,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".HomeDisplay"
+            android:name=".addEditRecipe"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

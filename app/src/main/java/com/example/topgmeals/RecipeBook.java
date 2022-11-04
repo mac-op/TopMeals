@@ -1,8 +1,5 @@
 package com.example.topgmeals;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,26 +39,13 @@ public class RecipeBook extends AppCompatActivity  {
         RecipeBook currentClass = RecipeBook.this;
 
 
-        ActivityResultLauncher<Intent> viewRecipe = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == 2){
-                        Intent intent = result.getData();
-                        int position = intent.getIntExtra("POSITION", -1);
-                        assert (position != -1);
-                        recipeBook.remove(position);
-                        recipeListAdapter.notifyDataSetChanged();
-                    }
-
-                }
-
-        );
 
 
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Intent new_intent=getIntent();
+
 
 
                 Intent intent = new Intent(currentClass, RecipeDisplay.class);
@@ -73,19 +56,13 @@ public class RecipeBook extends AppCompatActivity  {
                 String category = recipeBook.get(i).getCategory();
                 String comments = recipeBook.get(i).getComments();
 
-
                 intent.putExtra("TITLE",title);
                 intent.putExtra("PREP_TIME",prep_time);
                 intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
-                intent.putExtra("POSITION",i);
 
-
-
-                //startActivity(intent);
-                viewRecipe.launch(intent);
-
+                startActivity(intent);
             }
         });
 
@@ -119,41 +96,34 @@ public class RecipeBook extends AppCompatActivity  {
             }
         });
 
-        Button add_recipe=(Button) findViewById(R.id.AddRecipe);
+        Button add_recipe=(Button) findViewById(R.id.add_button);
 
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, AddRecipe.class);
+                Intent intent = new Intent(currentClass, addEditRecipe.class);
                 startActivity(intent);
             }
         });
 
-        Button RecipesButton = (Button) findViewById(R.id.switchToRecipes);
+        Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
 
-        RecipesButton.setOnClickListener(new View.OnClickListener() {
+        RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, RecipeBook.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 check=Boolean.TRUE;
                 startActivity(intent);
 
-
             }
         });
-        //System.out.println(check);
-
-
-
-        Recipe new_recipe= (Recipe) getIntent().getSerializableExtra("NEW");
+        System.out.println(check);
+        Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
         if (new_recipe!=null){
             recipeBook.add(new_recipe);
-
         }
         //endregion
 
     }
-
-
 }

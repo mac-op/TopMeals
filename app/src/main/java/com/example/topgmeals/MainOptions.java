@@ -44,6 +44,9 @@ public class MainOptions extends AppCompatActivity {
             txtUsername.setText(account.getDisplayName());
         }
 
+//        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        Log.d("iddddddddddddddd", id);
+
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +78,7 @@ public class MainOptions extends AppCompatActivity {
         btnRecipesBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainOptions.this, Recipes.class);
+                Intent intent = new Intent(MainOptions.this, RecipeBook.class);
                 startActivity(intent);
             }
         });
