@@ -34,7 +34,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 String unitText = unit.getText().toString();
                 String categoryText = category.getText().toString();
 
-                Ingredient new_ingredient = new Ingredient(descriptionText,new java.util.Date(System.currentTimeMillis()),null,amountText,unitText,categoryText);
+                Ingredient new_ingredient = new Ingredient(descriptionText,new java.util.Date(System.currentTimeMillis()),null,amountText,unitText,categoryText, "ape");
                 intentAddIngredient.putExtra("NEW", new_ingredient);
                 startActivity(intentAddIngredient);
 

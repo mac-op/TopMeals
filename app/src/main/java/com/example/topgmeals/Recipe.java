@@ -13,13 +13,15 @@ public class Recipe implements Serializable {
     private String category;
     private String comments;
     private ImageView picture;
+    private String uid;
 
-    public Recipe (String title, String prepTime, int servings, String category, String comments) {
+    public Recipe (String title, String prepTime, int servings, String category, String comments, String id) {
         this.title = title;
         this.prepTime = prepTime;
         this.servings = servings;
         this.category = category;
         this.comments = comments;
+        this.uid = id;
         //this.picture = picture;
 
     }
@@ -83,6 +85,11 @@ public class Recipe implements Serializable {
         this.picture = picture;
     }
 
+    public String getUid() {
+        return uid;
+    }
 
-
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

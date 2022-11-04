@@ -12,19 +12,21 @@ public class Ingredient implements Parcelable {
     private float amount;
     private String unit;
     private String category;
+    private String id;
 
     public Ingredient(){
         super();
     }
 
     public Ingredient(String description, Date bestBefore, String location, float amount, String unit,
-                      String category) {
+                      String category, String id) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
         this.amount = amount;
         this.unit = unit;
         this.category = category;
+        this.id = id;
     }
 
 

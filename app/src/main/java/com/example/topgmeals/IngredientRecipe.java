@@ -7,19 +7,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class IngredientRecipe extends AppCompatActivity {
 
     ListView ingredientsList;
     ArrayList<Ingredient> ingredientsRecipeBook;
+    IngredientRecipeAdapter ingredientListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +43,47 @@ public class IngredientRecipe extends AppCompatActivity {
 
         ingredientsList = (ListView) findViewById(R.id.ingredient_recipe);
         ingredientsRecipeBook = new ArrayList<>();
-        Ingredient beef = new Ingredient("Beef", null, null,5,"5","Meat");
-        ingredientsRecipeBook.add(beef);
+        ingredientListAdapter = new IngredientRecipeAdapter(this, R.layout.ingredients_recipe_content, ingredientsRecipeBook);
 
-        IngredientRecipeAdapter ingredientListAdapter = new IngredientRecipeAdapter(this, R.layout.ingredients_recipe_content, ingredientsRecipeBook);
+        Intent Itemintent = getIntent();
+        String RecipeID = Itemintent.getExtras().getString("RECIPE_ID");
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //getCurrentUserRecipes(uid, db);
+
+        final CollectionReference RecipeRef = db.collection("recipeIngredients");
+        SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        RecipeRef.whereEqualTo("id", RecipeID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                        for (QueryDocumentSnapshot doc : value){
+                            // refList.add(doc.getId());
+                            Map<String, Object> rData = doc.getData();
+//                            Date cur = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1, new ParsePosition(0));
+//                            Log.e("HEEEEYYYYYYYYY", cur.toString());
+                            Ingredient curIng = new Ingredient(
+                                    rData.get("description").toString(),
+                                    new SimpleDateFormat("dd/MM/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
+                                    rData.get("location").toString(),
+                                    (float)(double)rData.get("amount"),
+                                    rData.get("unit").toString(),
+                                    rData.get("category").toString(),
+                                    doc.getId());
+
+                            ingredientsRecipeBook.add(curIng);
+
+                        }
+                        ingredientsList.setAdapter(ingredientListAdapter);
+
+                    }
+                });
+
+
+        // ingredientsRecipeBook.add(beef);
+
         ingredientsList.setAdapter(ingredientListAdapter);
 
 

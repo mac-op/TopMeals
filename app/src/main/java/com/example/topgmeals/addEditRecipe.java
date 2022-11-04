@@ -42,7 +42,8 @@ public class addEditRecipe extends AppCompatActivity {
                 System.out.println('3');
 
 
-                Recipe new_recipe =new Recipe(title_text,prep_time_text,3,category_text,comments_text);
+
+                Recipe new_recipe =new Recipe(title_text,prep_time_text,3,category_text,comments_text, "si");
                 intent_add.putExtra("NEW",new_recipe);
                 startActivity(intent_add);
             }

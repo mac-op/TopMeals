@@ -205,6 +205,7 @@ public class IngredientStorage extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         ingredientList.clear();
                         refList.clear();
+                        Log.e("temp", "REE");
                         assert value != null;
                         for (QueryDocumentSnapshot doc : value){
                             refList.add(doc.getId());
