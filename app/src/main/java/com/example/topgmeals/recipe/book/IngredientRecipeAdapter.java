@@ -15,6 +15,9 @@ import com.example.topgmeals.ingredient.storage.Ingredient;
 
 import java.util.List;
 
+/**
+ * Ingredient Recipe Adapter to fit {@link Ingredient} objects into {@link ArrayAdapter}
+ */
 public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
 
     private static final String TAG = "IngredientListAdapter";

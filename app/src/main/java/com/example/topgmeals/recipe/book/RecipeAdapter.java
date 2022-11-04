@@ -15,18 +15,27 @@ import com.example.topgmeals.recipe.book.Recipe;
 
 import java.util.List;
 
+/**
+ * Recipe Adapter to fit {@link Recipe} objects into {@link ArrayAdapter}
+ */
 public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
     private static final String TAG = "RecipeListAdapter";
     private Context context;
     private int resource;
 
+    /**
+     * Constructor for {@link RecipeAdapter}
+     */
     public RecipeAdapter(@NonNull Context context, int resource, @NonNull List<Recipe> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
     }
 
+    /**
+     * A {@link View} class to get the view of an {@link Recipe} object
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

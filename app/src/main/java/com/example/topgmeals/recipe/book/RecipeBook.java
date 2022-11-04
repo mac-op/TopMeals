@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * This class is an Activity that handles the Recipe Book menu. The user will be able to see
+ * a list of recipes and their information and add a new recipe.
+ */
 public class RecipeBook extends AppCompatActivity  {
 
     ListView recipeList;
@@ -38,6 +44,10 @@ public class RecipeBook extends AppCompatActivity  {
     Boolean check=Boolean.FALSE;
     RecipeAdapter recipeListAdapter;
 
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for the Activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +99,6 @@ public class RecipeBook extends AppCompatActivity  {
 
         RecipeBook currentClass = RecipeBook.this;
 
-
-
-
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -126,7 +133,6 @@ public class RecipeBook extends AppCompatActivity  {
         });
 
         Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-
         ShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +142,6 @@ public class RecipeBook extends AppCompatActivity  {
         });
 
         Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-
         MealPlanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,8 +150,8 @@ public class RecipeBook extends AppCompatActivity  {
             }
         });
 
+        // Add recipe
         Button add_recipe=(Button) findViewById(R.id.add_button);
-
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,7 +172,7 @@ public class RecipeBook extends AppCompatActivity  {
 
             }
         });
-        System.out.println(check);
+        // Adding a recipe to recipeBook
         Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
         if (new_recipe!=null){
             recipeBook.add(new_recipe);

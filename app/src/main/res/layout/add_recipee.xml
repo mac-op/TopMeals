@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/back_button_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back">
@@ -59,7 +60,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:hint="Title"
             android:textAlignment="center"
             android:id="@+id/title_editText">
@@ -115,7 +115,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:inputType="number"
             android:hint="Serving "
             android:textAlignment="center"
             android:id="@+id/serving_editText">
@@ -222,22 +222,16 @@
 
    </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/add_recipe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:text="Add Recipee"
-            android:textAlignment="center"
-            android:id="@+id/add_new">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:text="Add Recipee"
+        android:textAlignment="center">
 
-        </Button>
-    </LinearLayout>
-
-
+    </Button>
 
 
 </LinearLayout>

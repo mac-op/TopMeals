@@ -22,6 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.topgmeals.ingredient.storage.Ingredient;
+/**
+ * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe.
+ */
 public class AddIngredientRecipe extends AppCompatActivity {
 
     String RecipeID;

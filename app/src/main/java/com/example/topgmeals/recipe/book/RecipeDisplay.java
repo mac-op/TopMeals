@@ -20,6 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * This class is an Activity that handles the Recipe Display menu. The user will be able to see
+ * the information of each recipe, and edit and delete a recipe
+ */
 public class RecipeDisplay extends AppCompatActivity {
 
     @Override
@@ -68,6 +72,27 @@ public class RecipeDisplay extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        // Edit a recipe
+//        Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
+//        edit_recipe.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                recipe_object.setTitle(title.getText().toString());
+//                recipe_object.setPrepTime(prepTime.getText().toString());
+//                recipe_object.setServings(Integer.valueOf(servings.getText().toString()));
+//                recipe_object.setCategory(category.getText().toString());
+//                recipe_object.setComments(comments.getText().toString());
+//
+//                Intent intent = new Intent();
+//                intent.putExtra("POSITION", position);
+//                intent.putExtra("UPDATED OBJECT",recipe_object);
+//                setResult(3,intent);
+//                finish();
+//            }
+//        });
+
+
+        // Delete a recipe
         Button delete = (Button) findViewById(R.id.delete_recipe);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
