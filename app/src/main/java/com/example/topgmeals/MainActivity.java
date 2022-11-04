@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
 
 public class MainActivity extends AppCompatActivity {
     private Button googleSignInBtn;
@@ -57,22 +59,17 @@ public class MainActivity extends AppCompatActivity {
     });
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         createRequest();
 
@@ -82,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 signInLauncher.launch(signInIntent);
-                //startActivityForResult(signInIntent, 1000);
             }
         });
     }
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            Log.d("TESTING", "This is my message");
                             Intent intent = new Intent(getApplicationContext(), MainOptions.class);
                             startActivity(intent);
                         } else {
