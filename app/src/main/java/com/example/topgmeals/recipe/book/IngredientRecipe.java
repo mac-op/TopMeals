@@ -1,8 +1,7 @@
-package com.example.topgmeals;
+package com.example.topgmeals.recipe.book;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,7 +11,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.R;
+import com.example.topgmeals.ingredient.storage.Ingredient;
 
 import java.util.ArrayList;
 

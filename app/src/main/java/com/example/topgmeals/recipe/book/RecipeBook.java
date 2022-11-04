@@ -1,18 +1,18 @@
-package com.example.topgmeals;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.topgmeals.recipe.book;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.topgmeals.meal.plan.MealPlan;
+import com.example.topgmeals.R;
+import com.example.topgmeals.ingredient.storage.IngredientStorage;
+import com.example.topgmeals.shopping.list.ShoppingList;
 
 import java.util.ArrayList;
 
@@ -39,15 +39,10 @@ public class RecipeBook extends AppCompatActivity  {
 
         RecipeBook currentClass = RecipeBook.this;
 
-
-
-
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Intent new_intent=getIntent();
-
-
 
                 Intent intent = new Intent(currentClass, RecipeDisplay.class);
                 String title = recipeBook.get(i).getTitle();
@@ -125,6 +120,5 @@ public class RecipeBook extends AppCompatActivity  {
             recipeBook.add(new_recipe);
         }
         //endregion
-
     }
 }

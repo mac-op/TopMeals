@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.recipe.book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.R;
+import com.example.topgmeals.ingredient.storage.Ingredient;
 
 public class AddIngredientRecipe extends AppCompatActivity {
 

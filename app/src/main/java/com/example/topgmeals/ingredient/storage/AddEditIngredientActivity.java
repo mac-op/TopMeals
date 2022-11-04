@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredientstorage;
+package com.example.topgmeals.ingredient.storage;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.topgmeals.DateFormat;
+import com.example.topgmeals.utils.DateFormat;
 import com.example.topgmeals.R;
 
 public class AddEditIngredientActivity extends AppCompatActivity {

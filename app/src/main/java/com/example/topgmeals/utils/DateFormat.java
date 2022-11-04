@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
