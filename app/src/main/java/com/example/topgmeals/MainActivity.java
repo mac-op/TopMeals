@@ -1,5 +1,7 @@
 package com.example.topgmeals;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,6 +15,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -63,6 +67,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button b = (Button) findViewById(R.id.main_login);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText emailT = (EditText) findViewById(R.id.main_email);
+                EditText pwdT = (EditText) findViewById(R.id.main_password);
+                String ema = emailT.getText().toString();
+                String pwd = pwdT.getText().toString();
+                signIn(ema, pwd);
+
+            }
+        });
+
+        Button create_account = (Button) findViewById(R.id.main_Create_Account);
+        create_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText emailT = (EditText) findViewById(R.id.main_email);
+                EditText pwdT = (EditText) findViewById(R.id.main_password);
+                String ema = emailT.getText().toString();
+                String pwd = pwdT.getText().toString();
+                createAccount(ema, pwd);
+
+            }
+        });
+
+
+
+
+
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(getApplicationContext(), MainOptions.class);
@@ -77,10 +112,59 @@ public class MainActivity extends AppCompatActivity {
         googleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("SUI", "Clicky");
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 signInLauncher.launch(signInIntent);
             }
         });
+    }
+
+    private void createAccount(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
+                            startActivity(intent);
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void signIn(String email, String password) {
+        // [START sign_in_with_email]
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getApplicationContext(), MainOptions.class);
+                            startActivity(intent);
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+        // [END sign_in_with_email]
     }
 
     private void createRequest() {

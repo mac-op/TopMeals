@@ -31,6 +31,7 @@ public class MainOptions extends AppCompatActivity {
     private Button btnMealPlanner;
     private Button btnRecipesBook;
     private GoogleSignInAccount account;
+    private FirebaseUser curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,11 @@ public class MainOptions extends AppCompatActivity {
         setContentView(R.layout.activity_main_options);
 
         account = GoogleSignIn.getLastSignedInAccount(this);
-
+        curUser = FirebaseAuth.getInstance().getCurrentUser();
         txtUsername = findViewById(R.id.txtName);
-        if (account != null) {
-            txtUsername.setText(account.getDisplayName());
+        if (curUser != null) {
+
+            txtUsername.setText(curUser.getEmail());
         }
 
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
