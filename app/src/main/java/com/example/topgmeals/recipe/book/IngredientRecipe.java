@@ -16,6 +16,10 @@ import com.example.topgmeals.ingredient.storage.Ingredient;
 
 import java.util.ArrayList;
 
+/**
+ * This class is an Activity that handles the Ingredients of a recipe. The user will be able to see
+ * a list of ingredients and their information and add a new ingredient.
+ */
 public class IngredientRecipe extends AppCompatActivity {
 
     ListView ingredientsList;
@@ -99,6 +103,7 @@ public class IngredientRecipe extends AppCompatActivity {
             }
         });
 
+        // Adding a ingredient for a recipe
         Ingredient new_ingredient= (Ingredient) getIntent().getParcelableExtra("NEW");
         if (new_ingredient!=null){
             ingredientsRecipeBook.add(new_ingredient);

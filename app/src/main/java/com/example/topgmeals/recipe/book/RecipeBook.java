@@ -18,12 +18,20 @@ import com.example.topgmeals.shopping.list.ShoppingList;
 
 import java.util.ArrayList;
 
+/**
+ * This class is an Activity that handles the Recipe Book menu. The user will be able to see
+ * a list of recipes and their information and add a new recipe.
+ */
 public class RecipeBook extends AppCompatActivity  {
 
     ListView recipeList;
     ArrayList<Recipe> recipeBook;
     Boolean check=Boolean.FALSE;
 
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for the Activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +95,6 @@ public class RecipeBook extends AppCompatActivity  {
         });
 
         Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-
         ShoppingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +104,6 @@ public class RecipeBook extends AppCompatActivity  {
         });
 
         Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-
         MealPlanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,8 +112,8 @@ public class RecipeBook extends AppCompatActivity  {
             }
         });
 
+        // Add recipe
         Button add_recipe=(Button) findViewById(R.id.add_button);
-
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +134,7 @@ public class RecipeBook extends AppCompatActivity  {
 
             }
         });
+        // Adding a recipe to recipeBook
         Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
         if (new_recipe!=null){
             recipeBook.add(new_recipe);

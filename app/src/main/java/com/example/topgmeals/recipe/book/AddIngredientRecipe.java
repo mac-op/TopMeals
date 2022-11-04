@@ -10,7 +10,9 @@ import android.widget.EditText;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredient.storage.Ingredient;
-
+/**
+ * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe.
+ */
 public class AddIngredientRecipe extends AppCompatActivity {
 
     @Override

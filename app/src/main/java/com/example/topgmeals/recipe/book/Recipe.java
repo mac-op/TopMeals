@@ -31,6 +31,8 @@ public class Recipe implements Serializable {
 
     /**
      * Gets the recipe title from the recipe
+     * @return
+     *      Returns title of recipe
      */
     public String getTitle() {
         return title;
@@ -38,6 +40,8 @@ public class Recipe implements Serializable {
 
     /**
      * Sets the recipe title for the recipe
+     * @param title
+     *
      */
     public void setTitle(String title) {
         this.title = title;
@@ -45,69 +49,84 @@ public class Recipe implements Serializable {
 
     /**
      * Gets the preparation time from the recipe
+     * @return
+     *      Returns preparation time of recipe
      */
     public String getPrepTime() {
         return prepTime;
     }
 
     /**
-     * Sets the preparation time o
+     * Sets the preparation time of the recipe
+     * @param prepTime
      */
     public void setPrepTime(String prepTime) {
         this.prepTime = prepTime;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Gets the servings value from the recipe
+     *  @return
+     *      Returns servings of recipe
      */
     public Integer getServings() {
         return servings;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Sets the serving value of the recipe
+     * @param servings
      */
     public void setServings(int servings) {
         this.servings = servings;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Gets the recipe category
+     *  @return
+     *      Returns category of recipe
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Sets the recipe category
+     * @param category
      */
     public void setCategory(String category) {
         this.category = category;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Gets the comments of the recipe
+     *  @return
+     *      Returns comments of recipe
      */
     public String getComments() {
         return comments;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Sets comments for the recipe
+     * @param comments
      */
     public void setComments(String comments) {
         this.comments = comments;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Gets the picture of the recipe
+     *  @return
+     *      Returns picture of recipe
      */
     public ImageView getPicture() {
         return picture;
     }
 
     /**
-     * Gets the recipe title from the recipe
+     * Sets the picture for the recipe
+     * @param picture
      */
     public void setPicture(ImageView picture) {
         this.picture = picture;

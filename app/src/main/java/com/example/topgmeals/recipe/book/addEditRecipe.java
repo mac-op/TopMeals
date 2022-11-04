@@ -13,6 +13,10 @@ import com.example.topgmeals.R;
 import com.example.topgmeals.recipe.book.Recipe;
 import com.example.topgmeals.recipe.book.RecipeBook;
 
+
+/**
+ * This class is an Activity that handles the ADD functionality of the Recipe Book menu.
+ */
 public class addEditRecipe extends AppCompatActivity {
 
     @Override

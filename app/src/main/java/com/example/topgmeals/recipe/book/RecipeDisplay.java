@@ -10,6 +10,10 @@ import android.widget.EditText;
 
 import com.example.topgmeals.R;
 
+/**
+ * This class is an Activity that handles the Recipe Display menu. The user will be able to see
+ * the information of each recipe, and edit and delete a recipe
+ */
 public class RecipeDisplay extends AppCompatActivity {
 
     @Override
@@ -51,6 +55,7 @@ public class RecipeDisplay extends AppCompatActivity {
             }
         });
 
+        // Edit a recipe
         Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
         edit_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +74,8 @@ public class RecipeDisplay extends AppCompatActivity {
             }
         });
 
+
+        // Delete a recipe
         Button delete = (Button) findViewById(R.id.delete_recipe);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
