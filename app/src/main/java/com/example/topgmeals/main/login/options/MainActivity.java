@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.main.login.options;
 
 import static android.content.ContentValues.TAG;
 
@@ -16,9 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.topgmeals.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

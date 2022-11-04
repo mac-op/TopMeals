@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.recipe.book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.topgmeals.R;
+
 public class addEditRecipe extends AppCompatActivity {
 
     @Override
@@ -15,10 +17,6 @@ public class addEditRecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
         addEditRecipe currentClass = addEditRecipe.this;
-
-
-
-
 
         Button add_new=findViewById(R.id.add_new);
         add_new.setOnClickListener(new View.OnClickListener() {

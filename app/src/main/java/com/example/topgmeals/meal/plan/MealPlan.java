@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.meal.plan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.R;
+import com.example.topgmeals.ingredient.storage.IngredientStorage;
+import com.example.topgmeals.recipe.book.RecipeBook;
+import com.example.topgmeals.shopping.list.ShoppingList;
 
 public class MealPlan extends AppCompatActivity {
 

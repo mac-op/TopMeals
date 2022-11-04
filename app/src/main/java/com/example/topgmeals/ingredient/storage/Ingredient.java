@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredientstorage;
+package com.example.topgmeals.ingredient.storage;
 
 import android.os.Parcel;
 import android.os.Parcelable;

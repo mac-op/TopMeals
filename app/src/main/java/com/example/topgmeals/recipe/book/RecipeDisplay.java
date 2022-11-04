@@ -1,4 +1,4 @@
-package com.example.topgmeals;
+package com.example.topgmeals.recipe.book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
+import com.example.topgmeals.R;
 
 public class RecipeDisplay extends AppCompatActivity {
 

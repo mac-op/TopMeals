@@ -1,10 +1,8 @@
-package com.example.topgmeals;
+package com.example.topgmeals.recipe.book;
 
 import android.widget.ImageView;
-
 import java.io.Serializable;
 import android.os.Parcel;
-import android.os.Parcelable;
 
 public class Recipe implements Serializable {
     private String title;
@@ -20,20 +18,16 @@ public class Recipe implements Serializable {
         this.servings = servings;
         this.category = category;
         this.comments = comments;
-        //this.picture = picture;
 
     }
+
     protected Recipe(Parcel in) {
         title = in.readString();
         prepTime=in.readString();
         servings=in.readInt();
         category=in.readString();
         comments=in.readString();
-
     }
-
-
-
 
     public String getTitle() {
         return title;
@@ -82,7 +76,4 @@ public class Recipe implements Serializable {
     public void setPicture(ImageView picture) {
         this.picture = picture;
     }
-
-
-
 }

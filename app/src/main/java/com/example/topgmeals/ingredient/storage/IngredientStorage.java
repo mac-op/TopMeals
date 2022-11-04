@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredientstorage;
+package com.example.topgmeals.ingredient.storage;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,11 +16,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.topgmeals.DateFormat;
-import com.example.topgmeals.MealPlan;
+import com.example.topgmeals.utils.DateFormat;
+import com.example.topgmeals.meal.plan.MealPlan;
 import com.example.topgmeals.R;
-import com.example.topgmeals.Recipes;
-import com.example.topgmeals.ShoppingList;
+import com.example.topgmeals.recipe.book.RecipeBook;
+import com.example.topgmeals.shopping.list.ShoppingList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
@@ -36,7 +35,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class IngredientStorage extends AppCompatActivity {
 
@@ -94,7 +92,7 @@ public class IngredientStorage extends AppCompatActivity {
         RecipiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, Recipes.class);
+                Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredientstorage;
+package com.example.topgmeals.ingredient.storage;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.topgmeals.DateFormat;
+import com.example.topgmeals.utils.DateFormat;
 import com.example.topgmeals.R;
 
 import java.util.ArrayList;
