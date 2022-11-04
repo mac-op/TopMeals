@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-installations:17.1.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.5.4'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 
 //    implementation 'com.android.support:recyclerview-v7:28.0.0'

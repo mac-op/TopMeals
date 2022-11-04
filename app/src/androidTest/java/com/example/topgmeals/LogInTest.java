@@ -17,6 +17,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * This class tests the log in process. Please log out of your account before conducting this test.
+ */
 @RunWith(AndroidJUnit4.class)
 public class LogInTest {
     private Solo solo;
@@ -48,10 +51,14 @@ public class LogInTest {
     @Test
     public void LogIn(){
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        //Enter email
         solo.enterText((EditText) solo.getView(R.id.main_email), "testemail@gmail.com");
+        //Enter password
         solo.enterText((EditText) solo.getView(R.id.main_password), "randompass");
+        //Click on Create Account
         solo.clickOnButton("Create Account");
 
+        // Now in Main Options
         solo.assertCurrentActivity("Not in Main Options",MainOptions.class);
     }
 }

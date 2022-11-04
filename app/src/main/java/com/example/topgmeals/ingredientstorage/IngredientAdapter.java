@@ -52,7 +52,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.description);
+            description = itemView.findViewById(R.id.description_content);
             bestBefore = itemView.findViewById(R.id.best_before);
             count = itemView.findViewById(R.id.count);
             category = itemView.findViewById(R.id.category);
@@ -60,6 +60,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
             itemView.setTag(this);
             itemView.setOnClickListener(onItemClickListener);
+        }
+
+        public TextView getDescription(){
+            return description;
         }
     }
 

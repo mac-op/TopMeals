@@ -47,7 +47,7 @@ public class IngredientStorage extends AppCompatActivity {
     /**
      * An {@link ArrayList} that holds {@link Ingredient} objects.
      */
-    private ArrayList<Ingredient> ingredientList;
+    public ArrayList<Ingredient> ingredientList;
 
     /**
      * A custom {@link RecyclerView.Adapter} of type {@link IngredientAdapter} that handles the view
@@ -70,6 +70,11 @@ public class IngredientStorage extends AppCompatActivity {
      * that user's ingredients
      */
     private ArrayList<String> refList = new ArrayList<>();
+
+    /**
+     * {@link RecyclerView} to hold ingredientList
+     */
+    public RecyclerView ingredientView;
 
     /**
      *  This method gets called when the Activity is created. It creates the layouts
@@ -127,7 +132,7 @@ public class IngredientStorage extends AppCompatActivity {
         //endregion
 
         ingredientList = new ArrayList<>();
-        RecyclerView ingredientView = findViewById(R.id.ingredient_list);
+        ingredientView = findViewById(R.id.ingredient_list);
         adapter = new IngredientAdapter(ingredientList);
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));

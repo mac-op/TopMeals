@@ -40,6 +40,12 @@ public class Ingredient implements Parcelable {
      */
     private String category;
 
+    /**
+     * No-argument constructor for Ingredient
+     */
+    public Ingredient(){
+
+    }
 
     /**
      * Constructor for {@link Ingredient}
