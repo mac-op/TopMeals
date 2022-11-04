@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back">
@@ -223,6 +224,7 @@
         >
 
         <Button
+            android:id="@+id/delete_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete Recipe"
@@ -230,6 +232,7 @@
 
         </Button>
         <Button
+            android:id="@+id/ingredients_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ingredients"
@@ -248,4 +251,3 @@
 
 
 </LinearLayout>
-

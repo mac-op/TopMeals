@@ -16,6 +16,34 @@
         android:theme="@style/Theme.TopGMeals"
         tools:targetApi="31">
         <activity
+            android:name=".AddIngredientRecipe"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".IngredientsDisplay"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".IngredientRecipeAdapter"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".IngredientRecipe"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MainOptions"
             android:exported="false">
             <meta-data
@@ -60,17 +88,16 @@
         <activity
             android:name=".ingredientstorage.IngredientStorage"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
             android:launchMode="singleTop"
-            >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ingredientstorage.AddEditIngredientActivity"
-            android:parentActivityName=".ingredientstorage.IngredientStorage"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ingredientstorage.IngredientStorage">
             <meta-data
                 android:name="android.support.IngredientStorage"
                 android:value="com/example/topgmeals/AddEditIngredientActivity.java" />
