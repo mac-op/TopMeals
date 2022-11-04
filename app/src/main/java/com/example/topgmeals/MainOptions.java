@@ -47,8 +47,6 @@ public class MainOptions extends AppCompatActivity {
             txtUsername.setText(curUser.getEmail());
         }
 
-//        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        Log.d("iddddddddddddddd", id);
 
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
