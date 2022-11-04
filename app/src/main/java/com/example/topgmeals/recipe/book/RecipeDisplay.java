@@ -26,18 +26,19 @@ public class RecipeDisplay extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String titleToDisplay = intent.getExtras().getString("TITLE");
-        String prepTimeToDisplay = intent.getExtras().getString("PREP_TIME");
-        Integer servingsToDisplay = intent.getExtras().getInt("SERVINGS");
-        String categoryToDisplay = intent.getExtras().getString("CATEGORY");
-        String commentsToDisplay = intent.getExtras().getString("COMMENTS");
+
+
+        Recipe recipe_object = (Recipe) intent.getSerializableExtra("OBJECT");
+
+
+
+        title.setText(recipe_object.getTitle());
+        prepTime.setText(recipe_object.getPrepTime());
+        servings.setText(recipe_object.getServings().toString());
+        category.setText(recipe_object.getCategory());
+        comments.setText(recipe_object.getComments());
         int position = intent.getIntExtra("POSITION",-1);
 
-        title.setText(titleToDisplay);
-        prepTime.setText(prepTimeToDisplay);
-        servings.setText(servingsToDisplay.toString()); // Not displaying right servings value
-        category.setText(categoryToDisplay);
-        comments.setText(commentsToDisplay);
 
 
 
@@ -47,6 +48,24 @@ public class RecipeDisplay extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
                 startActivity(intent);
+            }
+        });
+
+        Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
+        edit_recipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recipe_object.setTitle(title.getText().toString());
+                recipe_object.setPrepTime(prepTime.getText().toString());
+                recipe_object.setServings(Integer.valueOf(servings.getText().toString()));
+                recipe_object.setCategory(category.getText().toString());
+                recipe_object.setComments(comments.getText().toString());
+
+                Intent intent = new Intent();
+                intent.putExtra("POSITION", position);
+                intent.putExtra("UPDATED OBJECT",recipe_object);
+                setResult(3,intent);
+                finish();
             }
         });
 

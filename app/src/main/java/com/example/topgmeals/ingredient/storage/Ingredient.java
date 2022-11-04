@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+
+
 public class Ingredient implements Parcelable {
     private String description;
     private Date bestBefore;

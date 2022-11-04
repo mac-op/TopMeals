@@ -50,6 +50,13 @@ public class RecipeBook extends AppCompatActivity  {
                         recipeBook.remove(position);
                         recipeListAdapter.notifyDataSetChanged();
                     }
+                    else if (result.getResultCode() == 3){
+                        Intent intent = result.getData();
+                        Recipe recipe_object = (Recipe) intent.getSerializableExtra("UPDATED OBJECT");
+                        int position = intent.getIntExtra("POSITION",-1);
+                        recipeBook.set(position,recipe_object);
+                        recipeListAdapter.notifyDataSetChanged();
+                    }
 
                 }
 
@@ -58,23 +65,14 @@ public class RecipeBook extends AppCompatActivity  {
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Intent new_intent=getIntent();
 
                 Intent intent = new Intent(currentClass, RecipeDisplay.class);
-                String title = recipeBook.get(i).getTitle();
-                String prep_time = recipeBook.get(i).getPrepTime();
-                Integer servings = recipeBook.get(i).getServings();
-                String s_servings=servings.toString();
-                String category = recipeBook.get(i).getCategory();
-                String comments = recipeBook.get(i).getComments();
+                Recipe recipe_object = recipeBook.get(i);
+                intent.putExtra("POSITION", i);
+                intent.putExtra("OBJECT", recipe_object);
 
-                intent.putExtra("TITLE",title);
-                intent.putExtra("PREP_TIME",prep_time);
-                intent.putExtra("SERVINGS",s_servings);
-                intent.putExtra("CATEGORY",category);
-                intent.putExtra("COMMENTS",comments);
-                intent.putExtra("POSITION",i);
                 viewRecipe.launch(intent);
+
             }
         });
 
