@@ -20,6 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.topgmeals.DateFormat;
 import com.example.topgmeals.R;
 
+/**
+ * This is an Activity where user can add a new {@link Ingredient} or edit/delete an existing one.
+ * Called by {@link IngredientStorage}
+ */
 public class AddEditIngredientActivity extends AppCompatActivity {
     private EditText description;
     private EditText bestBefore;
@@ -38,6 +42,9 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
     String[] categoryArray = new String[]{"category1", "category2"};
 
+    /**
+     * Method to handle layout of the Activity when it is created
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +59,12 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel_delete_button);
         save = findViewById(R.id.save_button);
 
-        intent = getIntent();
-        String purpose = intent.getStringExtra("purpose");
-        int pos = intent.getIntExtra("position", -1);
 
+        intent = getIntent();
+        String purpose = intent.getStringExtra("purpose");              // purpose is either add or edit/delete
+        int pos = intent.getIntExtra("position", -1);        // position of item to edit/delete. -1 if purpose is add
+
+        //Set Spinners to hold values
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, unitArray);
         unit.setAdapter(unitAdapter);
@@ -71,11 +80,16 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is invoked if the purpose of the Activity is to edit/delete an existing {@link Ingredient}
+     * @param pos: position of item to edit/delete
+     */
     public void editMenu(int pos){
         setTitle("Edit Ingredient");
         cancel.setText("Delete");
         save.setText("Save");
 
+        // Get the Ingredient from Intent and set the fields to its content
         Ingredient ingredient = intent.getParcelableExtra("ingredient_object");
         description.setText(ingredient.getDescription());
         bestBefore.setText(format.parse(ingredient.getBestBefore()));
@@ -84,46 +98,50 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         unit.setSelection(Arrays.asList(unitArray).indexOf(ingredient.getUnit()));
         category.setSelection(Arrays.asList(categoryArray).indexOf(ingredient.getCategory()));
 
-        //Delete item
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent deleteIntent = new Intent();
-                assert (pos != -1);
-                deleteIntent.putExtra("delete_position", pos);
-                setResult(2, deleteIntent);
-                finish();
-            }
+        /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
+        cancel.setOnClickListener(view -> {
+            Intent deleteIntent = new Intent();
+            assert (pos != -1);
+            deleteIntent.putExtra("delete_position", pos);
+            setResult(2, deleteIntent);
+            finish();
         });
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: Separate method to collect text??
-                String description_ = description.getText().toString();
-                Date bbDate_ = myCalendar.getTime();
-                String location_ = location.getText().toString();
-                float amount_ = Float.parseFloat(amount.getText().toString());
-                String unit_ = unit.getSelectedItem().toString();
-                String category_ = category.getSelectedItem().toString();
+        /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
+         to update **/
+        save.setOnClickListener(view -> {
+            //TODO: Separate method to collect text??
+            String description_ = description.getText().toString();
+            Date bbDate_ = myCalendar.getTime();
+            String location_ = location.getText().toString();
+            float amount_ = Float.parseFloat(amount.getText().toString());
+            String unit_ = unit.getSelectedItem().toString();
+            String category_ = category.getSelectedItem().toString();
 
-                //TODO: Input validation
+            //TODO: Input validation
 
-                Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
-                Intent editIntent = new Intent();
-                editIntent.putExtra("edited_ingredient", ingredient);
-                editIntent.putExtra("edited_position", pos);
-                setResult(RESULT_OK, editIntent);
-                finish();
-            }
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
+            Intent editIntent = new Intent();
+            editIntent.putExtra("edited_ingredient", ingredient1);
+            editIntent.putExtra("edited_position", pos);
+            setResult(RESULT_OK, editIntent);
+            finish();
         });
     }
 
+    /**
+     * This method is invoked if the purpose of the Activity is to add a new {@link Ingredient} by
+     * prompting user to input the content of that Ingredient
+     */
     public void addMenu(){
         setTitle("Add Ingredient");
         cancel.setText("Cancel");
         save.setText("Save");
 
+        /*
+        Create a DatePicker from a calendar for the user to choose a date.
+        Code adapted from https://stackoverflow.com/a/14933515
+         */
         myCalendar.setTime(new Date());
         updateLabel();
         DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
@@ -141,31 +159,29 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: Ask user if they want to discard changes
-                finish();
-            }
+        // When the user wants to discard changes and go back to IngredientStorage
+        cancel.setOnClickListener(view -> {
+            //TODO: Ask user if they want to discard changes
+            finish();
         });
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String description_ = description.getText().toString();
-                Date bbDate_ = myCalendar.getTime();
-                String location_ = location.getText().toString();
-                float amount_ = Float.parseFloat(amount.getText().toString());
-                String unit_ = unit.getSelectedItem().toString();
-                String category_ = category.getSelectedItem().toString();
 
-                //TODO: Input validation
+        // When the user wants to save the newly created Ingredient
+        save.setOnClickListener(view -> {
+            String description_ = description.getText().toString();
+            Date bbDate_ = myCalendar.getTime();
+            String location_ = location.getText().toString();
+            float amount_ = Float.parseFloat(amount.getText().toString());
+            String unit_ = unit.getSelectedItem().toString();
+            String category_ = category.getSelectedItem().toString();
 
-                Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
-                Intent saveIntent = new Intent();
-                saveIntent.putExtra("added_ingredient", ingredient);
-                setResult(RESULT_OK, saveIntent);
-                finish();
-            }
+            //TODO: Input validation
+
+            /* Create a new Ingredient and return it to IngredientStorage to be added */
+            Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_);
+            Intent saveIntent = new Intent();
+            saveIntent.putExtra("added_ingredient", ingredient);
+            setResult(RESULT_OK, saveIntent);
+            finish();
         });
 
     }
@@ -175,7 +191,9 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //    https://stackoverflow.com/a/14933515
+    /**
+     * This method updates the bestBefore {@link EditText} to the date of myCalendar
+     */
     private void updateLabel(){
         bestBefore.setText(format.parse(myCalendar.getTime()));
     }
