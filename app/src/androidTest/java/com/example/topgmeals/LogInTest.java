@@ -5,11 +5,13 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import android.app.Activity;
 import android.widget.EditText;
 
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.topgmeals.main_login_options.MainActivity;
-import com.example.topgmeals.main_login_options.MainOptions;
+import com.example.topgmeals.login.MainActivity;
+import com.example.topgmeals.login.MainOptions;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
