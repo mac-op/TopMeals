@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/option_background"
-    tools:context=".main.login.options.MainOptions">
+    tools:context=".main_login_options.MainOptions">
 
     <TextView
         android:id="@+id/txtWelcome"

@@ -16,87 +16,87 @@
         android:theme="@style/Theme.TopGMeals"
         tools:targetApi="31">
         <activity
-            android:name=".recipe.book.AddIngredientRecipe"
+            android:name=".recipebook.AddIngredientRecipe"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.book.IngredientsDisplay"
+            android:name=".recipebook.IngredientsDisplay"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.book.IngredientRecipe"
+            android:name=".recipebook.IngredientRecipe"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".main.login.options.MainOptions"
+            android:name=".login.MainOptions"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.book.RecipeDisplay"
+            android:name=".recipebook.RecipeDisplay"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.book.addEditRecipe"
+            android:name=".recipebook.addEditRecipe"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".shopping.list.ShoppingList"
+            android:name=".shoppinglist.ShoppingList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".meal.plan.MealPlan"
+            android:name=".mealplan.MealPlan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.book.RecipeBook"
+            android:name=".recipebook.RecipeBook"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredient.storage.IngredientStorage"
+            android:name=".ingredientstorage.IngredientStorage"
             android:exported="false"
             android:launchMode="singleTop"
-            android:parentActivityName=".main.login.options.MainActivity">
+            android:parentActivityName=".login.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredient.storage.AddEditIngredientActivity"
+            android:name=".ingredientstorage.AddEditIngredientActivity"
             android:exported="false"
-            android:parentActivityName=".ingredient.storage.IngredientStorage">
+            android:parentActivityName=".ingredientstorage.IngredientStorage">
             <meta-data
                 android:name="android.support.IngredientStorage"
                 android:value="com/example/topgmeals/AddEditIngredientActivity.java" />
         </activity>
         <activity
-            android:name=".main.login.options.MainActivity"
+            android:name=".login.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

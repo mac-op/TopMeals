@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.example.topgmeals"},{"l":"com.example.topgmeals.ingredientstorage"},{"l":"com.example.topgmeals.login"},{"l":"com.example.topgmeals.mealplan"},{"l":"com.example.topgmeals.recipebook"},{"l":"com.example.topgmeals.shoppinglist"},{"l":"com.example.topgmeals.utils"}]
