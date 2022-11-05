@@ -1,4 +1,4 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
 
 import static android.content.ContentValues.TAG;
 
@@ -18,13 +18,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
 /**
  * This class is an Activity that handles the Recipe Display menu. The user will be able to see
  * the information of each recipe, and edit and delete a recipe
  */
 public class RecipeDisplay extends AppCompatActivity {
+    private EditText title;
+    private EditText prepTime;
+    private EditText servings;
+    private EditText category;
+    private EditText comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,11 @@ public class RecipeDisplay extends AppCompatActivity {
         setContentView(R.layout.activity_recipee_information);
         RecipeDisplay currentClass = RecipeDisplay.this;
 
-        EditText title = (EditText) findViewById(R.id.title_editText);
-        EditText prepTime = (EditText) findViewById(R.id.PreparationTime_editText);
-        EditText servings = (EditText) findViewById(R.id.servings_editText);
-        EditText category = (EditText) findViewById(R.id.Category_editText);
-        EditText comments = (EditText) findViewById(R.id.Comments_editText);
-
+        title = findViewById(R.id.title_editText);
+        prepTime = findViewById(R.id.PreparationTime_editText);
+        servings = findViewById(R.id.servings_editText);
+        category = findViewById(R.id.Category_editText);
+        comments = findViewById(R.id.Comments_editText);
 
         Intent intent = getIntent();
         String titleToDisplay = intent.getExtras().getString("TITLE");

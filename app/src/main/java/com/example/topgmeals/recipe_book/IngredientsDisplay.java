@@ -1,4 +1,4 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,10 @@ import com.example.topgmeals.R;
  * the information of each ingredient, and delete an ingredient for a recipe.
  */
 public class IngredientsDisplay extends AppCompatActivity {
+    private EditText description;
+    private EditText amount;
+    private EditText units;
+    private EditText category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +27,10 @@ public class IngredientsDisplay extends AppCompatActivity {
         setContentView(R.layout.activity_modify_ingredient);
         IngredientsDisplay currentClass = IngredientsDisplay.this;
 
-        EditText description = (EditText) findViewById(R.id.description_editText);
-        EditText amount = (EditText) findViewById(R.id.amount_editText);
-        EditText units = (EditText) findViewById(R.id.unit_editText);
-        EditText category = (EditText) findViewById(R.id.Category_editText);
-
+        description = findViewById(R.id.description_editText);
+        amount = findViewById(R.id.amount_editText);
+        units = findViewById(R.id.unit_editText);
+        category = findViewById(R.id.Category_editText);
 
         Intent intent = getIntent();
         String descriptionToDisplay = intent.getExtras().getString("DESCRIPTION");
@@ -40,11 +43,6 @@ public class IngredientsDisplay extends AppCompatActivity {
         amount.setText(amountToDisplay);
         units.setText(unitToDisplay);
         category.setText(categoryToDisplay);
-
-
-
-
-
 
         Button backButton = (Button) findViewById(R.id.back_button_modify_ingredient);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +70,7 @@ public class IngredientsDisplay extends AppCompatActivity {
                 intent.putExtra("POSITION", position);
                 setResult(2,intent);
                 finish();
-
-
             }
         });
-
-
     }
 }

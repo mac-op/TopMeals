@@ -1,20 +1,19 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredient.storage.Ingredient;
+import com.example.topgmeals.ingredient_storage.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,10 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -35,10 +31,9 @@ import java.util.Map;
  * a list of ingredients and their information and add a new ingredient.
  */
 public class IngredientRecipe extends AppCompatActivity {
-
-    ListView ingredientsList;
-    ArrayList<Ingredient> ingredientsRecipeBook;
-    IngredientRecipeAdapter ingredientListAdapter;
+    private ListView ingredientsList;
+    private ArrayList<Ingredient> ingredientsRecipeBook;
+    private IngredientRecipeAdapter ingredientListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +79,8 @@ public class IngredientRecipe extends AppCompatActivity {
 
                     }
                 });
-
-
         // ingredientsRecipeBook.add(beef);
-
         ingredientsList.setAdapter(ingredientListAdapter);
-
-
 
         IngredientRecipe currentClass = IngredientRecipe.this;
 
@@ -131,9 +121,6 @@ public class IngredientRecipe extends AppCompatActivity {
             }
         });
 
-
-
-
         Button addIngredient = (Button) findViewById(R.id.add_ingredient_recipe);
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +130,6 @@ public class IngredientRecipe extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
 
         Button backButton = (Button) findViewById(R.id.back_button_ingredient_recipe);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -160,10 +143,6 @@ public class IngredientRecipe extends AppCompatActivity {
         Ingredient new_ingredient= (Ingredient) getIntent().getParcelableExtra("NEW");
         if (new_ingredient!=null){
             ingredientsRecipeBook.add(new_ingredient);
-
         }
-
-
-
     }
 }

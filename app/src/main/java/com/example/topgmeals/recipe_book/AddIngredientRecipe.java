@@ -1,4 +1,4 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
 
 import static android.content.ContentValues.TAG;
 
@@ -22,13 +22,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.topgmeals.ingredient.storage.Ingredient;
 /**
  * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe.
  */
 public class AddIngredientRecipe extends AppCompatActivity {
+    private String RecipeID;
 
-    String RecipeID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +98,5 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.topgmeals.main.login.options;
+package com.example.topgmeals.main_login_options;
 
 import static android.content.ContentValues.TAG;
 

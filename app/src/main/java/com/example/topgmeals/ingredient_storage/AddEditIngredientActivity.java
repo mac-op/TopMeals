@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredient.storage;
+package com.example.topgmeals.ingredient_storage;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.topgmeals.utils.DateFormat;
 import com.example.topgmeals.R;
+import com.example.topgmeals.utils.DateFormat;
 
 /**
  * This is an Activity where user can add a new {@link Ingredient} or edit/delete an existing one.

@@ -1,4 +1,4 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
 
 import static android.content.ContentValues.TAG;
 
@@ -10,16 +10,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredient.storage.IngredientStorage;
-import com.example.topgmeals.meal.plan.MealPlan;
-import com.example.topgmeals.shopping.list.ShoppingList;
+import com.example.topgmeals.ingredient_storage.IngredientStorage;
+import com.example.topgmeals.meal_plan.MealPlan;
+import com.example.topgmeals.shopping_list.ShoppingList;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ import java.util.Map;
  * This class is an Activity that handles the Recipe Book menu. The user will be able to see
  * a list of recipes and their information and add a new recipe.
  */
-public class RecipeBook extends AppCompatActivity  {
+public class RecipeBook extends AppCompatActivity {
 
     ListView recipeList;
     ArrayList<Recipe> recipeBook;

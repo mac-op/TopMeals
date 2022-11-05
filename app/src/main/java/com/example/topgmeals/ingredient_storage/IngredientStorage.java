@@ -1,8 +1,7 @@
-package com.example.topgmeals.ingredient.storage;
+package com.example.topgmeals.ingredient_storage;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.topgmeals.utils.DateFormat;
-import com.example.topgmeals.meal.plan.MealPlan;
 import com.example.topgmeals.R;
-import com.example.topgmeals.recipe.book.RecipeBook;
-import com.example.topgmeals.shopping.list.ShoppingList;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.topgmeals.recipe_book.RecipeBook;
+import com.example.topgmeals.meal_plan.MealPlan;
+import com.example.topgmeals.shopping_list.ShoppingList;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;

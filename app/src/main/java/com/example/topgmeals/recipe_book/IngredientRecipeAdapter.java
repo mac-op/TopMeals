@@ -1,4 +1,4 @@
-package com.example.topgmeals.recipe.book;
+package com.example.topgmeals.recipe_book;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredient.storage.Ingredient;
+import com.example.topgmeals.ingredient_storage.Ingredient;
 
 import java.util.List;
 
@@ -19,11 +19,9 @@ import java.util.List;
  * Ingredient Recipe Adapter to fit {@link Ingredient} objects into {@link ArrayAdapter}
  */
 public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
-
     private static final String TAG = "IngredientListAdapter";
     private Context context;
     private int resource;
-
 
     public IngredientRecipeAdapter(@NonNull Context context, int resource, @NonNull List<Ingredient> objects) {
         super(context, resource, objects);

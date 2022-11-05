@@ -1,4 +1,4 @@
-package com.example.topgmeals.shopping.list;
+package com.example.topgmeals.shopping_list;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.topgmeals.meal.plan.MealPlan;
+import com.example.topgmeals.meal_plan.MealPlan;
 import com.example.topgmeals.R;
-import com.example.topgmeals.recipe.book.RecipeBook;
-import com.example.topgmeals.ingredient.storage.IngredientStorage;
+import com.example.topgmeals.recipe_book.RecipeBook;
+import com.example.topgmeals.ingredient_storage.IngredientStorage;
 
 public class ShoppingList extends AppCompatActivity {
 
@@ -60,6 +60,5 @@ public class ShoppingList extends AppCompatActivity {
             }
         });
         //endregion
-
     }
 }
