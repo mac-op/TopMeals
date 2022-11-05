@@ -45,8 +45,8 @@ public class IngredientRecipe extends AppCompatActivity {
         ingredientsRecipeBook = new ArrayList<>();
         ingredientListAdapter = new IngredientRecipeAdapter(this, R.layout.ingredients_recipe_content, ingredientsRecipeBook);
 
-        Intent Itemintent = getIntent();
-        String RecipeID = Itemintent.getExtras().getString("RECIPE_ID");
+        Intent itemIntent = getIntent();
+        String RecipeID = itemIntent.getExtras().getString("RECIPE_ID");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //getCurrentUserRecipes(uid, db);
@@ -122,6 +122,8 @@ public class IngredientRecipe extends AppCompatActivity {
                 intent.putExtra("UNIT",unit);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("POSITION",i);
+                intent.putExtra("docID", ingredientsRecipeBook.get(i).getDocumentID());
+                intent.putExtra("recipeID", RecipeID);
 
                 viewIngredient.launch(intent);
             }

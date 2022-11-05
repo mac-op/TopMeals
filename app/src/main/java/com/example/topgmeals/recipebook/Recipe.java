@@ -16,7 +16,7 @@ public class Recipe implements Serializable {
     private String category;
     private String comments;
     private ImageView picture;
-    private String uid;
+    private String documentID;
 
     /**
      * Constructor for {@link Recipe}
@@ -27,7 +27,7 @@ public class Recipe implements Serializable {
         this.servings = servings;
         this.category = category;
         this.comments = comments;
-        this.uid = id;
+        this.documentID = id;
         //this.picture = picture;
 
     }
@@ -143,11 +143,11 @@ public class Recipe implements Serializable {
         this.picture = picture;
     }
 
-    public String getUid() {
-        return uid;
+    public String getDocumentID() {
+        return documentID;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
     }
 }
