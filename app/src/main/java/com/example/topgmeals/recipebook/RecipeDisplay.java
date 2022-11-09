@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This class is an Activity that handles the Recipe Display menu. The user will be able to see
  * the information of each recipe, and edit and delete a recipe
@@ -37,14 +40,14 @@ public class RecipeDisplay extends AppCompatActivity {
         EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
 
-        Intent intent = getIntent();
-        String titleToDisplay = intent.getExtras().getString("TITLE");
-        String prepTimeToDisplay = intent.getExtras().getString("PREP_TIME");
-        Integer servingsToDisplay = intent.getExtras().getInt("SERVINGS");
-        String categoryToDisplay = intent.getExtras().getString("CATEGORY");
-        String commentsToDisplay = intent.getExtras().getString("COMMENTS");
-        String recipeID = intent.getExtras().getString("ID");
-        int position = intent.getIntExtra("POSITION",-1);
+        Intent dataIntent = getIntent();
+        String titleToDisplay = dataIntent.getExtras().getString("TITLE");
+        String prepTimeToDisplay = dataIntent.getExtras().getString("PREP_TIME");
+        Integer servingsToDisplay = dataIntent.getExtras().getInt("SERVINGS");
+        String categoryToDisplay = dataIntent.getExtras().getString("CATEGORY");
+        String commentsToDisplay = dataIntent.getExtras().getString("COMMENTS");
+        String recipeID = dataIntent.getExtras().getString("RecipeID");
+        int position = dataIntent.getIntExtra("POSITION",-1);
 
         title.setText(titleToDisplay);
         prepTime.setText(prepTimeToDisplay);
@@ -70,24 +73,41 @@ public class RecipeDisplay extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Edit a recipe
-//        Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
-//        edit_recipe.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                recipe_object.setTitle(title.getText().toString());
-//                recipe_object.setPrepTime(prepTime.getText().toString());
-//                recipe_object.setServings(Integer.valueOf(servings.getText().toString()));
-//                recipe_object.setCategory(category.getText().toString());
-//                recipe_object.setComments(comments.getText().toString());
-//
-//                Intent intent = new Intent();
-//                intent.putExtra("POSITION", position);
-//                intent.putExtra("UPDATED OBJECT",recipe_object);
-//                setResult(3,intent);
-//                finish();
-//            }
-//        });
+        //  Edit a recipe
+        Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
+        edit_recipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("title", title.getText().toString());
+                data.put("prepTime", prepTime.getText().toString());
+                data.put("servings", Integer.valueOf(servings.getText().toString()));
+                data.put("category", category.getText().toString());
+                data.put("comments", comments.getText().toString());
+                data.put("id", uid);
+
+                db.collection("recipes").document(recipeID)
+                        .set(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+
+                Intent intent = new Intent(currentClass, RecipeBook.class);
+                startActivity(intent);
+
+
+            }
+        });
 
 
         // Delete a recipe

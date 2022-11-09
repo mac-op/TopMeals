@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class DateFormat {
     private String format = "MM/dd/yyyy";
-    private SimpleDateFormat dateFormat=new SimpleDateFormat(format, Locale.CANADA);
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
 
     public String parse(Date date){
         return dateFormat.format(date);
