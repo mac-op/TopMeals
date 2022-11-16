@@ -64,11 +64,19 @@ public class IngredientRecipe extends AppCompatActivity {
                             Map<String, Object> rData = doc.getData();
 //                            Date cur = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1, new ParsePosition(0));
 //                            Log.e("HEEEEYYYYYYYYY", cur.toString());
+
+                            float temp = 0;
+                            try{
+                                temp = (float)(double)rData.get("amount");
+                            }
+                            catch (Exception ex){
+                                temp = (long)rData.get("amount");
+                            }
                             Ingredient curIng = new Ingredient(
                                     rData.get("description").toString(),
                                     new SimpleDateFormat("dd/MM/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
                                     rData.get("location").toString(),
-                                    (float)(long)rData.get("amount"),
+                                    temp,
                                     rData.get("unit").toString(),
                                     rData.get("category").toString(),
                                     doc.getId());

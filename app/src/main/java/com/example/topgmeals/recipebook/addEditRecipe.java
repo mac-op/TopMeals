@@ -36,7 +36,7 @@ public class addEditRecipe extends AppCompatActivity {
         addEditRecipe currentClass = addEditRecipe.this;
 
 
-        Button add_new=findViewById(R.id.add_recipe);
+        Button add_new = findViewById(R.id.add_recipe);
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

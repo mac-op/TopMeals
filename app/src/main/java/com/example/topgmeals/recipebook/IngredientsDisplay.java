@@ -97,6 +97,7 @@ public class IngredientsDisplay extends AppCompatActivity {
                         });
 
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
+                intent.putExtra("RECIPE_ID", recipeId);
                 startActivity(intent);
             }
         });
@@ -124,6 +125,7 @@ public class IngredientsDisplay extends AppCompatActivity {
 
 
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
+                intent.putExtra("RECIPE_ID", recipeId);
                 startActivity(intent);
 
             }
