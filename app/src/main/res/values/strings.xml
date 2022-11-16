@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TopGMeals</string>
     <string name="ingredient_description">Description</string>
+    <string-array name="ingredient_sort">
+        <item>Description</item>
+        <item>Best Before</item>
+        <item>Location</item>
+        <item>Category</item>
+    </string-array>
 </resources>

@@ -2,14 +2,19 @@ package com.example.topgmeals.ingredientstorage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -130,6 +136,41 @@ public class IngredientStorage extends AppCompatActivity {
         adapter = new IngredientAdapter(ingredientList);
         ingredientView.setAdapter(adapter);
         ingredientView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Set Sort Spinner
+        Spinner sortSpinner = findViewById(R.id.sort_by_spinner);
+        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(this,
+                R.array.ingredient_sort, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        sortAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(sortAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Comparator<Ingredient> comparator = null;
+                switch (pos) {
+                    case 0:
+                        comparator = Comparator.comparing(Ingredient::getDescription);
+                        break;
+                    case 1:
+                        comparator = Comparator.comparing(Ingredient::getBestBefore);
+                        break;
+                    case 2:
+                        comparator = Comparator.comparing(Ingredient::getLocation);
+                        break;
+                    case 3:
+                        comparator = Comparator.comparing(Ingredient::getCategory);
+                        break;
+                }
+
+                ingredientList.sort(comparator);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
 
 
         // ActivityResultLauncher to launch AddEditIngredientActivity when the user clicks on an
