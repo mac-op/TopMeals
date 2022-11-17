@@ -63,7 +63,10 @@ public class IngredientsDisplay extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(currentClass, IngredientRecipe.class);
+                intent.putExtra("RECIPE_ID", recipeId);
+                startActivity(intent);
+                currentClass.finish();
             }
         });
 
@@ -127,6 +130,7 @@ public class IngredientsDisplay extends AppCompatActivity {
                 Intent intent = new Intent(currentClass, IngredientRecipe.class);
                 intent.putExtra("RECIPE_ID", recipeId);
                 startActivity(intent);
+                currentClass.finish();
 
             }
         });

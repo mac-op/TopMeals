@@ -158,7 +158,9 @@ public class IngredientRecipe extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(currentClass, RecipeBook.class);
+                startActivity(intent);
+                currentClass.finish();
             }
         });
 
