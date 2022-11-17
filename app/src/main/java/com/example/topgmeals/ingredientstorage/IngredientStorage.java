@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -135,7 +136,13 @@ public class IngredientStorage extends AppCompatActivity {
         ingredientView = findViewById(R.id.ingredient_list);
         adapter = new IngredientAdapter(ingredientList);
         ingredientView.setAdapter(adapter);
-        ingredientView.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        ingredientView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ingredientView.getContext(),
+                layoutManager.getOrientation());
+        ingredientView.addItemDecoration(dividerItemDecoration);
+
 
         // Set Sort Spinner
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner);

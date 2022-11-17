@@ -64,7 +64,8 @@
         </activity>
         <activity
             android:name=".mealplan.MealPlan"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
