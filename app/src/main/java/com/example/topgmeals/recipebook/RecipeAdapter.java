@@ -1,16 +1,24 @@
 package com.example.topgmeals.recipebook;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.topgmeals.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -22,6 +30,9 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
     private static final String TAG = "RecipeListAdapter";
     private Context context;
     private int resource;
+
+    private StorageReference mStorageRef;
+
 
     /**
      * Constructor for {@link RecipeAdapter}
@@ -43,6 +54,9 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         String prep_time = getItem(position).getPrepTime();
         Integer servings = getItem(position).getServings();
         String category = getItem(position).getCategory();
+        String recID = getItem(position).getDocumentID();
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource,parent,false);
@@ -51,6 +65,39 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView prep_time_display = (TextView) convertView.findViewById(R.id.prep_time_id);
         TextView servings_display = (TextView) convertView.findViewById(R.id.serving_id);
         TextView category_display = (TextView) convertView.findViewById(R.id.category_id);
+
+        ImageView recImg = (ImageView) convertView.findViewById(R.id.recipeBookImage);
+
+        Log.e("TTT", "uploads/" + recID);
+
+        try {
+            Glide.with(context).load(mStorageRef.child("uploads/" + recID).getDownloadUrl()).into(recImg);
+            Log.e("s", "SUCC");
+        }
+        catch (Exception ex){
+
+        }
+//        final Uri[] temp = {null};
+//        mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                // Got the download URL for 'users/me/profile.png'
+//
+//                Log.e("madeit", "s");
+//                recImg.setImageURI(uri);
+//                Log.e("madeit", "wrap");
+//                //temp[0] = uri;
+//                //title_display.setText(title.toString());
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                // Handle any errors
+//            }
+//        });
+
+        // recImg.setImageURI(temp[0]);
 
         title_display.setText(title.toString());
         prep_time_display.setText(prep_time.toString());
