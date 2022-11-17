@@ -46,6 +46,11 @@ public class MainOptions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_options);
 
+        // Hide action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         textViewUsername = (TextView) findViewById(R.id.txtName);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

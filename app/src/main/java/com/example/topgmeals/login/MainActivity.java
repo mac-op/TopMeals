@@ -35,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Hide action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         textViewRegister = (TextView) findViewById(R.id.register);
         textViewRegister.setOnClickListener(this);
 

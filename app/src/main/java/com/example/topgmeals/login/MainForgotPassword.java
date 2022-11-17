@@ -27,6 +27,11 @@ public class MainForgotPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_forgot_password);
 
+        // Hide action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         mAuth = FirebaseAuth.getInstance();
 
         editTextEmail = (EditText) findViewById(R.id.forgotPwdEmailAddress);

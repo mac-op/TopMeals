@@ -34,6 +34,11 @@ public class MainRegisterUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_register_user);
 
+        // Hide action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         mAuth = FirebaseAuth.getInstance();
 
         editTextName = (EditText) findViewById(R.id.registerName);
