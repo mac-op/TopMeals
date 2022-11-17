@@ -30,6 +30,7 @@ public class MealPlan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mealplan);
+        setTitle("Meal Planner");
 
 //        http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/
         mealListView = findViewById(R.id.expandable_meal_plan);

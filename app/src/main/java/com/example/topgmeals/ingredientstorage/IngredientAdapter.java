@@ -91,11 +91,20 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Ingredient ingredient = ingredientList.get(position);
         DateFormat dateFormat = new DateFormat();
 
+        float amountFloat = ingredient.getAmount();
+        String amountString;
+        if (amountFloat % 1 ==0) {
+            amountString = String.valueOf((int) amountFloat);
+        } else{
+            amountString = String.valueOf(amountFloat);
+        }
+
         holder.description.setText(ingredient.getDescription());
-        holder.bestBefore.setText(dateFormat.parse(ingredient.getBestBefore()));
-        holder.count.setText(String.format("%s%s", ingredient.getAmount(), ingredient.getUnit()));
-        holder.category.setText(ingredient.getCategory());
-        holder.location.setText(ingredient.getLocation());
+        holder.bestBefore.setText(
+                String.format("Best Before: %s", dateFormat.parse(ingredient.getBestBefore())));
+        holder.count.setText(String.format("%s %s", amountString, ingredient.getUnit()));
+        holder.category.setText(String.format("Category: %s", ingredient.getCategory()));
+        holder.location.setText(String.format("Location: %s", ingredient.getLocation()));
     }
 
     /**
