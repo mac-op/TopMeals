@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
@@ -16,21 +18,25 @@ import com.example.topgmeals.shoppinglist.ShoppingList;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * This class handles the menu after the user successfully logs in, where they can choose between 4 Activities
  */
 public class MainOptions extends AppCompatActivity {
-    private TextView txtUsername;
-    private Button btnSignOut;
-    private Button btnIngredientStorage;
-    private Button btnShoppingList;
-    private Button btnMealPlanner;
-    private Button btnRecipesBook;
-    private GoogleSignInAccount account;
-    private FirebaseUser curUser;
+    private TextView textViewUsername;
+    private Button btnLogout, btnIngredientStorage, btnShoppingList, btnMealPlanner, btnRecipesBook;
+    private String userId;
+    private FirebaseFirestore db;
 
     /**
      * This class handles the layout and logic of the Activity. Called on Activity creation.
@@ -40,16 +46,29 @@ public class MainOptions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_options);
 
-        //Check if user is already logged in
-        account = GoogleSignIn.getLastSignedInAccount(this);
-        curUser = FirebaseAuth.getInstance().getCurrentUser();
-        txtUsername = findViewById(R.id.txtName);
-        if (curUser != null) {
-            txtUsername.setText(curUser.getEmail());
-        }
+        textViewUsername = (TextView) findViewById(R.id.txtName);
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference userDocRef = db.collection("users");
+        userDocRef.whereEqualTo("uid", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                textViewUsername.setText(document.get("username").toString());
+                            }
+                        } else {
+                            Toast.makeText(MainOptions.this,
+                                    "Failed to get username!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
         // 4 buttons that point to Ingredient Storage, Shopping List, Meal Planner and Recipe Book respectively
-        btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
+        btnIngredientStorage = (Button) findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +77,7 @@ public class MainOptions extends AppCompatActivity {
             }
         });
 
-        btnShoppingList = findViewById(R.id.btnOptionShoppingList);
+        btnShoppingList = (Button) findViewById(R.id.btnOptionShoppingList);
         btnShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +86,7 @@ public class MainOptions extends AppCompatActivity {
             }
         });
 
-        btnMealPlanner = findViewById(R.id.btnOptionMealPlanner);
+        btnMealPlanner = (Button) findViewById(R.id.btnOptionMealPlanner);
         btnMealPlanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +95,7 @@ public class MainOptions extends AppCompatActivity {
             }
         });
 
-        btnRecipesBook = findViewById(R.id.btnOptionRecipesBook);
+        btnRecipesBook = (Button) findViewById(R.id.btnOptionRecipesBook);
         btnRecipesBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,19 +104,13 @@ public class MainOptions extends AppCompatActivity {
             }
         });
 
-        //Sign out button
-        btnSignOut = findViewById(R.id.btnSignOut);
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
+        // Logout button
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-
-                GoogleSignIn.getClient(
-                        getApplicationContext(),
-                        new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-                ).signOut();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainOptions.this, MainActivity.class));
                 finish();
             }
         });

@@ -94,7 +94,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSignOut"
+        android:id="@+id/btnLogout"
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_marginTop="100dp"
@@ -102,7 +102,7 @@
         android:textSize="20sp"
         android:background="@drawable/round_btn"
         app:backgroundTint="@color/design_default_color_error"
-        android:text="SIGN OUT"
+        android:text="LOGOUT"
         android:textColor="@color/white"
         android:fontFamily="@font/lemonmilk_regular"
         />
