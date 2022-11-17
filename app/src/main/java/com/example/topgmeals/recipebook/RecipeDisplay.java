@@ -43,7 +43,7 @@ public class RecipeDisplay extends AppCompatActivity {
         Intent dataIntent = getIntent();
         String titleToDisplay = dataIntent.getExtras().getString("TITLE");
         String prepTimeToDisplay = dataIntent.getExtras().getString("PREP_TIME");
-        Integer servingsToDisplay = dataIntent.getExtras().getInt("SERVINGS");
+        String servingsToDisplay = dataIntent.getStringExtra("SERVINGS");
         String categoryToDisplay = dataIntent.getExtras().getString("CATEGORY");
         String commentsToDisplay = dataIntent.getExtras().getString("COMMENTS");
         String recipeID = dataIntent.getExtras().getString("RecipeID");
@@ -51,7 +51,7 @@ public class RecipeDisplay extends AppCompatActivity {
 
         title.setText(titleToDisplay);
         prepTime.setText(prepTimeToDisplay);
-        servings.setText(servingsToDisplay.toString()); // Not displaying right servings value
+        servings.setText(servingsToDisplay);
         category.setText(categoryToDisplay);
         comments.setText(commentsToDisplay);
 
@@ -133,6 +133,7 @@ public class RecipeDisplay extends AppCompatActivity {
 
                 Intent intent = new Intent(currentClass, RecipeBook.class);
                 startActivity(intent);
+                currentClass.finish();
 
             }
         });
@@ -142,7 +143,9 @@ public class RecipeDisplay extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(currentClass, RecipeBook.class);
+                startActivity(intent);
+                currentClass.finish();
             }
         });
 
