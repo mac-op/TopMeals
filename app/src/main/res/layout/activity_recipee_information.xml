@@ -189,9 +189,9 @@
         </TextView>
 
         <ImageView
+            android:id="@+id/recImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/mealplan">
+            android:layout_height="match_parent">
 
         </ImageView>
 
