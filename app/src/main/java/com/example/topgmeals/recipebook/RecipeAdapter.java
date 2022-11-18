@@ -70,32 +70,32 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         Log.e("TTT", "uploads/" + recID);
 
-        try {
-            Glide.with(context).load(mStorageRef.child("uploads/" + recID).getDownloadUrl()).into(recImg);
-            Log.e("s", "SUCC");
-        }
-        catch (Exception ex){
-
-        }
+//        try {
+//            Log.e("e", mStorageRef.child("uploads/" + recID).getDownloadUrl().getResult().toString());
+//            Glide.with(context).load(mStorageRef.child("uploads/" + recID).getDownloadUrl()).into(recImg);
+//            Log.e("s", "SUCC");
+//        }
+//        catch (Exception ex){
+//
+//        }
 //        final Uri[] temp = {null};
-//        mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                // Got the download URL for 'users/me/profile.png'
-//
-//                Log.e("madeit", "s");
-//                recImg.setImageURI(uri);
-//                Log.e("madeit", "wrap");
-//                //temp[0] = uri;
-//                //title_display.setText(title.toString());
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle any errors
-//            }
-//        });
+        mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+
+                Log.e("madeit", uri.toString());
+                //temp[0] = uri;
+                Glide.with(context).load(uri.toString()).into(recImg);
+                //title_display.setText(title.toString());
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
         // recImg.setImageURI(temp[0]);
 
