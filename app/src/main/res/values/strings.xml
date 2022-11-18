@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TopGMeals</string>
     <string name="ingredient_description">Description</string>
+    <string name="delete_meal_item">delete_meal_item</string>
+    <string name="edit_meal_item">edit_meal_item</string>
     <string-array name="ingredient_sort">
         <item>Description</item>
         <item>Best Before</item>
