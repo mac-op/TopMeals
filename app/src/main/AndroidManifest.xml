@@ -72,9 +72,7 @@
         </activity>
         <activity
             android:name=".shoppinglist.ShoppingList"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:parentActivityName=".login.MainActivity">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

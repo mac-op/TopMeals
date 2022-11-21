@@ -3,14 +3,19 @@ package com.example.topgmeals.recipebook;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.topgmeals.R;
 
@@ -19,6 +24,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +37,21 @@ import java.util.Map;
  */
 public class addEditRecipe extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri mImageUri;
+
+    private ImageView mImageView;
+    private StorageReference mStorageRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
         addEditRecipe currentClass = addEditRecipe.this;
 
+        mImageView = findViewById(R.id.recipeImage);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         Button add_new = findViewById(R.id.add_recipe);
         add_new.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +88,24 @@ public class addEditRecipe extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+                                StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId().toString());
+                                UploadTask uploadTask = uploadRef.putFile(mImageUri);
+
+
+                                // Register observers to listen for when the download is done or if it fails
+                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle unsuccessful uploads
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                        // ...
+                                    }
+                                });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -88,6 +123,35 @@ public class addEditRecipe extends AppCompatActivity {
             }
         });
 
+        Button ImportImage = findViewById(R.id.import_button);
+        ImportImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
+
+
     }
 
+    private void openFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("TT", "AYOO");
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            mImageUri = data.getData();
+
+            mImageView.setImageURI(mImageUri);
+            Log.e("TT", "IMAGE");
+
+        }
+    }
 }
