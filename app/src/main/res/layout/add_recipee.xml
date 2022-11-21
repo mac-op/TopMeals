@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Preparation Time"
+            android:text="Preparation Time (mins)"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/black"

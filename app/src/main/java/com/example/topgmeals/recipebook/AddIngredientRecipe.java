@@ -54,6 +54,26 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 String unitText = unit.getText().toString();
                 String categoryText = category.getText().toString();
 
+//                if (descriptionText.isEmpty()) {
+//                    description.setError("Title is required!");
+//                    description.requestFocus();
+//                    return;
+//                }
+//
+//
+//
+//                if (unitText.isEmpty()) {
+//                    unit.setError("Servings is required!");
+//                    unit.requestFocus();
+//                    return;
+//                }
+//
+//                if (categoryText.isEmpty()) {
+//                    category.setError("Category is required!");
+//                    category.requestFocus();
+//                    return;
+//                }
+
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

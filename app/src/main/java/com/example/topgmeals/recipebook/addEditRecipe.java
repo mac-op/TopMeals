@@ -49,7 +49,7 @@ public class addEditRecipe extends AppCompatActivity {
 
                 String title_text = title.getText().toString();
                 String prep_time_text = prep_time.getText().toString();
-                Integer serving_text = Integer.parseInt(serving.getText().toString());
+                String serving_text = serving.getText().toString();
                 String category_text = category.getText().toString();
                 String comments_text = comments.getText().toString();
 
@@ -65,11 +65,11 @@ public class addEditRecipe extends AppCompatActivity {
                     return;
                 }
 
-//                if (serving_text.toString().isEmpty()) {
-//                    serving.setError("Servings is required!");
-//                    serving.requestFocus();
-//                    return;
-//                }
+                if (serving_text.isEmpty()) {
+                    serving.setError("Servings is required!");
+                    serving.requestFocus();
+                    return;
+                }
 
                 if (category_text.isEmpty()) {
                     category.setError("Category is required!");
