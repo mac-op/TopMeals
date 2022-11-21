@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:layout_goneMarginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:orientation="horizontal">
 
         <TextView
@@ -22,9 +23,9 @@
 
         <CheckBox
             android:id="@+id/checkItem"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
+            android:layout_marginTop="10dp"
             android:scaleX="2"
             android:scaleY="2" />
 
@@ -43,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
+            android:layout_marginLeft="6dp"
             android:maxLines="1"
             android:text="Amount:"
             android:textSize="15dp"/>

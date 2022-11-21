@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.example.topgmeals.ingredientstorage.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 
@@ -52,6 +54,29 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         holder.shopUnit.setText(ingredientUnit);
         holder.shopCategory.setText(ingredientCategory);
 
+        final CheckBox cb = holder.itemChecked;
+
+        cb.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (((CheckBox) view).isChecked()) {
+                    Log.e("I AM ", "HERE-2");
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(200);
+                    }
+                    catch (Exception e){
+
+                    }
+                    cb.setChecked(false);
+                    mData.remove(position);
+                    notifyDataSetChanged();
+
+                }
+                // Inform to Activity or the Fragment where the RecyclerView reside.
+            }
+        });
+//in some cases, it will prevent unwanted situations
+        cb.setOnCheckedChangeListener(null);
+
     }
 
     // total number of rows
@@ -67,6 +92,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         TextView shopAmount;
         TextView shopUnit;
         TextView shopCategory;
+        CheckBox itemChecked;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -74,12 +100,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             shopAmount = (TextView) itemView.findViewById(R.id.shoppingListAmount);
             shopUnit = (TextView) itemView.findViewById(R.id.shoppingListUnit);
             shopCategory = (TextView) itemView.findViewById(R.id.shoppingListIngredientCategory);
+            itemChecked = (CheckBox) itemView.findViewById(R.id.checkItem);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            Log.e("us", "CLIKBAIT");
 
         }
     }

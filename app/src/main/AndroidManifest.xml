@@ -14,6 +14,13 @@
         android:theme="@style/Theme.TopGMeals"
         tools:targetApi="32">
         <activity
+            android:name=".ShoppingListFinish"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".recipebook.AddIngredientRecipe"
             android:exported="false">
             <meta-data
