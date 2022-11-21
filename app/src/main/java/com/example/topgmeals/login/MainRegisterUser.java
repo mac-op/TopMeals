@@ -1,7 +1,6 @@
 package com.example.topgmeals.login;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
