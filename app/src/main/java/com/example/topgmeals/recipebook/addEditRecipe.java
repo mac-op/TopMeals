@@ -88,19 +88,6 @@ public class addEditRecipe extends AppCompatActivity {
             }
         });
 
-        Button back = findViewById(R.id.back_button_recipe);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                startActivity(intent);
-                currentClass.finish();
-            }
-        });
-
-
-
-
     }
 
 }

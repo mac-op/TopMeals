@@ -94,43 +94,6 @@ public class IngredientStorage extends AppCompatActivity {
         id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         setTitle("Ingredient Storage");
 
-        IngredientStorage currentClass = IngredientStorage.this;
-        //region ButtonSwapping
-        Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(view -> {
-            Intent intent = new Intent(currentClass, IngredientStorage.class);
-            startActivity(intent);
-        });
-
-        Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-
-        ShoppingButton.setOnClickListener(view -> {
-            Intent intent = new Intent(currentClass, ShoppingList.class);
-            startActivity(intent);
-            finish();
-        });
-
-        Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-
-        MealPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, MealPlan.class);
-                startActivity(intent);
-            }
-        });
-
-        Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
-
-        RecipiesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                startActivity(intent);
-            }
-        });
-        //endregion
-
         ingredientList = new ArrayList<>();
         ingredientView = findViewById(R.id.ingredient_list);
         adapter = new IngredientAdapter(ingredientList);
@@ -171,7 +134,6 @@ public class IngredientStorage extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
-
 
         // ActivityResultLauncher to launch AddEditIngredientActivity when the user clicks on an
         // item in the list
@@ -225,16 +187,6 @@ public class IngredientStorage extends AppCompatActivity {
         };
         adapter.setOnItemClickListener(onItemClickListener);
 
-
-//        ingredientView.setOnClickListener(view -> {
-//            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
-//
-//            int position = viewHolder.getAdapterPosition();
-//            Log.println(Log.ASSERT,"", String.valueOf(position));
-//        });
-
-        // ActivityResultLauncher to launch AddEditIngredientActivity when user presses on ADD button
-        // to add an Ingredient to the list
         ActivityResultLauncher<Intent> addActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -258,7 +210,7 @@ public class IngredientStorage extends AppCompatActivity {
         // Launch addActivityResultLauncher to allow the user to add an Ingredient
         Button addButton = findViewById(R.id.add_button);
         addButton.setOnClickListener(view -> {
-            Intent intent = new Intent(currentClass, AddEditIngredientActivity.class);
+            Intent intent = new Intent(IngredientStorage.this, AddEditIngredientActivity.class);
             intent.putExtra("purpose", "ADD");
             addActivityResultLauncher.launch(intent);
         });
@@ -282,6 +234,33 @@ public class IngredientStorage extends AppCompatActivity {
                     }
                 });
 
+        // Begin Region ButtonSwapping
+        Button btnIngredientStorage = (Button) findViewById(R.id.switchToIngredientStorage);
+        btnIngredientStorage.setOnClickListener(view -> {
+            startActivity(new Intent(IngredientStorage.this, IngredientStorage.class));
+        });
+
+        Button btnShoppingList = (Button) findViewById(R.id.switchToShoppingList);
+        btnShoppingList.setOnClickListener(view -> {
+            startActivity(new Intent(IngredientStorage.this, ShoppingList.class));
+            finish();
+        });
+
+        Button btnMealPlanner = (Button) findViewById(R.id.switchToMealPlan);
+        btnMealPlanner.setOnClickListener(view -> {
+            startActivity(new Intent(IngredientStorage.this, MealPlan.class));
+            finish();
+        });
+
+        Button btnRecipesBook = (Button) findViewById(R.id.switchToRecipes);
+        btnRecipesBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(IngredientStorage.this, RecipeBook.class));
+                finish();
+            }
+        });
+        // End Region ButtonSwapping
     }
 
     /**

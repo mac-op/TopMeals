@@ -199,4 +199,3 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     }
 
 }
-

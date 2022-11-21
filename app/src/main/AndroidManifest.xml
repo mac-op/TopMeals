@@ -72,21 +72,27 @@
         </activity>
         <activity
             android:name=".shoppinglist.ShoppingList"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".login.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".mealplan.MealPlan"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".login.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.RecipeBook"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".login.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -95,7 +101,7 @@
             android:name=".ingredientstorage.IngredientStorage"
             android:exported="false"
             android:launchMode="singleTop"
-            android:parentActivityName=".login.MainActivity">
+            android:parentActivityName=".login.MainActivity">>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

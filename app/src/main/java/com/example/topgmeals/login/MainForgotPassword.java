@@ -34,9 +34,9 @@ public class MainForgotPassword extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        editTextEmail = (EditText) findViewById(R.id.forgotPwdEmailAddress);
+        editTextEmail = findViewById(R.id.forgotPwdEmailAddress);
 
-        btnResetPassword = (Button) findViewById(R.id.forgotPwdResetPassword);
+        btnResetPassword = findViewById(R.id.forgotPwdResetPassword);
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

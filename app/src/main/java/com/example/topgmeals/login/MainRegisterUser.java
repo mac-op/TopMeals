@@ -26,7 +26,9 @@ import java.util.Map;
 
 public class MainRegisterUser extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText editTextName, editTextEmail, editTextPassword;
+    private EditText editTextName;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
     private Button createAccountBtn;
 
     @Override
@@ -41,11 +43,11 @@ public class MainRegisterUser extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        editTextName = (EditText) findViewById(R.id.registerName);
-        editTextEmail = (EditText) findViewById(R.id.registerEmailAddress);
-        editTextPassword = (EditText) findViewById(R.id.registerPassword);
+        editTextName = findViewById(R.id.registerName);
+        editTextEmail = findViewById(R.id.registerEmailAddress);
+        editTextPassword = findViewById(R.id.registerPassword);
 
-        createAccountBtn = (Button) findViewById(R.id.createAccount);
+        createAccountBtn = findViewById(R.id.createAccount);
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +91,8 @@ public class MainRegisterUser extends AppCompatActivity {
             return;
         }
 
+        Toast.makeText(MainRegisterUser.this,"Creating account...", Toast.LENGTH_SHORT).show();
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,11 +115,7 @@ public class MainRegisterUser extends AppCompatActivity {
                                             Toast.makeText(MainRegisterUser.this,
                                                     "Account has been successfully created!",
                                                     Toast.LENGTH_LONG).show();
-                                            new Handler().postDelayed(new Runnable() {
-                                                public void run() {
-                                                    finish();
-                                                }
-                                            }, 3000); // 3 seconds
+                                            finish();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

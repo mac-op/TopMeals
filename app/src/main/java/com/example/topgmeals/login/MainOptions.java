@@ -34,7 +34,11 @@ import com.google.firebase.firestore.QuerySnapshot;
  */
 public class MainOptions extends AppCompatActivity {
     private TextView textViewUsername;
-    private Button btnLogout, btnIngredientStorage, btnShoppingList, btnMealPlanner, btnRecipesBook;
+    private Button btnLogout;
+    private Button btnIngredientStorage;
+    private Button btnShoppingList;
+    private Button btnMealPlanner;
+    private Button btnRecipesBook;
     private String userId;
     private FirebaseFirestore db;
 
@@ -51,7 +55,7 @@ public class MainOptions extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        textViewUsername = (TextView) findViewById(R.id.txtName);
+        textViewUsername = findViewById(R.id.txtName);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
@@ -73,44 +77,40 @@ public class MainOptions extends AppCompatActivity {
                 });
 
         // 4 buttons that point to Ingredient Storage, Shopping List, Meal Planner and Recipe Book respectively
-        btnIngredientStorage = (Button) findViewById(R.id.btnOptionIngredientStorage);
+        btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainOptions.this, IngredientStorage.class);
-                startActivity(intent);
+                startActivity(new Intent(MainOptions.this, IngredientStorage.class));
             }
         });
 
-        btnShoppingList = (Button) findViewById(R.id.btnOptionShoppingList);
+        btnShoppingList = findViewById(R.id.btnOptionShoppingList);
         btnShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainOptions.this, ShoppingList.class);
-                startActivity(intent);
+                startActivity(new Intent(MainOptions.this, ShoppingList.class));
             }
         });
 
-        btnMealPlanner = (Button) findViewById(R.id.btnOptionMealPlanner);
+        btnMealPlanner = findViewById(R.id.btnOptionMealPlanner);
         btnMealPlanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainOptions.this, MealPlan.class);
-                startActivity(intent);
+                startActivity(new Intent(MainOptions.this, MealPlan.class));
             }
         });
 
-        btnRecipesBook = (Button) findViewById(R.id.btnOptionRecipesBook);
+        btnRecipesBook = findViewById(R.id.btnOptionRecipesBook);
         btnRecipesBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainOptions.this, RecipeBook.class);
-                startActivity(intent);
+                startActivity(new Intent(MainOptions.this, RecipeBook.class));
             }
         });
 
         // Logout button
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

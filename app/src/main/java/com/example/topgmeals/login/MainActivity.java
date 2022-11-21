@@ -23,9 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
-    private EditText editTextEmail, editTextPassword;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
     private Button btnLogin;
-    private TextView textViewForgotPassword, textViewRegister;
+    private TextView textViewForgotPassword;
+    private TextView textViewRegister;
 
     /**
      * This method handles the layout and logic of the Activity. Called on Activity creation.
@@ -40,16 +42,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             getSupportActionBar().hide();
         }
 
-        textViewRegister = (TextView) findViewById(R.id.register);
+        textViewRegister = findViewById(R.id.register);
         textViewRegister.setOnClickListener(this);
 
-        btnLogin = (Button) findViewById(R.id.login);
+        btnLogin = findViewById(R.id.login);
         btnLogin.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.emailAddress);
-        editTextPassword = (EditText) findViewById(R.id.password);
+        editTextEmail = findViewById(R.id.emailAddress);
+        editTextPassword = findViewById(R.id.password);
 
-        textViewForgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        textViewForgotPassword = findViewById(R.id.forgotPassword);
         textViewForgotPassword.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
