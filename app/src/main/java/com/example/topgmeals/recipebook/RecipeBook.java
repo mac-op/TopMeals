@@ -109,7 +109,8 @@ public class RecipeBook extends AppCompatActivity {
                 intent.putExtra("COMMENTS",comments);
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
 
-                startActivity(new Intent());
+                startActivity(intent);
+
             }
         });
 
