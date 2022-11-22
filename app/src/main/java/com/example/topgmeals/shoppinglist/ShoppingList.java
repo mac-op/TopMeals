@@ -119,16 +119,16 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         finishShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
-
-                Log.e("e",Integer.toString( shoppingList.size()));
-                Log.e("e",Integer.toString( fullshoppingList.size()));
-
-                intent.putExtra("Endshoplist", shoppingList);
-                intent.putExtra("Fullshoplist", fullshoppingList);
-
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
+//
+//                Log.e("e",Integer.toString( shoppingList.size()));
+//                Log.e("e",Integer.toString( fullshoppingList.size()));
+//
+//                intent.putExtra("Endshoplist", shoppingList);
+//                intent.putExtra("Fullshoplist", fullshoppingList);
+//
+//                startActivity(intent);
+//                finish();
 
             }
         });
