@@ -92,15 +92,5 @@ public class AddIngredientRecipe extends AppCompatActivity {
             }
         });
 
-        Button back = findViewById(R.id.back_button_ingredients);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-
-
     }
 }

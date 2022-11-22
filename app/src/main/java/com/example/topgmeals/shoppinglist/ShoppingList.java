@@ -18,48 +18,43 @@ public class ShoppingList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        setTitle("Shopping List");
 
-        ShoppingList currentClass = ShoppingList.this;
-        //region ButtonSwapping
-        Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(new View.OnClickListener() {
+        // Begin Region ButtonSwapping
+        Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
+        btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, IngredientStorage.class);
-                startActivity(intent);
+                startActivity(new Intent(ShoppingList.this, IngredientStorage.class));
+                finish();
             }
         });
 
-        Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-
-        ShoppingButton.setOnClickListener(new View.OnClickListener() {
+        Button btnShoppingList = findViewById(R.id.switchToShoppingList);
+        btnShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, ShoppingList.class);
-                startActivity(intent);
+                startActivity(new Intent(ShoppingList.this, ShoppingList.class));
             }
         });
 
-        Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-
-        MealPlanButton.setOnClickListener(new View.OnClickListener() {
+        Button btnMealPlanner = findViewById(R.id.switchToMealPlan);
+        btnMealPlanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, MealPlan.class);
-                startActivity(intent);
+                startActivity(new Intent(ShoppingList.this, MealPlan.class));
+                finish();
             }
         });
 
-        Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
-
-        RecipiesButton.setOnClickListener(new View.OnClickListener() {
+        Button btnRecipesBook = findViewById(R.id.switchToRecipes);
+        btnRecipesBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                startActivity(intent);
+                startActivity(new Intent(ShoppingList.this, RecipeBook.class));
+                finish();
             }
         });
-        //endregion
-
+        // End Region ButtonSwapping
     }
 }
