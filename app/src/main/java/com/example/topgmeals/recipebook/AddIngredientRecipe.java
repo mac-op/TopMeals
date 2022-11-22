@@ -50,6 +50,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 EditText category = (EditText) findViewById(R.id.category_editText);
 
                 String descriptionText = description.getText().toString();
+//                String amountText = amount.getText().toString();
                 Float amountText = Float.parseFloat(amount.getText().toString());
                 String unitText = unit.getText().toString();
                 String categoryText = category.getText().toString();
@@ -59,9 +60,8 @@ public class AddIngredientRecipe extends AppCompatActivity {
 //                    description.requestFocus();
 //                    return;
 //                }
-//
-//
-//
+
+
 //                if (unitText.isEmpty()) {
 //                    unit.setError("Servings is required!");
 //                    unit.requestFocus();
