@@ -32,8 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-
-
 /**
  * This class is an Activity that handles the ADD functionality of the Recipe Book menu.
  */
@@ -119,20 +117,9 @@ public class addEditRecipe extends AppCompatActivity {
 
                 // Recipe new_recipe =new Recipe(title_text,prep_time_text,3,category_text,comments_text, "si");
 
-
                 startActivity(intent_add);
 
 
-            }
-        });
-
-        Button back = findViewById(R.id.back_button_recipe);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                startActivity(intent);
-                currentClass.finish();
             }
         });
 
@@ -168,35 +155,3 @@ public class addEditRecipe extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

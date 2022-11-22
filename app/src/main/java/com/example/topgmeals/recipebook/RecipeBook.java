@@ -39,12 +39,12 @@ import java.util.Map;
  * This class is an Activity that handles the Recipe Book menu. The user will be able to see
  * a list of recipes and their information and add a new recipe.
  */
-public class RecipeBook extends AppCompatActivity  {
+public class RecipeBook extends AppCompatActivity {
 
-    ListView recipeList;
-    ArrayList<Recipe> recipeBook;
-    Boolean check=Boolean.FALSE;
-    RecipeAdapter recipeListAdapter;
+    private ListView recipeList;
+    private ArrayList<Recipe> recipeBook;
+    private Boolean check=Boolean.FALSE;
+    private RecipeAdapter recipeListAdapter;
 
     /**
      *  This method gets called when the Activity is created. It creates the layouts
@@ -54,6 +54,7 @@ public class RecipeBook extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipies);
+        setTitle("Recipes Book");
 
         recipeList = (ListView) findViewById(R.id.recipe_book);
         recipeBook = new ArrayList<>();
@@ -62,8 +63,6 @@ public class RecipeBook extends AppCompatActivity  {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        //getCurrentUserRecipes(uid, db);
 
         final CollectionReference RecipeRef = db.collection("recipes");
 
@@ -86,26 +85,16 @@ public class RecipeBook extends AppCompatActivity  {
 
                         }
                         recipeList.setAdapter(recipeListAdapter);
-                        Log.e("v", "" +value.size());
                     }
                 });
-        Log.e("her", "ho");
-
-
-//        Recipe burger = new Recipe("a","Half Hour", 2 , "Fast Food", "Follow the instruction as is");
-//        Recipe pizza = new Recipe("Pizza","15 mins", 3, "fastfood", "Follow instructions");
-//        recipeBook.add(burger);
-//        recipeBook.add(pizza);
 
         recipeList.setAdapter(recipeListAdapter);
-
-        RecipeBook currentClass = RecipeBook.this;
 
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(currentClass, RecipeDisplay.class);
+                Intent intent = new Intent(RecipeBook.this, RecipeDisplay.class);
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
                 Integer servings = recipeBook.get(i).getServings();
@@ -120,7 +109,7 @@ public class RecipeBook extends AppCompatActivity  {
                 intent.putExtra("COMMENTS",comments);
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
 
-                startActivity(intent);
+                startActivity(new Intent());
             }
         });
 
@@ -133,65 +122,58 @@ public class RecipeBook extends AppCompatActivity  {
         Button categorySort = (Button) findViewById(R.id.category2);
         sortRecipe(categorySort, 3);
 
-
-
-        //region ButtonSwapping
-        Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, IngredientStorage.class);
-                startActivity(intent);
-            }
-        });
-
-        Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-        ShoppingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, ShoppingList.class);
-                startActivity(intent);
-            }
-        });
-
-        Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-        MealPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, MealPlan.class);
-                startActivity(intent);
-            }
-        });
-
         // Add recipe
         Button add_recipe=(Button) findViewById(R.id.add_button);
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(currentClass, addEditRecipe.class);
+                Intent intent = new Intent(RecipeBook.this, addEditRecipe.class);
                 startActivity(intent);
             }
         });
 
-        Button RecipiesButton = (Button) findViewById(R.id.switchToRecipes);
-
-        RecipiesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                check=Boolean.TRUE;
-                startActivity(intent);
-
-            }
-        });
         // Adding a recipe to recipeBook
         Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
         if (new_recipe!=null){
             recipeBook.add(new_recipe);
         }
-        //endregion
 
+        // Begin Region ButtonSwapping
+        Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
+        btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeBook.this, IngredientStorage.class));
+                finish();
+            }
+        });
+
+        Button btnShoppingList = findViewById(R.id.switchToShoppingList);
+        btnShoppingList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeBook.this, ShoppingList.class));
+                finish();
+            }
+        });
+
+        Button btnMealPlanner = findViewById(R.id.switchToMealPlan);
+        btnMealPlanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeBook.this, MealPlan.class));
+                finish();
+            }
+        });
+
+        Button btnRecipesBook = findViewById(R.id.switchToRecipes);
+        btnRecipesBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecipeBook.this, RecipeBook.class));
+            }
+        });
+        // End Region ButtonSwapping
     }
 
     private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
@@ -211,27 +193,6 @@ public class RecipeBook extends AppCompatActivity  {
                 }
             }
         });
-        Log.e("her", "ho");
-
-//        RecipeRef
-//            .whereEqualTo("id", uid)
-//            .get()
-//            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        Log.e("SUI", "here");
-//
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//                            Log.d(TAG, document.getId() + " => " + document.getData());
-//                        }
-//                        Log.e("END", "sor");
-//                    } else {
-//                        Log.d(TAG, "Error getting documents: ", task.getException());
-//                    }
-//                }
-//            });
-
     }
 
     private void sortRecipe(Button sortButton, int criterion){
