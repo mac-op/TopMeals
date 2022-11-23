@@ -90,7 +90,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView mealName = view.findViewById(R.id.meal_name);
         mealName.setText(mealItem.getMealName());
 
-        TextView  mealServing = view.findViewById(R.id.meal_serving);
+        TextView  mealServing = view.findViewById(R.id.num_serving);
         mealServing.setText(String.format("Servings: %d", mealItem.getNumServings()));
         // TODO: setOnClickListener for edit and delete
         ImageView editButton = view.findViewById(R.id.edit_meal_item);

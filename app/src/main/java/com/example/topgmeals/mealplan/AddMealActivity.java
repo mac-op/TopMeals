@@ -74,7 +74,7 @@ public class AddMealActivity extends AppCompatActivity {
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
 
-        ArrayAdapter<String> selectionAdapter = new ArrayAdapter<>(this,
+        ArrayAdapter<String> selectionAdapter = new ArrayAdapter<>(getBaseContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealNames);
         selectionAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         selection.setAdapter(selectionAdapter);
@@ -104,9 +104,12 @@ public class AddMealActivity extends AppCompatActivity {
                                     else{ name = (String) doc.get("description"); }
                                     mealNames.add(name);
                                 }
+                                selectionAdapter.notifyDataSetChanged();
+
                             }
                         });
-                selectionAdapter.notifyDataSetChanged();
+
+                Log.d("MealName", String.valueOf(mealNames));
             }
 
             @Override
@@ -125,12 +128,15 @@ public class AddMealActivity extends AppCompatActivity {
             HashMap<String, Object> item = new HashMap<>();
             item.put("id", userID);
             item.put("date", date1);
-            item.put("meal", addedMeal);
+            item.put("mealName", addedMeal.getMealName());
+            item.put("numServings", addedMeal.getNumServings());
 
             DocumentReference docRef = mealCollection.document();
             docRef.set(item)
                     .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))
                     .addOnFailureListener(e -> Log.d("failure", "failed"));
+
+            finish();
         });
     }
 
