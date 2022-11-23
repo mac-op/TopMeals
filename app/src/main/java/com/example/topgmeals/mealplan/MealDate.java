@@ -33,6 +33,10 @@ public class MealDate {
         return meals.get(i);
     }
 
+    public void addMeal(Meal meal){
+        meals.add(meal);
+    }
+
     public interface MealName {
         String getMealName();
         int getMealServings();

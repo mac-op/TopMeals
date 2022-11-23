@@ -22,11 +22,14 @@ import java.util.Map;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
-    private final ArrayList<MealDate> dateList;
+    private final ArrayList<String> dateList;
+    private final HashMap<String, ArrayList<Meal>> mealsByDate;
 
-    public ExpandableListAdapter(Context context, ArrayList<MealDate> dateList){
+    public ExpandableListAdapter(Context context, ArrayList<String> dateList,
+                                 HashMap<String, ArrayList<Meal>> mealsByDate){
         this.context = context;
         this.dateList = dateList;
+        this.mealsByDate = mealsByDate;
     }
 
     @Override
@@ -36,17 +39,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return dateList.get(i).getSize();
+        return mealsByDate.get(getGroup(i)).size();
     }
 
     @Override
-    public MealDate getGroup(int i) {
+    public String getGroup(int i) {
         return dateList.get(i);
     }
 
     @Override
     public Meal getChild(int listPos, int expandedListPos) {
-        return dateList.get(listPos).getMeal(expandedListPos);
+        return mealsByDate.get(dateList.get(listPos)).get(expandedListPos);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String selectedDate = (String) getGroup(i).getDate();
+        String selectedDate = getGroup(i);
 
         if (view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,23 +83,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int listPos, int expandedListPos, boolean b, View view, ViewGroup viewGroup) {
         Meal mealItem = getChild(listPos, expandedListPos);
-        String mealName = mealItem.getMealName();
-        int numServings = mealItem.getNumServings();
-
         if (view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.meal_item, null);
         }
+        TextView mealName = view.findViewById(R.id.meal_name);
+        mealName.setText(mealItem.getMealName());
 
-        TextView meal = view.findViewById(R.id.meal_name);
-        meal.setText(mealName);
-
-        TextView servings = view.findViewById(R.id.num_serving);
-        servings.setText(String.format("Servings: %d", numServings));
-
+        TextView  mealServing = view.findViewById(R.id.meal_serving);
+        mealServing.setText(String.format("Servings: %d", mealItem.getNumServings()));
         // TODO: setOnClickListener for edit and delete
         ImageView editButton = view.findViewById(R.id.edit_meal_item);
-        editButton.setOnClickListener(view1 -> Log.d("test edit button","Edit clicked"));
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("test edit button","Edit clicked");
+            }
+        });
         return view;
     }
 

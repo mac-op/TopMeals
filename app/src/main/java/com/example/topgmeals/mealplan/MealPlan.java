@@ -31,7 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MealPlan extends AppCompatActivity {
-    ArrayList<MealDate> dateList;
+    ArrayList<String> dates;
+    HashMap<String, ArrayList<Meal>> mealList;
     String userID;
 
     @Override
@@ -40,29 +41,34 @@ public class MealPlan extends AppCompatActivity {
         setContentView(R.layout.activity_mealplan);
         setTitle("Meal Planner");
 
-        dateList = new ArrayList<>();
+        dates = new ArrayList<>();
+        mealList = new HashMap<>();
 
 //        http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/
         ExpandableListView mealListView = findViewById(R.id.expandable_meal_plan);
         MealPlan currentClass = MealPlan.this;
 
-        ExpandableListAdapter adapter = new ExpandableListAdapter(this, dateList);
+        ExpandableListAdapter adapter = new ExpandableListAdapter(this, dates, mealList);
         mealListView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference mealCollection = db.collection("mealplan");
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        mealCollection.whereEqualTo("id", userID).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                dateList.clear();
-                for (QueryDocumentSnapshot doc: value){
-                    MealDate date = doc.toObject(MealDate.class);
-                    dateList.add(date);
+        mealCollection.whereEqualTo("id", userID).addSnapshotListener((value, error) -> {
+            dates.clear();
+            mealList.clear();
+            for (QueryDocumentSnapshot doc: value){
+                Meal meal = doc.toObject(Meal.class);
+                String date = doc.getString("date");
+
+                if (!dates.contains(date)){
+                    dates.add(date);
+                    mealList.put(date, new ArrayList<>());
                 }
-                adapter.notifyDataSetChanged();
+                mealList.get(date).add(meal);
             }
+            adapter.notifyDataSetChanged();
         });
 
         Button addButton = findViewById(R.id.add_meal_button);

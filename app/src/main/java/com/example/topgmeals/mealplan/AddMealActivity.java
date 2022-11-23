@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class AddMealActivity extends AppCompatActivity {
 
@@ -72,11 +74,16 @@ public class AddMealActivity extends AppCompatActivity {
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
 
+        ArrayAdapter<String> selectionAdapter = new ArrayAdapter<>(this,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealNames);
+        selectionAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        selection.setAdapter(selectionAdapter);
+
+
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealTypes);
         typeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         type.setAdapter(typeAdapter);
-
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -99,6 +106,7 @@ public class AddMealActivity extends AppCompatActivity {
                                 }
                             }
                         });
+                selectionAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -106,18 +114,23 @@ public class AddMealActivity extends AppCompatActivity {
         });
 
 
-        ArrayAdapter<String> selectionAdapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealNames);
-        selectionAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        selection.setAdapter(selectionAdapter);
 
         cancel.setOnClickListener(view -> finish());
 
         save.setOnClickListener(view -> {
             String date1 = mealDate.getText().toString();
-            Task<QuerySnapshot> queryRes = mealCollection.whereEqualTo("id", userID)
-                    .whereEqualTo("date", date1).get();
+            String mealName = selection.getSelectedItem().toString();
+            int numServings = Integer.parseInt(serving.getText().toString());
+            Meal addedMeal = new Meal(mealName, numServings);
+            HashMap<String, Object> item = new HashMap<>();
+            item.put("id", userID);
+            item.put("date", date1);
+            item.put("meal", addedMeal);
 
+            DocumentReference docRef = mealCollection.document();
+            docRef.set(item)
+                    .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))
+                    .addOnFailureListener(e -> Log.d("failure", "failed"));
         });
     }
 
