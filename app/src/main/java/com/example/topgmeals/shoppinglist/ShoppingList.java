@@ -66,8 +66,14 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         shoppingList.add(burger4);
         shoppingList.add(burger5);
         shoppingList.add(burger6);
+        fullshoppingList = new ArrayList<Ingredient>(shoppingList.size());
+        for (Ingredient i : shoppingList){
+            fullshoppingList.add(i);
+        }
 
-        fullshoppingList = (ArrayList<Ingredient> ) shoppingList.clone();
+
+
+        Log.e("t", "load" + Integer.toString( shoppingList.size()));
 
         shoppingListAdapter.setClickListener(this);
         Log.e("t", "load" + Integer.toString( shoppingList.size()));
@@ -119,16 +125,26 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         finishShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
-//
-//                Log.e("e",Integer.toString( shoppingList.size()));
-//                Log.e("e",Integer.toString( fullshoppingList.size()));
-//
-//                intent.putExtra("Endshoplist", shoppingList);
-//                intent.putExtra("Fullshoplist", fullshoppingList);
-//
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
+
+                Log.e("e",Integer.toString( shoppingList.size()));
+                Log.e("e",Integer.toString( fullshoppingList.size()));
+
+                ArrayList<Ingredient> inCart = new ArrayList<Ingredient>();
+                for (Ingredient i : fullshoppingList){
+                    inCart.add(i);
+                }
+
+                if (shoppingList.size() != 0){
+                    for (Ingredient i : shoppingList) {
+                        inCart.remove(i);
+                    }
+                }
+
+                ShoppingGlobalVars.getInstance().setList(inCart);
+
+                startActivity(intent);
+                finish();
 
             }
         });
