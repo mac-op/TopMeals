@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class MealDate {
     private String date;
-    private ArrayList<Object> meals;
+    private ArrayList<Meal> meals;
 
     public MealDate(){}
 
-    public MealDate(String date, ArrayList<Object> meals) {
+    public MealDate(String date, ArrayList<Meal> meals) {
         this.date = date;
         this.meals = meals;
     }
@@ -21,19 +21,15 @@ public class MealDate {
         this.date = date;
     }
 
-    public ArrayList<Object> getMeals() {
+    public ArrayList<Meal> getMeals() {
         return meals;
-    }
-
-    public void setMeals(ArrayList<Object> meals) {
-        this.meals = meals;
     }
 
     public int getSize(){
         return meals.size();
     }
 
-    public Object getMeal(int i){
+    public Meal getMeal(int i){
         return meals.get(i);
     }
 

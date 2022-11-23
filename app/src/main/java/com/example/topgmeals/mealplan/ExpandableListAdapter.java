@@ -45,7 +45,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int listPos, int expandedListPos) {
+    public Meal getChild(int listPos, int expandedListPos) {
         return dateList.get(listPos).getMeal(expandedListPos);
     }
 
@@ -79,9 +79,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int listPos, int expandedListPos, boolean b, View view, ViewGroup viewGroup) {
-        MealDate.MealName mealItem = (MealDate.MealName) getChild(listPos, expandedListPos);
+        Meal mealItem = getChild(listPos, expandedListPos);
         String mealName = mealItem.getMealName();
-        int numServings = mealItem.getMealServings();
+        int numServings = mealItem.getNumServings();
 
         if (view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
