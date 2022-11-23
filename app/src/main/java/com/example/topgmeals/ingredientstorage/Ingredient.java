@@ -3,13 +3,15 @@ package com.example.topgmeals.ingredientstorage;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.topgmeals.mealplan.MealDate;
+
 import java.util.Date;
 
 /**
  * This is a class to represent an ingredient. It implements interface {@link Parcelable} to be sent
  * between Activities.
  */
-public class Ingredient implements Parcelable {
+public class Ingredient implements Parcelable, MealDate.MealName {
     /**
      * The Ingredient's description.
      */
@@ -158,5 +160,15 @@ public class Ingredient implements Parcelable {
         parcel.writeFloat(amount);
         parcel.writeString(unit);
         parcel.writeString(category);
+    }
+
+    @Override
+    public String getMealName() {
+        return getDescription();
+    }
+
+    @Override
+    public int getMealServings() {
+        return 1;
     }
 }

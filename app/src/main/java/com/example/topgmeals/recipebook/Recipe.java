@@ -4,12 +4,14 @@ import android.widget.ImageView;
 import java.io.Serializable;
 import android.os.Parcel;
 
+import com.example.topgmeals.mealplan.MealDate;
+
 
 /**
  * This is a class to represent a recipe. It implements interface {@link Serializable} to be sent
  * between Activities.
  */
-public class Recipe implements Serializable {
+public class Recipe implements Serializable, MealDate.MealName {
     private String title;
     private String prepTime;
     private Integer servings;
@@ -149,5 +151,15 @@ public class Recipe implements Serializable {
 
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
+    }
+
+    @Override
+    public String getMealName() {
+        return getTitle();
+    }
+
+    @Override
+    public int getMealServings() {
+        return getServings();
     }
 }

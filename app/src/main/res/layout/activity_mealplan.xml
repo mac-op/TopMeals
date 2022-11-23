@@ -4,11 +4,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_meal_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/plus_fit"
+        android:drawablePadding="10dp"
+        android:padding="4dp"
+        android:text="Add"
+        android:textAlignment="viewStart"
+        android:textSize="16sp" />
+
     <ExpandableListView
         android:id="@+id/expandable_meal_plan"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_meal_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/include">
 
