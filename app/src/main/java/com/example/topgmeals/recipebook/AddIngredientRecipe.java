@@ -55,11 +55,11 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 String unitText = unit.getText().toString();
                 String categoryText = category.getText().toString();
 
-//                if (descriptionText.isEmpty()) {
-//                    description.setError("Title is required!");
-//                    description.requestFocus();
-//                    return;
-//                }
+                if (descriptionText.isEmpty()) {
+                    description.setError("Title is required!");
+                    description.requestFocus();
+                    return;
+                }
 
 
 //                if (unitText.isEmpty()) {
@@ -81,7 +81,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 data.put("description", descriptionText);
                 data.put("bestBefore", "11/11/22");
                 data.put("location", "fridge");
-                data.put("amount", 0);
+                data.put("amount", amountText);
                 data.put("unit", unitText);
                 data.put("category", categoryText);
                 data.put("id", RecipeID);
