@@ -3,12 +3,14 @@ package com.example.topgmeals.mealplan;
 public class Meal {
     private String mealName;
     private int numServings;
+    private String docRef;
 
     public Meal(){}
 
-    public Meal(String mealName, int numServings) {
+    public Meal(String mealName, int numServings, String docRef) {
         this.mealName = mealName;
         this.numServings = numServings;
+        this.docRef = docRef;
     }
 
     public String getMealName() {
@@ -25,5 +27,13 @@ public class Meal {
 
     public void setNumServings(int numServings) {
         this.numServings = numServings;
+    }
+
+    public String getDocRef() {
+        return docRef;
+    }
+
+    public void setDocRef(String docRef) {
+        this.docRef = docRef;
     }
 }

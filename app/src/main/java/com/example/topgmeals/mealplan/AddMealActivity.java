@@ -124,14 +124,15 @@ public class AddMealActivity extends AppCompatActivity {
             String date1 = mealDate.getText().toString();
             String mealName = selection.getSelectedItem().toString();
             int numServings = Integer.parseInt(serving.getText().toString());
-            Meal addedMeal = new Meal(mealName, numServings);
+
+            DocumentReference docRef = mealCollection.document();
+
             HashMap<String, Object> item = new HashMap<>();
             item.put("id", userID);
             item.put("date", date1);
-            item.put("mealName", addedMeal.getMealName());
-            item.put("numServings", addedMeal.getNumServings());
+            item.put("mealName", mealName);
+            item.put("numServings", numServings);
 
-            DocumentReference docRef = mealCollection.document();
             docRef.set(item)
                     .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))
                     .addOnFailureListener(e -> Log.d("failure", "failed"));

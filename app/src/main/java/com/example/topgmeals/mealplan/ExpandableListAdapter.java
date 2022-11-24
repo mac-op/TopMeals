@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.topgmeals.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +30,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private final ArrayList<String> dateList;
     private final HashMap<String, ArrayList<Meal>> mealsByDate;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference colRef = db.collection("mealplan");
 
     public ExpandableListAdapter(Context context, ArrayList<String> dateList,
                                  HashMap<String, ArrayList<Meal>> mealsByDate){
@@ -92,13 +100,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView  mealServing = view.findViewById(R.id.num_serving);
         mealServing.setText(String.format("Servings: %d", mealItem.getNumServings()));
-        // TODO: setOnClickListener for edit and delete
-        ImageView editButton = view.findViewById(R.id.edit_meal_item);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("test edit button","Edit clicked");
-            }
+
+        ImageView delete = view.findViewById(R.id.delete_meal_item);
+        delete.setOnClickListener(view1 -> {
+            String docRef = mealItem.getDocRef();
+            Log.d("Docref", docRef);
+
+            colRef.document(docRef).delete()
+                    .addOnSuccessListener(unused -> Log.d("DELETE MEAL", "Delete success"))
+                    .addOnFailureListener(e -> Log.d("DELETE MEAL", "Delete failed"));
         });
         return view;
     }

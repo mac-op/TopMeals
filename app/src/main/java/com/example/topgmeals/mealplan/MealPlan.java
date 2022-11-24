@@ -60,6 +60,7 @@ public class MealPlan extends AppCompatActivity {
             mealList.clear();
             for (QueryDocumentSnapshot doc: value){
                 Meal meal = doc.toObject(Meal.class);
+                meal.setDocRef(doc.getId());
                 String date = doc.getString("date");
 
                 if (!dates.contains(date)){
