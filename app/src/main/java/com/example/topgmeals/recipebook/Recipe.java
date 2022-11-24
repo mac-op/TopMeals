@@ -12,7 +12,7 @@ import android.os.Parcel;
 public class Recipe implements Serializable {
     private String title;
     private String prepTime;
-    private String servings;
+    private Integer servings;
     private String category;
     private String comments;
     private ImageView picture;
@@ -21,7 +21,7 @@ public class Recipe implements Serializable {
     /**
      * Constructor for {@link Recipe}
      */
-    public Recipe (String title, String prepTime, String servings, String category, String comments, String id) {
+    public Recipe (String title, String prepTime, Integer servings, String category, String comments, String id) {
         this.title = title;
         this.prepTime = prepTime;
         this.servings = servings;
@@ -35,7 +35,7 @@ public class Recipe implements Serializable {
     protected Recipe(Parcel in) {
         title = in.readString();
         prepTime=in.readString();
-        servings=in.readString();
+        servings=in.readInt();
         category=in.readString();
         comments=in.readString();
     }
@@ -80,7 +80,7 @@ public class Recipe implements Serializable {
      *  @return
      *      Returns servings of recipe
      */
-    public String getServings() {
+    public Integer getServings() {
         return servings;
     }
 
@@ -88,7 +88,7 @@ public class Recipe implements Serializable {
      * Sets the serving value of the recipe
      * @param servings
      */
-    public void setServings(String servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
     }
 

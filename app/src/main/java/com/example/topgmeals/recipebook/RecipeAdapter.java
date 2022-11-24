@@ -41,7 +41,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         String title = getItem(position).getTitle();
         String prep_time = getItem(position).getPrepTime();
-        String servings = getItem(position).getServings();
+        Integer servings = getItem(position).getServings();
         String category = getItem(position).getCategory();
 
         LayoutInflater inflater = LayoutInflater.from(context);

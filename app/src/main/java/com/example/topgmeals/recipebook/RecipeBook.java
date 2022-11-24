@@ -77,7 +77,7 @@ public class RecipeBook extends AppCompatActivity  {
                             Map<String, Object> rData = doc.getData();
                             Recipe curRecipe = new Recipe(rData.get("title").toString(),
                                     rData.get("prepTime").toString(),
-                                    rData.get("servings").toString() ,
+                                    (int)(long)rData.get("servings") ,
                                     rData.get("category").toString(),
                                     rData.get("comments").toString(),
                                     doc.getId());
@@ -108,14 +108,14 @@ public class RecipeBook extends AppCompatActivity  {
                 Intent intent = new Intent(currentClass, RecipeDisplay.class);
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
-                String servings = recipeBook.get(i).getServings();
-                //String s_servings=servings.toString();
+                Integer servings = recipeBook.get(i).getServings();
+                String s_servings=servings.toString();
                 String category = recipeBook.get(i).getCategory();
                 String comments = recipeBook.get(i).getComments();
 
                 intent.putExtra("TITLE",title);
                 intent.putExtra("PREP_TIME",prep_time);
-                intent.putExtra("SERVINGS",servings);
+                intent.putExtra("SERVINGS",s_servings);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("COMMENTS",comments);
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
