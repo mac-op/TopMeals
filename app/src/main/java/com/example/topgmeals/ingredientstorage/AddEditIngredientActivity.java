@@ -28,8 +28,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     private EditText bestBefore;
     private EditText location;
     private EditText amount;
-    private Spinner unit;
-    private Spinner category;
+    private EditText unit;
+    private EditText category;
     private Button cancel;
     private Button save;
 
@@ -37,10 +37,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     final private Calendar myCalendar = Calendar.getInstance();
     private DateFormat format = new DateFormat();
 
-    //TODO: Separate classes for unit, category, location
-
-    String[] unitArray = new String[]{"test unit1", "test unit2"};
-    String[] categoryArray = new String[]{"category1", "category2"};
 
     /**
      * Method to handle layout of the Activity when it is created
@@ -64,14 +60,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         String purpose = intent.getStringExtra("purpose");              // purpose is either add or edit/delete
         int pos = intent.getIntExtra("position", -1);        // position of item to edit/delete. -1 if purpose is add
 
-        //Set Spinners to hold values
-        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, unitArray);
-        unit.setAdapter(unitAdapter);
-
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoryArray);
-        category.setAdapter(categoryAdapter);
 
         if (purpose.equals("ADD")){
             addMenu();
@@ -95,8 +83,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         bestBefore.setText(format.parse(ingredient.getBestBefore()));
         location.setText(ingredient.getLocation());
         amount.setText(String.valueOf(ingredient.getAmount()));
-        unit.setSelection(Arrays.asList(unitArray).indexOf(ingredient.getUnit()));
-        category.setSelection(Arrays.asList(categoryArray).indexOf(ingredient.getCategory()));
+        unit.setText(ingredient.getUnit());
+        category.setText(ingredient.getCategory());
 
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
@@ -115,8 +103,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             Date bbDate_ = myCalendar.getTime();
             String location_ = location.getText().toString();
             float amount_ = Float.parseFloat(amount.getText().toString());
-            String unit_ = unit.getSelectedItem().toString();
-            String category_ = category.getSelectedItem().toString();
+            String unit_ = unit.getText().toString();
+            String category_ = category.getText().toString();
 
             //TODO: Input validation
 
@@ -171,8 +159,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             Date bbDate_ = myCalendar.getTime();
             String location_ = location.getText().toString();
             float amount_ = Float.parseFloat(amount.getText().toString());
-            String unit_ = unit.getSelectedItem().toString();
-            String category_ = category.getSelectedItem().toString();
+            String unit_ = unit.getText().toString();
+            String category_ = category.getText().toString();
 
             //TODO: Input validation
 
@@ -199,4 +187,3 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     }
 
 }
-

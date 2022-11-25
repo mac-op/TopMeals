@@ -1,50 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/option_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/back_button_recipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back">
-
-        </Button>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Add Recipee"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textStyle="bold">
-
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            android:textStyle="bold"
-            android:textSize="30dp">
-
-        </TextView>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -205,22 +172,6 @@
 
        </Button>
     </LinearLayout>
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent"
-
-           android:textStyle="bold"
-           android:textSize="70dp">
-
-
-       </TextView>
-
-
-   </LinearLayout>
 
     <Button
         android:id="@+id/add_recipe"
@@ -232,6 +183,12 @@
         android:textAlignment="center">
 
     </Button>
+
+    <ImageView
+        android:id="@+id/recipeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
 </LinearLayout>
