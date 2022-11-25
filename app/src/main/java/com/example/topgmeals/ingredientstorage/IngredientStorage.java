@@ -230,7 +230,6 @@ public class IngredientStorage extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         ingredientList.clear();
                         refList.clear();
-                        Log.e("temp", "REE");
                         assert value != null;
                         for (QueryDocumentSnapshot doc : value){
                             refList.add(doc.getId());
@@ -241,7 +240,7 @@ public class IngredientStorage extends AppCompatActivity {
                     }
                 });
 
-        // Begin Region ButtonSwapping
+        // region buttonswapping
         Button btnIngredientStorage = (Button) findViewById(R.id.switchToIngredientStorage);
         btnIngredientStorage.setOnClickListener(view -> {
             startActivity(new Intent(IngredientStorage.this, IngredientStorage.class));
@@ -267,7 +266,7 @@ public class IngredientStorage extends AppCompatActivity {
                 finish();
             }
         });
-        // End Region ButtonSwapping
+        // endregion
     }
 
     /**
