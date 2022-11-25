@@ -41,9 +41,20 @@ import java.util.Map;
  */
 public class RecipeBook extends AppCompatActivity {
 
+    /**
+     * {@link ListView} to hold recipeList
+     */
     private ListView recipeList;
+
+    /**
+     * An {@link ArrayList} that holds {@link Recipe} objects.
+     */
     private ArrayList<Recipe> recipeBook;
-    private Boolean check=Boolean.FALSE;
+
+    /**
+     * A custom {@link android.widget.ArrayAdapter} of type {@link RecipeAdapter} that handles the view
+     * of the list of recipes.
+     */
     private RecipeAdapter recipeListAdapter;
 
     /**
@@ -196,6 +207,7 @@ public class RecipeBook extends AppCompatActivity {
         });
     }
 
+    // Sorting recipes
     private void sortRecipe(Button sortButton, int criterion){
         sortButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)

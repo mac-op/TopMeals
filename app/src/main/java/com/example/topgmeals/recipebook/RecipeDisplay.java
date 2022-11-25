@@ -29,14 +29,17 @@ import java.util.Map;
 
 /**
  * This class is an Activity that handles the Recipe Display menu. The user will be able to see
- * the information of each recipe, and edit and delete a recipe
+ * the information of each recipe, and edit and delete a recipe.
  */
 public class RecipeDisplay extends AppCompatActivity {
 
     private StorageReference mStorageRef;
     private Context context;
 
-
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for displaying a {@link Recipe}.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +54,8 @@ public class RecipeDisplay extends AppCompatActivity {
         EditText category = (EditText) findViewById(R.id.Category_editText);
         EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
-
         Intent dataIntent = getIntent();
+
         String titleToDisplay = dataIntent.getExtras().getString("TITLE");
         String prepTimeToDisplay = dataIntent.getExtras().getString("PREP_TIME");
         String servingsToDisplay = dataIntent.getStringExtra("SERVINGS");
@@ -74,9 +77,7 @@ public class RecipeDisplay extends AppCompatActivity {
                 // Got the download URL for 'users/me/profile.png'
 
                 Log.e("madeit", uri.toString());
-                //temp[0] = uri;
                 Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
-                //title_display.setText(title.toString());
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -85,7 +86,6 @@ public class RecipeDisplay extends AppCompatActivity {
                 // Handle any errors
             }
         });
-
 
 
         Button ingredients = (Button) findViewById(R.id.ingredients_button);
@@ -104,7 +104,7 @@ public class RecipeDisplay extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        //  Edit a recipe
+        /* Performs the edit recipe button functionality */
         Button edit_recipe = (Button) findViewById(R.id.edit_recipe_button);
         edit_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +141,7 @@ public class RecipeDisplay extends AppCompatActivity {
         });
 
 
-        // Delete a recipe
+        /* Performs the delete recipe button functionality */
         Button delete = (Button) findViewById(R.id.delete_recipe);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +169,7 @@ public class RecipeDisplay extends AppCompatActivity {
             }
         });
 
-
+        /* Performs the back button functionality */
         Button backButton = (Button) findViewById(R.id.button_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

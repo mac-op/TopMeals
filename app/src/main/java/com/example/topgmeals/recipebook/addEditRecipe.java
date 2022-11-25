@@ -33,7 +33,8 @@ import java.util.Map;
 
 
 /**
- * This class is an Activity that handles the ADD functionality of the Recipe Book menu.
+ * This class is an Activity that handles the ADD functionality of the Recipe Book menu where user can add a
+ * new {@link Recipe}. Called by {@link RecipeBook}
  */
 public class addEditRecipe extends AppCompatActivity {
 
@@ -43,7 +44,9 @@ public class addEditRecipe extends AppCompatActivity {
     private ImageView mImageView;
     private StorageReference mStorageRef;
 
-
+    /**
+     * Method to handle layout of the Activity when it is created
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class addEditRecipe extends AppCompatActivity {
         mImageView = findViewById(R.id.recipeImage);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        /* Performing the add recipe button functionality */
         Button add_new = findViewById(R.id.add_recipe);
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +113,6 @@ public class addEditRecipe extends AppCompatActivity {
                     return;
                 }
 
-
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -153,14 +156,11 @@ public class addEditRecipe extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-
-
                 startActivity(intent_add);
-
-
             }
         });
 
+        // Importing picture for recipe
         Button ImportImage = findViewById(R.id.import_button);
         ImportImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,9 +169,7 @@ public class addEditRecipe extends AppCompatActivity {
             }
         });
 
-
     }
-
     private void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -182,13 +180,10 @@ public class addEditRecipe extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("TT", "AYOO");
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
-
             mImageView.setImageURI(mImageUri);
-            Log.e("TT", "IMAGE");
+
 
         }
     }

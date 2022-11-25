@@ -24,11 +24,16 @@ import java.util.Map;
 
 import com.example.topgmeals.ingredientstorage.Ingredient;
 /**
- * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe.
+ * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe where user can add a
+ *  * new {@link Ingredient} to a {@link Recipe}. Called by {@link IngredientRecipe}
  */
 public class AddIngredientRecipe extends AppCompatActivity {
 
     String RecipeID;
+
+    /**
+     * Method to handle layout of the Activity when it is created
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
         Intent Rintent = getIntent();
         RecipeID = Rintent.getExtras().getString("rID");
 
-
+        /* Performing the add ingredient button functionality */
         Button addIngredient = (Button) findViewById(R.id.add_ingredient);
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +114,6 @@ public class AddIngredientRecipe extends AppCompatActivity {
                             }
                         });
 
-
-
-                // Ingredient new_ingredient = new Ingredient(descriptionText,new java.util.Date(System.currentTimeMillis()),null,amountText,unitText,categoryText, "ape");
-                // intentAddIngredient.putExtra("NEW", new_ingredient);
                 intentAddIngredient.putExtra("RECIPE_ID", RecipeID);
                 startActivity(intentAddIngredient);
 

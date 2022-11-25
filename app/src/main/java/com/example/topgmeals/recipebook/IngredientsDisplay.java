@@ -27,6 +27,10 @@ import java.util.Map;
  */
 public class IngredientsDisplay extends AppCompatActivity {
 
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for displaying a {@link IngredientRecipe}.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -39,8 +43,8 @@ public class IngredientsDisplay extends AppCompatActivity {
         EditText units = (EditText) findViewById(R.id.unit_editText);
         EditText category = (EditText) findViewById(R.id.Category_editText);
 
-
         Intent getIntent = getIntent();
+
         String descriptionToDisplay = getIntent.getExtras().getString("DESCRIPTION");
         String amountToDisplay = getIntent.getExtras().getString("AMOUNT");
         String unitToDisplay = getIntent.getExtras().getString("UNIT");
@@ -58,7 +62,7 @@ public class IngredientsDisplay extends AppCompatActivity {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-
+        /* Performs the back button functionality */
         Button backButton = (Button) findViewById(R.id.back_button_modify_ingredient);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +74,7 @@ public class IngredientsDisplay extends AppCompatActivity {
             }
         });
 
+        /* Performs the update ingredient button functionality */
         Button update = (Button) findViewById(R.id.update_ingredient);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +110,7 @@ public class IngredientsDisplay extends AppCompatActivity {
             }
         });
 
-
+        /* Performs the delete ingredient button functionality */
         Button delete = (Button) findViewById(R.id.delete_ingredient);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
