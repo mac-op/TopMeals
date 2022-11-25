@@ -50,29 +50,37 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 EditText category = (EditText) findViewById(R.id.category_editText);
 
                 String descriptionText = description.getText().toString();
-//                String amountText = amount.getText().toString();
-                Float amountText = Float.parseFloat(amount.getText().toString());
-                String unitText = unit.getText().toString();
-                String categoryText = category.getText().toString();
-
                 if (descriptionText.isEmpty()) {
-                    description.setError("Title is required!");
+                    description.setError("Description is required!");
                     description.requestFocus();
                     return;
                 }
 
+                if (amount.getText().toString().equals("")) {
+                    amount.setError("Amount is required!");
+                    amount.requestFocus();
+                    return;
+                }
+                Float amountText = Float.parseFloat(amount.getText().toString());
 
-//                if (unitText.isEmpty()) {
-//                    unit.setError("Servings is required!");
-//                    unit.requestFocus();
-//                    return;
-//                }
-//
-//                if (categoryText.isEmpty()) {
-//                    category.setError("Category is required!");
-//                    category.requestFocus();
-//                    return;
-//                }
+                String unitText = unit.getText().toString();
+                if (unitText.isEmpty()) {
+                    unit.setError("Unit is required!");
+                    unit.requestFocus();
+                    return;
+                }
+                if (unitText.compareTo("0")==0){
+                    unit.setError("Units Cannot be 0!");
+                    unit.requestFocus();
+                    return;
+                }
+
+                String categoryText = category.getText().toString();
+                if (categoryText.isEmpty()) {
+                    category.setError("Category is required!");
+                    category.requestFocus();
+                    return;
+                }
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

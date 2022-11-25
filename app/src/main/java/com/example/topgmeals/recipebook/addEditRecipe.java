@@ -48,41 +48,44 @@ public class addEditRecipe extends AppCompatActivity {
                 EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
                 String title_text = title.getText().toString();
-                String prep_time_text = prep_time.getText().toString();
-                Integer serving_text = Integer.parseInt(serving.getText().toString());
-                String category_text = category.getText().toString();
-                String comments_text = comments.getText().toString();
-
                 if (title_text.isEmpty()) {
                     title.setError("Title is required!");
                     title.requestFocus();
                     return;
                 }
 
+                String prep_time_text = prep_time.getText().toString();
                 if (prep_time_text.isEmpty()) {
                     prep_time.setError("Preparation time is required!");
                     prep_time.requestFocus();
                     return;
                 }
+                if (prep_time_text.compareTo("0 mins")==0){
+                    prep_time.setError("Preparation time Cannot be 0!");
+                    prep_time.requestFocus();
+                    return;
+                }
 
-                if (serving_text.toString().isEmpty()) {
+                if (serving.getText().toString().equals("")) {
                     serving.setError("Servings is required!");
                     serving.requestFocus();
                     return;
                 }
+                Integer serving_text = Integer.parseInt(serving.getText().toString());
+                if (serving_text.equals(0)) {
+                    serving.setError("Servings Cannot be 0!");
+                    serving.requestFocus();
+                    return;
+                }
 
-//                if (serving_text.compareTo("0")==0){
-//                    serving.setError("Servings Cannot be 0!");
-//                    serving.requestFocus();
-//                    return;
-//                }
-
+                String category_text = category.getText().toString();
                 if (category_text.isEmpty()) {
                     category.setError("Category is required!");
                     category.requestFocus();
                     return;
                 }
 
+                String comments_text = comments.getText().toString();
                 if (comments_text.isEmpty()) {
                     comments.setError("Comments is required!");
                     comments.requestFocus();
@@ -116,10 +119,6 @@ public class addEditRecipe extends AppCompatActivity {
                             }
                         });
 
-                // Recipe new_recipe =new Recipe(title_text,prep_time_text,3,category_text,comments_text, "si");
-//                if (!title_text.isEmpty() && !prep_time_text.isEmpty() && !serving_text.toString().isEmpty() && !category_text.isEmpty() && !comments_text.isEmpty()){
-//                    startActivity(intent_add);
-//                }
 
                 startActivity(intent_add);
 
