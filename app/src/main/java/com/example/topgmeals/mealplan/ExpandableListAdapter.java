@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.topgmeals.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,10 +29,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
     private final ArrayList<String> dateList;
-    private final HashMap<String, ArrayList<String>> mealsByDate;
+    private final HashMap<String, ArrayList<Meal>> mealsByDate;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference colRef = db.collection("mealplan");
 
     public ExpandableListAdapter(Context context, ArrayList<String> dateList,
-                                 HashMap<String, ArrayList<String>> mealsByDate){
+                                 HashMap<String, ArrayList<Meal>> mealsByDate){
         this.context = context;
         this.dateList = dateList;
         this.mealsByDate = mealsByDate;
@@ -34,21 +42,21 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return mealsByDate.size();
+        return dateList.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return mealsByDate.get(dateList.get(i)).size();
+        return mealsByDate.get(getGroup(i)).size();
     }
 
     @Override
-    public Object getGroup(int i) {
+    public String getGroup(int i) {
         return dateList.get(i);
     }
 
     @Override
-    public Object getChild(int listPos, int expandedListPos) {
+    public Meal getChild(int listPos, int expandedListPos) {
         return mealsByDate.get(dateList.get(listPos)).get(expandedListPos);
     }
 
@@ -69,7 +77,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String selectedDate = (String) getGroup(i);
+        String selectedDate = getGroup(i);
 
         if (view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,20 +90,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int listPos, int expandedListPos, boolean b, View view, ViewGroup viewGroup) {
-        String mealItem = (String) getChild(listPos, expandedListPos);
+        Meal mealItem = getChild(listPos, expandedListPos);
         if (view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.meal_item, null);
         }
         TextView mealName = view.findViewById(R.id.meal_name);
-        mealName.setText(mealItem);
-        // TODO: setOnClickListener for edit and delete
-        ImageView editButton = view.findViewById(R.id.edit_meal_item);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("test edit button","Edit clicked");
-            }
+        mealName.setText(mealItem.getMealName());
+
+        TextView  mealServing = view.findViewById(R.id.num_serving);
+        mealServing.setText(String.format("Servings: %d", mealItem.getNumServings()));
+
+        ImageView delete = view.findViewById(R.id.delete_meal_item);
+        delete.setOnClickListener(view1 -> {
+            String docRef = mealItem.getDocRef();
+            Log.d("Docref", docRef);
+
+            colRef.document(docRef).delete()
+                    .addOnSuccessListener(unused -> Log.d("DELETE MEAL", "Delete success"))
+                    .addOnFailureListener(e -> Log.d("DELETE MEAL", "Delete failed"));
         });
         return view;
     }

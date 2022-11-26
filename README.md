@@ -92,3 +92,88 @@ Code Base of Prototype
 Relative Quality
 
 • Well above average relative quality, overall comprehensiveness, creativity, attractiveness, and innovation
+
+# Project Part 3 Feedback
+
+## Addressing Feedback
+
+3 = Almost all were addressed
+
+## User Interface Mockup and Storyboard
+
+3 = Consistent and clear
+• Complete UI mockups
+• Labeled elements on UI mockups
+• Detailed storyboard
+• Labeled actions for storyboard transitions
+• Covers all requirements
+• Intuitive user interface
+• Displays understanding of UI mockups and storyboarding
+
+## Sprint Planning
+
+3 =• Comprehensive
+• Displays understanding of Scrum
+• Displays regular and frequent pacing of working software
+• Each sprint is planned by user story
+• Some Riskier requirements are done earlier but some are not
+• Members all present at each review
+• Early and frequent integration using Github Actions.
+
+
+## Tangible Demo
+2 = • Fair Demo ability
+• Clear and coherent
+• Logically organized by tangible features
+• Realistic data and inputs
+• All members present except one was sick
+• Members well coordinated
+
+## Tools Practices
+3 = • All team members contribute to GitHub regularly
+• Effective use of GitHub features 
+Comments:
+GitHub projects should be used.
+One member has low contribution according to the GitHub contributors
+
+## Relative Quality
+3 = good relative quality as app was personalized like a portal
+
+## Code Base
+
+2 = • Approximately ½ of requirements implemented and fully done
+• Connectivity to server
+• Readable
+
+- Code convention are not followed in all classe.
+- One classe have their name start with small case. 
+- Error check and validation is missing in some classes.
+
+
+
+## Code Documentation
+
+2 = - No unit tests are written to cover the entity 
+classes.
+- Intent tests does not cover the all UI components.
+- Commented out code segments should be deleted from the main branch.
+- Code comments and javadoc comments are not sufficient for some entity classes
+- Many methods have javadoc comments but no description of the parameters and  return type.
+
+## Product Backlog
+
+0 = Cannot view the backlog, it is not accessible in GitHub's "Project" tab, nor is it available in the "Issues" section
+
+## Test Cases
+
+1 = ✓ Comprehensive intent tests for implemented user stories
+✓ Correct tests wtih realistic data
+✘ No unit tests of entity (model) classes implemented
+✘ All intent tests fail due to usage of inexistent layout IDs in the Login class
+
+## Object Oriented Design
+1 = why recipe is not connected with recipebook, does recipebook don't have any recipes. Similar to this many connections are missing. uml only shows inheritance, no link showing aggregation or composition. many classes or set of classes are standalone. only appcompactactivity has any relation to most of the classes does this mean that every interaction between classes is done through appcompactactivity. uml and crc cards don't match up, for example crc is saying ingredientstorage is a collaborator of ingredient but uml has nothing to show for this.
+
+Total = 8.11
+
+## NB.. These values are not final
