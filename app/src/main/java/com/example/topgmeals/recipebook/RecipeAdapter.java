@@ -70,15 +70,6 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         Log.e("TTT", "uploads/" + recID);
 
-//        try {
-//            Log.e("e", mStorageRef.child("uploads/" + recID).getDownloadUrl().getResult().toString());
-//            Glide.with(context).load(mStorageRef.child("uploads/" + recID).getDownloadUrl()).into(recImg);
-//            Log.e("s", "SUCC");
-//        }
-//        catch (Exception ex){
-//
-//        }
-//        final Uri[] temp = {null};
         mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

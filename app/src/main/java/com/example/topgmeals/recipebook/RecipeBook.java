@@ -128,7 +128,7 @@ public class RecipeBook extends AppCompatActivity {
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecipeBook.this, addEditRecipe.class);
+                Intent intent = new Intent(RecipeBook.this, AddEditRecipe.class);
                 startActivity(intent);
             }
         });
@@ -139,7 +139,7 @@ public class RecipeBook extends AppCompatActivity {
             recipeBook.add(new_recipe);
         }
 
-        // Begin Region ButtonSwapping
+        // region buttonswapping
         Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +174,7 @@ public class RecipeBook extends AppCompatActivity {
                 startActivity(new Intent(RecipeBook.this, RecipeBook.class));
             }
         });
-        // End Region ButtonSwapping
+        // endregion
     }
 
     private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
