@@ -39,6 +39,7 @@ public class AddMealActivity extends AppCompatActivity {
     Button save;
     final String[] mealTypes = {"Recipe", "Ingredient"};
     ArrayList<String> mealNames = new ArrayList<>();
+    ArrayList<String> refList = new ArrayList<>();
     final private Calendar myCalendar = Calendar.getInstance();
     private DateFormat format = new DateFormat();
     private String userID;
@@ -93,6 +94,7 @@ public class AddMealActivity extends AppCompatActivity {
                     selectionCollection = db.collection("ingredients");
                 }
                 mealNames.clear();
+                refList.clear();
                 selectionCollection.whereEqualTo("id", userID).get()
                         .addOnSuccessListener(queryDocumentSnapshots -> {
                             if (queryDocumentSnapshots.isEmpty()){
@@ -103,6 +105,7 @@ public class AddMealActivity extends AppCompatActivity {
                                     if (i == 0){ name = (String)doc.get("title"); }
                                     else{ name = (String) doc.get("description"); }
                                     mealNames.add(name);
+                                    refList.add(doc.getId());
                                 }
                                 selectionAdapter.notifyDataSetChanged();
 
@@ -132,6 +135,7 @@ public class AddMealActivity extends AppCompatActivity {
             item.put("date", date1);
             item.put("mealName", mealName);
             item.put("numServings", numServings);
+            item.put("ref", refList.get(selection.getSelectedItemPosition()));
 
             docRef.set(item)
                     .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +25,13 @@ import com.example.topgmeals.R;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.recipebook.RecipeBook;
 import com.example.topgmeals.shoppinglist.ShoppingList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -85,6 +89,8 @@ public class IngredientStorage extends AppCompatActivity {
         app = FirebaseApp.initializeApp(IngredientStorage.this);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
+        CollectionReference mealCol = db.collection("mealplan");
+
 
         // Get the user ID with FirebaseAuth
         id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -154,7 +160,17 @@ public class IngredientStorage extends AppCompatActivity {
                                 .addOnFailureListener(e -> Log.d("Delete item", "Delete failed"));
 
                         db.collection("mealplan").whereEqualTo("ref", deleteRef)
-                                .get();
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        for (DocumentSnapshot document : task.getResult()) {
+                                            mealCol.document(document.getId()).delete();
+                                            Log.d("DELETE MEAL", "Meal deleted after ingredient deleted");
+                                        }
+                                    } else {
+                                        Log.d("DELETE MEAL", "Error getting documents: ", task.getException());
+                                    }
+                            });
                     }
                     // When EDIT is chosen
                     else if (result.getResultCode() == Activity.RESULT_OK){
