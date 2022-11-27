@@ -111,8 +111,8 @@ public class IngredientStorage extends AppCompatActivity {
         // Set Sort Spinner
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner);
         ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(this,
-                R.array.ingredient_sort, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        sortAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                R.array.ingredient_sort, R.layout.ingredient_sort_drop_down);
+        sortAdapter.setDropDownViewResource(R.layout.ingredient_sort_drop_down);
         sortSpinner.setAdapter(sortAdapter);
 
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

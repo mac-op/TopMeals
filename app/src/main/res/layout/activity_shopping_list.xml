@@ -2,37 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/shoppingListText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Shopping List"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent"
+    android:background="@drawable/option_background">
 
     <LinearLayout
         android:id="@+id/sort_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/shoppingListText"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:gravity="center">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/sortBy_text"
             android:layout_width="78dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="13dp"
-            android:text="Sort by:"
-            android:textSize="20dp"
+            android:text="SORT BY:"
+            android:fontFamily="@font/satoshi_medium"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
@@ -41,8 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="15sp"
             android:layout_marginRight="8dp">
-
         </Button>
 
         <Button
@@ -50,22 +39,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="15sp"
             android:orientation="horizontal">
-
         </Button>
 
     </LinearLayout>
 
-
+    <View
+        android:id="@+id/top_horizontal_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sort_buttons" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shoppingListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/sort_buttons"
-        app:layout_constraintBottom_toTopOf="@id/finishShopping">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintBottom_toTopOf="@id/finishShopping"
+        app:layout_constraintTop_toBottomOf="@id/top_horizontal_divider"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,23 +68,30 @@
         android:id="@+id/finishShopping"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/shoppingListView"
-        app:layout_constraintBottom_toTopOf="@id/include2"
-        android:background="#10f7f7f7">
+        app:layout_constraintBottom_toTopOf="@id/include2" >
 
         <Button
             android:id="@+id/shopFinishShopping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish Shopping">
-
+            android:text="Finish Shopping"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="18sp">
         </Button>
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/bottom_horizontal_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finishShopping" />
 
     <include
         android:id="@+id/include2"
         layout="@layout/activity_bottomswitchbuttons" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

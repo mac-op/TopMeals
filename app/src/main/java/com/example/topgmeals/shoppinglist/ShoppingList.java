@@ -1,6 +1,7 @@
 package com.example.topgmeals.shoppinglist;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -39,7 +40,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
-
+        setTitle("Shopping List");
 
         // Initialize variables for ListView
         shoppingListView = findViewById(R.id.shoppingListView);
