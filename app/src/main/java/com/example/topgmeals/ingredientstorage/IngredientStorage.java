@@ -66,11 +66,6 @@ public class IngredientStorage extends AppCompatActivity {
      */
     private String id;
 
-    /**
-     * An {@link ArrayList} of unique {@link DocumentReference} objects that belong to a user and point to
-     * that user's ingredients
-     */
-    private ArrayList<String> refList = new ArrayList<>();
 
     /**
      * {@link RecyclerView} to hold ingredientList
@@ -152,12 +147,14 @@ public class IngredientStorage extends AppCompatActivity {
                         // Get Intent from child Activity and the position of the item to delete
                         Intent deleteIntent = result.getData();
 
-                        // Get DocumentReference of the item in the database according to its position
-                        // in refList and remove it
+                        // Get DocumentReference of the item in the database and remove it
                         String deleteRef = deleteIntent.getStringExtra("deleted_ref");
                         ingredientsDb.document(deleteRef).delete()
                                 .addOnSuccessListener(unused -> Log.d("Delete item", "Delete success"))
                                 .addOnFailureListener(e -> Log.d("Delete item", "Delete failed"));
+
+                        db.collection("mealplan").whereEqualTo("ref", deleteRef)
+                                .get();
                     }
                     // When EDIT is chosen
                     else if (result.getResultCode() == Activity.RESULT_OK){
