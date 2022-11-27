@@ -20,6 +20,7 @@ import com.example.topgmeals.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -146,16 +147,24 @@ public class RecipeDisplay extends AppCompatActivity {
             public void onClick(View view) {
                 db.collection("recipes").document(recipeID)
                         .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                            }
-                        })
+                        .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully deleted!"))
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+                db.collection("mealplan").whereEqualTo("ref", recipeID)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document : task.getResult()) {
+                                    db.collection("mealplan").document(document.getId()).delete();
+                                    Log.d("DELETE MEAL", "Meal deleted after ingredient deleted");
+                                }
+                            } else {
+                                Log.d("DELETE MEAL", "Error getting documents: ", task.getException());
                             }
                         });
 
