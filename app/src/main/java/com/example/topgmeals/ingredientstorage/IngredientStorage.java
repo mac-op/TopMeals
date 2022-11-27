@@ -159,18 +159,6 @@ public class IngredientStorage extends AppCompatActivity {
                                 .addOnSuccessListener(unused -> Log.d("Delete item", "Delete success"))
                                 .addOnFailureListener(e -> Log.d("Delete item", "Delete failed"));
 
-                        db.collection("mealplan").whereEqualTo("ref", deleteRef)
-                                .get()
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        for (DocumentSnapshot document : task.getResult()) {
-                                            mealCol.document(document.getId()).delete();
-                                            Log.d("DELETE MEAL", "Meal deleted after ingredient deleted");
-                                        }
-                                    } else {
-                                        Log.d("DELETE MEAL", "Error getting documents: ", task.getException());
-                                    }
-                            });
                     }
                     // When EDIT is chosen
                     else if (result.getResultCode() == Activity.RESULT_OK){
