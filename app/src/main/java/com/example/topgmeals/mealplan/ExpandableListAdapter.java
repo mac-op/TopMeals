@@ -27,6 +27,9 @@ import java.util.Map;
 
 /**
  * {@link ExpandableListAdapter} to hold the meals where they are grouped by date.
+ * Code adapted from this
+ * <a href="http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/">
+ * tutorial </a>
  */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
