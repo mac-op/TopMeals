@@ -72,6 +72,7 @@ public class Ingredient implements Parcelable {
         amount = in.readFloat();
         unit = in.readString();
         category = in.readString();
+        documentID = in.readString();
     }
 
     public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
@@ -158,6 +159,7 @@ public class Ingredient implements Parcelable {
         parcel.writeFloat(amount);
         parcel.writeString(unit);
         parcel.writeString(category);
+        parcel.writeString(documentID);
     }
 
 }

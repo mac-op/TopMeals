@@ -96,8 +96,6 @@ public class RecipeDisplay extends AppCompatActivity {
 
                 intent.putExtra("RECIPE_ID", recipeID);
                 startActivity(intent);
-
-
             }
         });
 
