@@ -29,6 +29,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * This class is an Activity that
+ */
 public class AddMealActivity extends AppCompatActivity {
 
     EditText mealDate;
@@ -44,6 +47,7 @@ public class AddMealActivity extends AppCompatActivity {
     private DateFormat format = new DateFormat();
     private String userID;
     CollectionReference selectionCollection;
+    boolean isRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +94,10 @@ public class AddMealActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0){
                     selectionCollection = db.collection("recipes");
+                    isRecipe = true;
                 } else {
                     selectionCollection = db.collection("ingredients");
+                    isRecipe = false;
                 }
                 mealNames.clear();
                 refList.clear();
@@ -136,6 +142,7 @@ public class AddMealActivity extends AppCompatActivity {
             item.put("mealName", mealName);
             item.put("numServings", numServings);
             item.put("ref", refList.get(selection.getSelectedItemPosition()));
+            item.put("isRecipe", isRecipe);
 
             docRef.set(item)
                     .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))
