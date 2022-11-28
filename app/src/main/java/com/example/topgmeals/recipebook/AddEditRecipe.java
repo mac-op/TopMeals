@@ -3,13 +3,14 @@ package com.example.topgmeals.recipebook;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -182,6 +183,7 @@ public class AddEditRecipe extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
             mImageView.setImageURI(mImageUri);
+
 
         }
     }
