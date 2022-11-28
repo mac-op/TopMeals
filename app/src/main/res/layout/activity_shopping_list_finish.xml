@@ -46,10 +46,10 @@
         app:layout_constraintTop_toBottomOf="@id/shoppingFinishListView">
 
         <Button
-            android:id="@+id/shopFinishShopping"
+            android:id="@+id/shopFinishShopping2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish Shopping">
+            android:text="Finish Adding">
 
         </Button>
     </LinearLayout>

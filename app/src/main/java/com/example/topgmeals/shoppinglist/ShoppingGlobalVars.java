@@ -9,6 +9,16 @@ public class ShoppingGlobalVars {
 
     private ArrayList<Ingredient> list;
 
+    private ArrayList<Ingredient> curIngredientsList;
+
+    public ArrayList getcurIngredientsList() {
+        return curIngredientsList;
+    }
+
+    public void setcurIngredientsList(ArrayList list) {
+        this.curIngredientsList = list;
+    }
+
     public ArrayList getList() {
         return list;
     }

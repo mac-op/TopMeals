@@ -74,7 +74,7 @@ public class IngredientRecipe extends AppCompatActivity {
                             }
                             Ingredient curIng = new Ingredient(
                                     rData.get("description").toString(),
-                                    new SimpleDateFormat("dd/MM/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
+                                    new SimpleDateFormat("MM/dd/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
                                     rData.get("location").toString(),
                                     temp,
                                     rData.get("unit").toString(),

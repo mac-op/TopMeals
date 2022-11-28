@@ -65,7 +65,54 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             addMenu();
         } else if (purpose.equals("EDIT")){
             editMenu(pos);
+        } else if (purpose.equals("UPDATE")){
+            updateMenu(pos);
         }
+    }
+
+    public void updateMenu(int pos) {
+        setTitle("Update Storage");
+        cancel.setText("Delete");
+        save.setText("Update/Save");
+
+        // Get the Ingredient from Intent and set the fields to its content
+        Ingredient ingredient = intent.getParcelableExtra("ingredient_object");
+        description.setText(ingredient.getDescription());
+        bestBefore.setText(format.parse(ingredient.getBestBefore()));
+        location.setText(ingredient.getLocation());
+        amount.setText(String.valueOf(ingredient.getAmount()));
+        unit.setText(ingredient.getUnit());
+        category.setText(ingredient.getCategory());
+
+        /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
+        cancel.setOnClickListener(view -> {
+            Intent deleteIntent = new Intent();
+            assert (pos != -1);
+            deleteIntent.putExtra("delete_position", pos);
+            setResult(2, deleteIntent);
+            finish();
+        });
+
+        /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
+         to update **/
+        save.setOnClickListener(view -> {
+            //TODO: Separate method to collect text??
+            String description_ = description.getText().toString();
+            Date bbDate_ = myCalendar.getTime();
+            String location_ = location.getText().toString();
+            float amount_ = Float.parseFloat(amount.getText().toString());
+            String unit_ = unit.getText().toString();
+            String category_ = category.getText().toString();
+
+            //TODO: Input validation
+
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+            Intent editIntent = new Intent();
+            editIntent.putExtra("edited_ingredient", ingredient1);
+            editIntent.putExtra("edited_position", pos);
+            setResult(RESULT_OK, editIntent);
+            finish();
+        });
     }
 
     /**
