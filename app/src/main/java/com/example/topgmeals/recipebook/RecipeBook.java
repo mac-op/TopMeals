@@ -51,7 +51,7 @@ public class RecipeBook extends AppCompatActivity {
     /**
      * An {@link ArrayList} that holds {@link Recipe} objects.
      */
-    private ArrayList<Recipe> recipeBook;
+    public ArrayList<Recipe> recipeBook;
 
     /**
      * A custom {@link android.widget.ArrayAdapter} of type {@link RecipeAdapter} that handles the view
