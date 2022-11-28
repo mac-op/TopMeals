@@ -83,6 +83,16 @@ public class AddIngredientRecipe extends AppCompatActivity {
                     unit.requestFocus();
                     return;
                 }
+                if (unitText.compareTo("00")==0){
+                    unit.setError("Units Cannot be 0!");
+                    unit.requestFocus();
+                    return;
+                }
+                if (unitText.compareTo("000")==0){
+                    unit.setError("Units Cannot be 0!");
+                    unit.requestFocus();
+                    return;
+                }
 
                 String categoryText = category.getText().toString();
                 if (categoryText.isEmpty()) {
