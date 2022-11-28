@@ -4,22 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/option_background"
-    android:paddingTop="10dp"
-    android:paddingRight="10dp">
+    android:paddingTop="10dp" >
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-
-        >
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
             android:layout_weight="2"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="Date"/>
 
         <EditText
             android:id="@+id/meal_date"
@@ -27,92 +28,111 @@
             android:clickable="true"
             android:focusable="false"
             android:inputType="date"
-            />
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="40dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type"
             android:layout_weight="2"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="Type" />
 
         <Spinner
             android:id="@+id/meal_type"
             android:layout_weight="3"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="40dp"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Meal Selection"
             android:layout_weight="2"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="Meal Selection" />
 
         <Spinner
             android:id="@+id/meal_selection"
             android:layout_weight="3"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="40dp"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Servings"
             android:layout_weight="2"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="Servings" />
 
         <EditText
             android:id="@+id/meal_serving"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="3"
             android:inputType="numberSigned"
-            />
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"  />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp">
+        android:layout_margin="30dp"
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/cancel_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
             android:layout_weight="1"
-            android:layout_margin="10dp"/>
+            android:layout_marginRight="20dp"
+            android:text="Cancel"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/save_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
             android:layout_weight="1"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginLeft="20dp"
+            android:text="Save"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
     </TableRow>
-
 
 </TableLayout>

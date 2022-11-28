@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -34,7 +35,7 @@ import java.util.List;
  * This class is an Activity that handles the Meal Planner menu. The user will be able to see
  * a list of planned meals grouped by their dates and can choose to add or delete each meal.
  */
-public class MealPlan extends AppCompatActivity {
+public class MealPlan extends AppCompatActivity implements ExpandableListAdapter.OnDeletePressedListener {
 
     /**
      * {@link ArrayList} that holds the dates where there are meals.
@@ -51,6 +52,7 @@ public class MealPlan extends AppCompatActivity {
      * The Firestore authentication ID of the user.
      */
     String userID;
+    CollectionReference mealCollection;
 
     /**
      *  This method gets called when the Activity is created. It creates the layouts
@@ -73,7 +75,7 @@ public class MealPlan extends AppCompatActivity {
 
         // Set up Firestore connection and Snapshot listener
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference mealCollection = db.collection("mealplan");
+        mealCollection = db.collection("mealplan");
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mealCollection.whereEqualTo("id", userID).addSnapshotListener((value, error) -> {
@@ -98,7 +100,7 @@ public class MealPlan extends AppCompatActivity {
         addButton.setOnClickListener(view -> {
             Intent addIntent = new Intent(getBaseContext(), AddMealActivity.class);
             startActivity(addIntent);
-       });
+        });
 
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
@@ -122,5 +124,12 @@ public class MealPlan extends AppCompatActivity {
             finish();
         });
         // endregion
+    }
+
+    @Override
+    public void deleteMeal(String docRef) {
+        mealCollection.document(docRef).delete()
+                .addOnSuccessListener(unused -> Log.d("DELETE MEAL", "Delete success"))
+                .addOnFailureListener(e -> Log.d("DELETE MEAL", "Delete failed"));
     }
 }

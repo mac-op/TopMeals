@@ -8,28 +8,31 @@
         android:id="@+id/meal_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lemonmilk_light"
+        android:layout_weight="1"
         android:padding="10dp"
+        android:fontFamily="@font/satoshi_medium"
         android:textSize="20sp"
-        android:layout_weight="1"/>
+        android:textColor="@color/black"
+        android:text="Meal Name" />
 
     <TextView
         android:id="@+id/num_serving"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="@font/lemonmilk_light"
+        android:layout_weight="1"
         android:padding="10dp"
-        android:layout_weight="1"/>
-
+        android:fontFamily="@font/satoshi_medium"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="Servings" />
 
     <ImageView
         android:id="@+id/delete_meal_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/delete_meal_item"
-        android:src="@drawable/delete_icon"
         android:layout_margin="10dp"
         android:padding="8dp"
-        />
+        android:contentDescription="@string/delete_meal_item"
+        android:src="@drawable/delete_icon"
+        android:backgroundTint="@color/black" />
 </LinearLayout>

@@ -102,7 +102,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         holder.description.setText(ingredient.getDescription());
         holder.bestBefore.setText(
                 String.format("Best Before: %s", dateFormat.parse(ingredient.getBestBefore())));
-        holder.count.setText(String.format("%s %s", amountString, ingredient.getUnit()));
+        holder.count.setText(String.format("Amount: %s %s", amountString, ingredient.getUnit()));
         holder.category.setText(String.format("Category: %s", ingredient.getCategory()));
         holder.location.setText(String.format("Location: %s", ingredient.getLocation()));
     }

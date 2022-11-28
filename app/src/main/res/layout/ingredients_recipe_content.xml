@@ -4,48 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/ingredient_description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/ingredient_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:padding="4dp"
-            android:text="TextView" />
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:text="Description"
+        android:fontFamily="@font/satoshi_bold"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:autoSizeTextType="uniform">
 
         <TextView
-            android:id="@+id/ingredient_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textAlignment="viewEnd"
-            android:padding="4dp"
-            android:text="TextView"
-            />
+            android:layout_weight="0"
+            android:maxLines="1"
+            android:layout_marginLeft="5dp"
+            android:text="Amount:"
+            android:fontFamily="@font/satoshi_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
-            android:id="@+id/ingredient_unit"
+            android:id="@+id/ingredient_amount_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textAlignment="viewEnd"
-            android:padding="4dp"
-            android:text="TextView"
-            />
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="None"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_marginLeft="5dp"
+            android:maxLines="1"
+            android:text="Category:"
+            android:fontFamily="@font/satoshi_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/ingredient_category_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textAlignment="viewEnd"
-            android:padding="4dp"
-            android:text="TextView"
-            />
-
-
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="None"
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"  />
     </LinearLayout>
 
 </LinearLayout>

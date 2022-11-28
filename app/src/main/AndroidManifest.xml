@@ -16,7 +16,9 @@
         tools:targetApi="32">
         <activity
             android:name=".mealplan.AddMealActivity"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".mealplan.AddMealActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -37,28 +39,45 @@
         </activity>
         <activity
             android:name=".shoppinglist.ShoppingListFinish"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".shoppinglist.ShoppingList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".shoppinglist.ShoppingList"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".login.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.AddIngredientRecipe"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.IngredientsDisplay">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.IngredientsDisplay"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.IngredientsDisplay">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.IngredientRecipe"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.RecipeDisplay">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -72,21 +91,18 @@
         </activity>
         <activity
             android:name=".recipebook.RecipeDisplay"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.RecipeBook">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.AddEditRecipe"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".shoppinglist.ShoppingList"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.RecipeBook">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

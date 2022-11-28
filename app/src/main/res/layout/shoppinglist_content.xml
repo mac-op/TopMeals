@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,25 +9,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
         <TextView
             android:id="@+id/shoppingListDescription"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:paddingLeft="5dp"
             android:paddingTop="5dp"
-            android:text="TextView"
-            android:textSize="30sp" />
+            android:paddingBottom="5dp"
+            android:fontFamily="@font/satoshi_bold"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <CheckBox
             android:id="@+id/checkItem"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:buttonTint="@color/black"
             android:scaleX="2"
             android:scaleY="2" />
-
 
     </LinearLayout>
 
@@ -36,18 +39,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:autoSizeTextType="uniform"
-        >
+        android:autoSizeTextType="uniform" >
 
         <TextView
             android:id="@+id/shoptextAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="5dp"
             android:maxLines="1"
             android:text="Amount:"
-            android:textSize="15dp"/>
+            android:fontFamily="@font/satoshi_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/shoppingListAmount"
@@ -55,18 +59,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:padding="15dp"
+            android:padding="5dp"
             android:text="None"
-            android:textSize="20dp"/>
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/shoptextUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
             android:maxLines="1"
             android:text="Unit:"
-            android:textSize="15dp"/>
+            android:fontFamily="@font/satoshi_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/shoppingListUnit"
@@ -74,9 +84,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:padding="15dp"
+            android:padding="5dp"
             android:text="None"
-            android:textSize="20dp"/>
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/shoptextCategory"
@@ -84,18 +96,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
             android:text="Category:"
-            android:textSize="15dp"/>
+            android:fontFamily="@font/satoshi_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/shoppingListIngredientCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="5dp"
             android:maxLines="1"
             android:text="None"
-            android:textSize="20dp"/>
+            android:fontFamily="@font/satoshi_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 

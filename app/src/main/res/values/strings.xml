@@ -4,16 +4,16 @@
     <string name="delete_meal_item">delete_meal_item</string>
     <string name="edit_meal_item">edit_meal_item</string>
     <string-array name="ingredient_sort">
-        <item>Description</item>
-        <item>Best Before</item>
-        <item>Location</item>
-        <item>Category</item>
+        <item>DESCRIPTION</item>
+        <item>BEST BEFORE</item>
+        <item>LOCATION</item>
+        <item>CATEGORY</item>
     </string-array>
     <string-array name="recipe_sort">
-        <item>Title</item>
-        <item>Time</item>
-        <item>Serving</item>
-        <item>Category</item>
+        <item>TITLE</item>
+        <item>TIME</item>
+        <item>SERVING</item>
+        <item>CATEGORY</item>
     </string-array>
 
 </resources>

@@ -6,7 +6,10 @@
         android:id="@+id/meal_date_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:fontFamily="@font/satoshi_bold"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:text="01/01/2022" />
 
 </LinearLayout>
