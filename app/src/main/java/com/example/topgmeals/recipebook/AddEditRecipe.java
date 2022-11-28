@@ -2,29 +2,22 @@ package com.example.topgmeals.recipebook;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.topgmeals.R;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.topgmeals.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,13 +26,11 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * This class is an Activity that handles the ADD functionality of the Recipe Book menu where user can add a
- * new {@link Recipe}. Called by {@link RecipeBook}
+ * This class is an Activity that handles the ADD functionality of the Recipe Book menu where user
+ * can add a new {@link Recipe}. Called by {@link RecipeBook}
  */
 public class AddEditRecipe extends AppCompatActivity {
-
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri mImageUri;
 
@@ -47,7 +38,7 @@ public class AddEditRecipe extends AppCompatActivity {
     private StorageReference mStorageRef;
 
     /**
-     * Method to handle layout of the Activity when it is created
+     * Method to handle layout of the Activity when it is created.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,54 +60,53 @@ public class AddEditRecipe extends AppCompatActivity {
             EditText category = (EditText) findViewById(R.id.Category_editText);
             EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
-            // region input validation
+            // Title validation
             String title_text = title.getText().toString();
-            if (title_text.isEmpty()) {
+            if ((title_text.trim()).isEmpty()) {
                 title.setError("Title is required!");
                 title.requestFocus();
                 return;
             }
 
-            String prep_time_text = prep_time.getText().toString().trim();
-            if (prep_time_text.isEmpty()) {
+            // Prep time validation
+            String prep_time_text = prep_time.getText().toString();
+            if ((prep_time_text.trim()).isEmpty()) {
                 prep_time.setError("Preparation time is required!");
                 prep_time.requestFocus();
                 return;
-            }
-
-            if (Integer.parseInt(prep_time_text) == 0){
+            } else if (Integer.parseInt(prep_time_text) == 0){
                 prep_time.setError("Preparation time cannot be 0!");
                 prep_time.requestFocus();
                 return;
             }
 
-            if ((serving.getText().toString().trim()).isEmpty()) {
+            // Serving validation
+            String serving_text = serving.getText().toString();
+            if ((serving_text.trim()).isEmpty()) {
                 serving.setError("Servings is required!");
                 serving.requestFocus();
                 return;
-            }
-
-            Integer serving_text = Integer.parseInt(serving.getText().toString());
-            if (serving_text.equals(0)) {
+            } else if (Integer.parseInt(serving_text) == 0) {
                 serving.setError("Servings cannot be 0!");
                 serving.requestFocus();
                 return;
             }
 
+            // Category validation
             String category_text = category.getText().toString();
-            if (category_text.isEmpty()) {
+            if ((category_text.trim()).isEmpty()) {
                 category.setError("Category is required!");
                 category.requestFocus();
                 return;
             }
 
+            // Comments validation
             String comments_text = comments.getText().toString();
-            if (comments_text.isEmpty()) {
+            if ((comments_text.trim()).isEmpty()) {
                 comments.setError("Comments is required!");
                 comments.requestFocus();
                 return;
             }
-            // endregion
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -132,13 +122,16 @@ public class AddEditRecipe extends AppCompatActivity {
             db.collection("recipes")
                     .add(data)
                     .addOnSuccessListener(documentReference -> {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        Log.d(TAG, "DocumentSnapshot written with ID: " +
+                                documentReference.getId());
 
-                        StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId());
+                        StorageReference uploadRef = mStorageRef.child("uploads/" +
+                                documentReference.getId());
 
                         if (mImageUri!=null) {
                             UploadTask uploadTask = uploadRef.putFile(mImageUri);
-                            // Register observers to listen for when the download is done or if it fails
+                            // Register observers to listen for when the download is done or
+                            // if it fails
                             uploadTask.addOnFailureListener(exception -> {})
                                     .addOnSuccessListener(taskSnapshot -> {});
                         }
@@ -151,7 +144,8 @@ public class AddEditRecipe extends AppCompatActivity {
         Button cancel_recipe = findViewById(R.id.cancel_recipe_button);
         cancel_recipe.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditRecipe.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Recipes Book?").setCancelable(true)
+            cancelDialog.setMessage("Do you want to discard changes and return to Recipes " +
+                            "Book?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -177,9 +171,9 @@ public class AddEditRecipe extends AppCompatActivity {
                 openFileChooser();
             }
         });
-
     }
-    private void openFileChooser(){
+
+    private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -189,7 +183,8 @@ public class AddEditRecipe extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null &&
+                data.getData() != null) {
             mImageUri = data.getData();
             mImageView.setImageURI(mImageUri);
         }

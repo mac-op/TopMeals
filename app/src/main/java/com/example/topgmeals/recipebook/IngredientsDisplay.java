@@ -25,11 +25,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is an Activity that handles the Ingredients display menu for a recipe. The user will be able to see
- * the information of each ingredient, and delete an ingredient for a recipe.
+ * This class is an Activity that handles the Ingredients display menu for a recipe. The user will
+ * be able to see the information of each ingredient, and delete an ingredient for a recipe.
  */
 public class IngredientsDisplay extends AppCompatActivity {
-
     /**
      *  This method gets called when the Activity is created. It creates the layouts
      *  and handles the logic for displaying a {@link IngredientRecipe}.

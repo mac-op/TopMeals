@@ -17,8 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * This Activity allows the user to enter their email to receive an email from Firebase to reset
- * their password.
+ * This class is an Activity that allows the user to enter their email to receive an email from
+ * Firebase to reset their password.
  */
 public class MainForgotPassword extends AppCompatActivity {
     private EditText editTextEmail;

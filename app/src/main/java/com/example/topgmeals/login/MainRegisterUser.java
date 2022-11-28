@@ -24,7 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This Activity allows a user to create an account by providing name, email address and password.
+ * This class is an Activity allows a user to create an account by providing name, email address
+ * and password.
  */
 public class MainRegisterUser extends AppCompatActivity {
     private FirebaseAuth mAuth;

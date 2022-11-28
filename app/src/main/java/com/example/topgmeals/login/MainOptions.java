@@ -24,8 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 /**
- * This Activity allows the signed-in user to choose from 4 main Activities (entities): Ingredient
- * Storage, Shopping List, Meal Planner, or Recipes Book.
+ * This class is an Activity that allows the signed-in user to choose from 4 main Activities
+ * (entities): Ingredient Storage, Shopping List, Meal Planner, or Recipes Book.
  */
 public class MainOptions extends AppCompatActivity {
     private TextView textViewUsername;

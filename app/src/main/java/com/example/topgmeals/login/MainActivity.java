@@ -19,8 +19,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * This Activity is the first entry point to the app. Allows the user to log in or create an
- * account.
+ * This class is an Activity that is the first entry point to the app. Allows the user to log in or
+ * create an account.
+ *
+ * All Firebase code for login, including creating account and forget password
+ * was adapted from https://youtu.be/Z-RE1QuUWPg.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.shoppinglist.ShoppingListFinish;
 import com.example.topgmeals.utils.DateFormat;
 
 import java.util.Calendar;
@@ -83,8 +82,10 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
-            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditIngredientActivity.this);
-            cancelDialog.setMessage("Do you want to remove this ingredient from the Shopping List?.").setCancelable(true)
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(AddEditIngredientActivity.this);
+            cancelDialog.setMessage("Do you want to remove this ingredient from the Shopping " +
+                            "List?.").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -97,7 +98,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
                             Intent deleteIntent = new Intent();
 
-                            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+                            Ingredient ingredient1 = new Ingredient(description_, bbDate_,
+                                    location_, amount_, unit_, category_, "TEMP");
                             deleteIntent.putExtra("edited_ingredient", ingredient1);
                             setResult(2, deleteIntent);
                             finish();
@@ -114,8 +116,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             alertCancel.show();
         });
 
-        /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
-         to update **/
+        /* Set button to send the position of the Ingredient and its new content back to
+           IngredientStorage to update **/
         save.setOnClickListener(view -> {
             String description_ = description.getText().toString();
             Date bbDate_ = myCalendar.getTime();
@@ -124,7 +126,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             String unit_ = unit.getText().toString();
             String category_ = category.getText().toString();
 
-            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_,
+                    unit_, category_, "TEMP");
             Intent editIntent = new Intent();
             editIntent.putExtra("edited_ingredient", ingredient1);
             setResult(RESULT_OK, editIntent);
@@ -133,7 +136,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is invoked if the purpose of the Activity is to edit/delete an existing {@link Ingredient}
+     * This method is invoked if the purpose of the Activity is to edit/delete an existing
+     * {@link Ingredient}
      */
     public void editMenu() {
         setTitle("Edit Ingredient");
@@ -168,8 +172,10 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
-            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditIngredientActivity.this);
-            cancelDialog.setMessage("Are you sure you want to delete this ingredient?").setCancelable(true)
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(AddEditIngredientActivity.this);
+            cancelDialog.setMessage("Are you sure you want to delete this " +
+                            "ingredient?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -190,8 +196,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             alertCancel.show();
         });
 
-        /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
-         to update **/
+        /* Set button to send the position of the Ingredient and its new content back to
+           IngredientStorage to update **/
         save.setOnClickListener(view -> {
             String description_ = description.getText().toString();
             Date bbDate_ = myCalendar.getTime();
@@ -200,14 +206,14 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             String category_ = category.getText().toString();
 
             // Description validation
-            if (description_.isEmpty()) {
+            if ((description_.trim()).isEmpty()) {
                 description.setError("Description is required!");
                 description.requestFocus();
                 return;
             }
 
             // Location validation
-            if (location_.isEmpty()) {
+            if ((location_.trim()).isEmpty()) {
                 location.setError("Location is required!");
                 location.requestFocus();
                 return;
@@ -215,7 +221,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             // Amount validation and setting its value
             float amount_;
-            if (amount.getText().toString().isEmpty()) {
+            if ((amount.getText().toString().trim()).isEmpty()) {
                 amount.setError("Amount is required!");
                 amount.requestFocus();
                 return;
@@ -228,14 +234,14 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
 
             // Unit validation
-            if (unit_.isEmpty()) {
+            if ((unit_.trim()).isEmpty()) {
                 unit.setError("Unit is required!");
                 unit.requestFocus();
                 return;
             }
 
             // Category validation
-            if (category_.isEmpty()) {
+            if ((category_.trim()).isEmpty()) {
                 category.setError("Category is required!");
                 category.requestFocus();
                 return;
@@ -260,8 +266,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         save.setText("Save");
 
         /*
-        Create a DatePicker from a calendar for the user to choose a date.
-        Code adapted from https://stackoverflow.com/a/14933515
+            Create a DatePicker from a calendar for the user to choose a date.
+            Code adapted from https://stackoverflow.com/a/14933515
          */
         myCalendar.setTime(new Date());
         updateLabel();
@@ -282,8 +288,10 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         // When the user wants to discard changes and go back to IngredientStorage
         cancel.setOnClickListener(view -> {
-            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditIngredientActivity.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Ingredient Storage?").setCancelable(true)
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(AddEditIngredientActivity.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to " +
+                            "Ingredient Storage?").setCancelable(true)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -310,14 +318,14 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             String category_ = category.getText().toString();
 
             // Description validation
-            if (description_.isEmpty()) {
+            if ((description_.trim()).isEmpty()) {
                 description.setError("Description is required!");
                 description.requestFocus();
                 return;
             }
 
             // Location validation
-            if (location_.isEmpty()) {
+            if ((location_.trim()).isEmpty()) {
                 location.setError("Location is required!");
                 location.requestFocus();
                 return;
@@ -325,12 +333,12 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             // Amount validation and setting its value
             float amount_;
-            if (amount.getText().toString().isEmpty()) {
+            if ((amount.getText().toString().trim()).isEmpty()) {
                 amount.setError("Amount is required!");
                 amount.requestFocus();
                 return;
             } else if (Float.parseFloat(amount.getText().toString()) == 0) {
-                amount.setError("Amount cannot be zero!");
+                amount.setError("Amount cannot be 0!");
                 amount.requestFocus();
                 return;
             } else {
@@ -338,27 +346,27 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
 
             // Unit validation
-            if (unit_.isEmpty()) {
+            if ((unit_.trim()).isEmpty()) {
                 unit.setError("Unit is required!");
                 unit.requestFocus();
                 return;
             }
 
             // Category validation
-            if (category_.isEmpty()) {
+            if ((category_.trim()).isEmpty()) {
                 category.setError("Category is required!");
                 category.requestFocus();
                 return;
             }
 
             /* Create a new Ingredient and return it to IngredientStorage to be added */
-            Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+            Ingredient ingredient = new Ingredient(description_, bbDate_, location_, amount_, unit_,
+                    category_, "TEMP");
             Intent saveIntent = new Intent();
             saveIntent.putExtra("added_ingredient", ingredient);
             setResult(RESULT_OK, saveIntent);
             finish();
         });
-
     }
 
     @Override

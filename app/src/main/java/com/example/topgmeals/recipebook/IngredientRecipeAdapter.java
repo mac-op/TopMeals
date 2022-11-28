@@ -27,7 +27,8 @@ public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
     /**
      * Constructor for {@link IngredientRecipeAdapter}
      */
-    public IngredientRecipeAdapter(@NonNull Context context, int resource, @NonNull List<Ingredient> objects) {
+    public IngredientRecipeAdapter(@NonNull Context context, int resource,
+                                   @NonNull List<Ingredient> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -39,7 +40,6 @@ public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         String description = getItem(position).getDescription();
         Float amount = getItem(position).getAmount();
         String unit = getItem(position).getUnit();
