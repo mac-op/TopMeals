@@ -8,8 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +37,7 @@ import java.util.Map;
  * This class is an Activity that handles the ADD functionality of the Recipe Book menu where user can add a
  * new {@link Recipe}. Called by {@link RecipeBook}
  */
-public class AddEditRecipe extends AppCompatActivity {
+public class addEditRecipe extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri mImageUri;
@@ -50,7 +52,7 @@ public class AddEditRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
-        AddEditRecipe currentClass = AddEditRecipe.this;
+        addEditRecipe currentClass = addEditRecipe.this;
 
         mImageView = findViewById(R.id.recipeImage);
         mStorageRef = FirebaseStorage.getInstance().getReference();
