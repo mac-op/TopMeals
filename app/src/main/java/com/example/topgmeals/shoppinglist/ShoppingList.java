@@ -265,6 +265,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                         Ingredient curI = new Ingredient(m.getMealName(), new Date(), i.getLocation(), (float)m.getNumServings() - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
                         shoppingList.add(curI);
                         fullshoppingList.add(curI);
+                        shoppingListAdapter.notifyDataSetChanged();
                         SeenIngredients.add(m.getMealName());
                     }
                     break;
@@ -333,6 +334,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                                                 Ingredient curI = new Ingredient(ir.getDescription(), new Date(), i.getLocation(), (float)tempTot - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
                                                 shoppingList.add(curI);
                                                 fullshoppingList.add(curI);
+                                                shoppingListAdapter.notifyDataSetChanged();
                                                 SeenIngredients.add(ir.getDescription());
                                             }
                                             NA = false;

@@ -82,6 +82,9 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                if (recImg.getDrawable() == null){
+                    recImg.setImageResource(R.drawable.defaultrecipe);
+                }
                 // Handle any errors
             }
         });
