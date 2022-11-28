@@ -9,8 +9,8 @@ import java.util.Locale;
  * Helper Object to format Date into MM/dd/yyyy
  */
 public class DateFormat {
-    private String format = "MM/dd/yyyy";
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
+    private final String format = "MM/dd/yyyy";
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
 
     public String parse(Date date){
         return dateFormat.format(date);
