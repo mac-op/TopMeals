@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.Ingredient;
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
+import com.example.topgmeals.mealplan.ingredientstorage.IngredientStorage;
 import com.example.topgmeals.mealplan.Meal;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.recipebook.Recipe;
@@ -83,7 +83,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         ingredientsDb.whereEqualTo("id", id)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
                         ingredientsList.clear();
                         assert value != null;
                         for (QueryDocumentSnapshot doc : value){
@@ -98,7 +99,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
 
         mealCollection.whereEqualTo("id", id).addSnapshotListener((value, error) -> {
             for (QueryDocumentSnapshot doc: value){
-                Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(doc.getString("date"), new ParsePosition(0));
+                Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(doc.getString("date"),
+                        new ParsePosition(0));
                 Date cur = new Date();
                 Log.e("t", date1.toString());
                 Log.e("t", cur.toString());
@@ -114,7 +116,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         RecipeRef.whereEqualTo("id", id)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
 
                         for (QueryDocumentSnapshot doc : value){
                             // refList.add(doc.getId());
@@ -137,11 +140,16 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
 
         shoppingListView.setAdapter(shoppingListAdapter);
 
-        Toast.makeText(this, "Swipe right or check the Checkbox to cross off the item. Press 'Done Shopping when finished.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Swipe right or check the Checkbox to cross off the " +
+                "item. Press 'Done Shopping when finished.", Toast.LENGTH_LONG).show();
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
@@ -160,7 +168,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         sortByDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Collections.sort(shoppingList, (d1, d2) -> d1.getDescription().compareTo(d2.getDescription()));
+                Collections.sort(shoppingList,
+                        (d1, d2) -> d1.getDescription().compareTo(d2.getDescription()));
                 shoppingListAdapter.notifyDataSetChanged();
 
             }
@@ -170,7 +179,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         sortByCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Collections.sort(shoppingList, (d1, d2) -> d1.getCategory().compareTo(d2.getCategory()));
+                Collections.sort(shoppingList,
+                        (d1, d2) -> d1.getCategory().compareTo(d2.getCategory()));
                 shoppingListAdapter.notifyDataSetChanged();
 
             }
@@ -202,42 +212,28 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
             }
         });
 
-        //region ButtonSwapping
+        // Begin Region Activity Swapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingList.this, IngredientStorage.class));
-                finish();
-            }
+        IngredientButton.setOnClickListener(view -> {
+            startActivity(new Intent(ShoppingList.this, IngredientStorage.class));
+            finish();
         });
 
         Button ShoppingButton = (Button) findViewById(R.id.switchToShoppingList);
-        ShoppingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingList.this, ShoppingList.class));
-            }
-        });
+        ShoppingButton.setOnClickListener(view -> startActivity(new Intent(ShoppingList.this, ShoppingList.class)));
 
         Button MealPlanButton = (Button) findViewById(R.id.switchToMealPlan);
-        MealPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingList.this, MealPlan.class));
-                finish();
-            }
+        MealPlanButton.setOnClickListener(view -> {
+            startActivity(new Intent(ShoppingList.this, MealPlan.class));
+            finish();
         });
 
         Button RecipesButton = (Button) findViewById(R.id.switchToRecipes);
-        RecipesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingList.this, RecipeBook.class));
-                finish();
-            }
+        RecipesButton.setOnClickListener(view -> {
+            startActivity(new Intent(ShoppingList.this, RecipeBook.class));
+            finish();
         });
-        //endregion
+        // End Region Activity Swapping
     }
 
     private void load(FirebaseFirestore db){
@@ -260,9 +256,12 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                         break;
                     }
 
-                    Log.e("t", i.getDescription() + String.valueOf(m.getNumServings()) + " " + String.valueOf(i.getAmount()));
+                    Log.e("t", i.getDescription() + String.valueOf(m.getNumServings()) +
+                            " " + String.valueOf(i.getAmount()));
                     if (m.getNumServings() > i.getAmount()){
-                        Ingredient curI = new Ingredient(m.getMealName(), new Date(), i.getLocation(), (float)m.getNumServings() - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
+                        Ingredient curI = new Ingredient(m.getMealName(), new Date(),
+                                i.getLocation(), (float)m.getNumServings() - (float)i.getAmount(),
+                                i.getUnit(), i.getCategory(), "s");
                         shoppingList.add(curI);
                         fullshoppingList.add(curI);
                         shoppingListAdapter.notifyDataSetChanged();
@@ -282,7 +281,8 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                     RecipeIngRef.whereEqualTo("id", r.getDocumentID())
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            public void onEvent(@Nullable QuerySnapshot value,
+                                                @Nullable FirebaseFirestoreException error) {
 
                                 for (QueryDocumentSnapshot doc : value){
                                     // refList.add(doc.getId());
@@ -331,7 +331,10 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                                                 break;
                                             }
                                             if (tempTot > i.getAmount()) {
-                                                Ingredient curI = new Ingredient(ir.getDescription(), new Date(), i.getLocation(), (float)tempTot - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
+                                                Ingredient curI = new Ingredient(ir.getDescription(),
+                                                        new Date(), i.getLocation(),
+                                                        (float)tempTot - (float)i.getAmount(),
+                                                        i.getUnit(), i.getCategory(), "s");
                                                 shoppingList.add(curI);
                                                 fullshoppingList.add(curI);
                                                 shoppingListAdapter.notifyDataSetChanged();
@@ -343,7 +346,10 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                                     }
                                     // Add new Ig if not in list
                                     if (NA) {
-                                        Ingredient curI = new Ingredient(ir.getDescription(), new Date(), ir.getLocation(), (float) m.getNumServings() * (float) ir.getAmount(), ir.getUnit(), ir.getCategory(), "s");
+                                        Ingredient curI = new Ingredient(ir.getDescription(),
+                                                new Date(), ir.getLocation(),
+                                                (float) m.getNumServings() * (float) ir.getAmount(),
+                                                ir.getUnit(), ir.getCategory(), "s");
                                         shoppingList.add(curI);
                                         fullshoppingList.add(curI);
                                         shoppingListAdapter.notifyDataSetChanged();

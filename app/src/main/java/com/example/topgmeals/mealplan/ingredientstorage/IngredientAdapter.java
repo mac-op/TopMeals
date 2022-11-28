@@ -1,4 +1,4 @@
-package com.example.topgmeals.ingredientstorage;
+package com.example.topgmeals.mealplan.ingredientstorage;
 
 import android.view.LayoutInflater;
 import android.view.View;

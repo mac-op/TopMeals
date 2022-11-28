@@ -126,7 +126,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredientstorage.IngredientStorage"
+            android:name=".mealplan.ingredientstorage.IngredientStorage"
             android:exported="false"
             android:launchMode="singleTop"
             android:parentActivityName=".login.MainActivity">
@@ -135,9 +135,9 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredientstorage.AddEditIngredientActivity"
+            android:name=".mealplan.ingredientstorage.AddEditIngredientActivity"
             android:exported="false"
-            android:parentActivityName=".ingredientstorage.IngredientStorage">
+            android:parentActivityName=".mealplan.ingredientstorage.IngredientStorage">
             <meta-data
                 android:name="android.support.IngredientStorage"
                 android:value="com/example/topgmeals/AddEditIngredientActivity.java" />

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
 
 import java.util.List;
 

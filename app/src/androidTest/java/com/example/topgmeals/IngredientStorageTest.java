@@ -6,17 +6,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
-import com.example.topgmeals.ingredientstorage.Ingredient;
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.mealplan.ingredientstorage.AddEditIngredientActivity;
+import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
+import com.example.topgmeals.mealplan.ingredientstorage.IngredientStorage;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;

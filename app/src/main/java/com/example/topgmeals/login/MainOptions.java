@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.mealplan.ingredientstorage.IngredientStorage;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.recipebook.RecipeBook;
 import com.example.topgmeals.shoppinglist.ShoppingList;
