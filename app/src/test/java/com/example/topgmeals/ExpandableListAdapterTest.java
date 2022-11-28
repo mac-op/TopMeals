@@ -12,9 +12,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * This class tests the functionality of {@link ExpandableListAdapter}
+ */
 public class ExpandableListAdapterTest {
     private ExpandableListAdapter adapter;
 
+    /**
+     * Creates mock {@link ExpandableListAdapter} with data
+     */
     public ExpandableListAdapter mockAdapter(){
         ArrayList<String> mockDates = new ArrayList<>(
                 Arrays.asList(
@@ -29,12 +35,18 @@ public class ExpandableListAdapterTest {
         return new ExpandableListAdapter(null, mockDates, map);
     }
 
+    /**
+     * Test if getGroupCount is correct
+     */
     @Test
     public void getGroupCountTest(){
         adapter = mockAdapter();
         assertEquals(3, adapter.getGroupCount());
     }
 
+    /**
+     * Test if getGroup is correct
+     */
     @Test
     public void getGroupTest(){
         adapter = mockAdapter();
@@ -42,6 +54,9 @@ public class ExpandableListAdapterTest {
         assertEquals("09/09/2022", date);
     }
 
+    /**
+     * Test if getChildrenCount is correct
+     */
     @Test
     public void getChildrenCountTest(){
         adapter = mockAdapter();

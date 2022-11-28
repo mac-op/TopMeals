@@ -72,12 +72,13 @@ public class AddEditRecipe extends AppCompatActivity {
                 EditText category = findViewById(R.id.Category_editText);
                 EditText comments = findViewById(R.id.Comments_editText);
 
-                String title_text = title.getText().toString();
-                if (title_text.isEmpty()) {
-                    title.setError("Title is required!");
-                    title.requestFocus();
-                    return;
-                }
+            // region input validation
+            String title_text = title.getText().toString();
+            if (title_text.isEmpty()) {
+                title.setError("Title is required!");
+                title.requestFocus();
+                return;
+            }
 
                 String prep_time_text = prep_time.getText().toString().trim();
                 if (prep_time_text.isEmpty()) {
@@ -91,77 +92,60 @@ public class AddEditRecipe extends AppCompatActivity {
                     return;
                 }
 
-                if (serving.getText().toString().equals("")) {
-                    serving.setError("Servings is required!");
-                    serving.requestFocus();
-                    return;
-                }
-                Integer serving_text = Integer.parseInt(serving.getText().toString());
-                if (serving_text.equals(0)) {
-                    serving.setError("Servings Cannot be 0!");
-                    serving.requestFocus();
-                    return;
-                }
-
-                String category_text = category.getText().toString();
-                if (category_text.isEmpty()) {
-                    category.setError("Category is required!");
-                    category.requestFocus();
-                    return;
-                }
-
-                String comments_text = comments.getText().toString();
-                if (comments_text.isEmpty()) {
-                    comments.setError("Comments is required!");
-                    comments.requestFocus();
-                    return;
-                }
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                Map<String, Object> data = new HashMap<>();
-                data.put("title", title_text);
-                data.put("prepTime", prep_time_text);
-                data.put("servings", serving_text);
-                data.put("category", category_text);
-                data.put("comments", comments_text);
-                data.put("id", uid);
-
-                db.collection("recipes")
-                        .add(data)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-                                StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId().toString());
-                                UploadTask uploadTask = uploadRef.putFile(mImageUri);
-
-
-                                // Register observers to listen for when the download is done or if it fails
-                                uploadTask.addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception exception) {
-                                        // Handle unsuccessful uploads
-                                    }
-                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                                        // ...
-                                    }
-                                });
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-                startActivity(intent_add);
+            if (serving.getText().toString().equals("")) {
+                serving.setError("Servings is required!");
+                serving.requestFocus();
+                return;
             }
+            Integer serving_text = Integer.parseInt(serving.getText().toString());
+            if (serving_text.equals(0)) {
+                serving.setError("Servings Cannot be 0!");
+                serving.requestFocus();
+                return;
+            }
+
+            String category_text = category.getText().toString();
+            if (category_text.isEmpty()) {
+                category.setError("Category is required!");
+                category.requestFocus();
+                return;
+            }
+
+            String comments_text = comments.getText().toString();
+            if (comments_text.isEmpty()) {
+                comments.setError("Comments is required!");
+                comments.requestFocus();
+                return;
+            }
+            // endregion
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("title", title_text);
+            data.put("prepTime", prep_time_text);
+            data.put("servings", serving_text);
+            data.put("category", category_text);
+            data.put("comments", comments_text);
+            data.put("id", uid);
+
+            db.collection("recipes")
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+                        StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId());
+
+                        if (mImageUri!=null) {
+                            UploadTask uploadTask = uploadRef.putFile(mImageUri);
+                            // Register observers to listen for when the download is done or if it fails
+                            uploadTask.addOnFailureListener(exception -> {})
+                                    .addOnSuccessListener(taskSnapshot -> {});
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+            startActivity(intent_add);
         });
 
         // When the user wants to discard changes and go back to RecipeBook
@@ -209,8 +193,6 @@ public class AddEditRecipe extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
             mImageView.setImageURI(mImageUri);
-
-
         }
     }
 }
