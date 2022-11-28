@@ -21,27 +21,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Custom Adapter to fit {@link Ingredient} objects into {@link RecyclerView}
+ */
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
 
+    /**
+     * List of {@link Ingredient} objects to display
+     */
     private ArrayList<Ingredient> mData;
+
+    /**
+     * {@link LayoutInflater} objects to display
+     */
     private LayoutInflater mInflater;
+
+    /**
+     * {@link ItemClickListener} to listen for clicks on items
+     */
     private ItemClickListener mClickListener;
 
-    // data is passed into the constructor
-
+    /**
+     * data is passed into the constructor
+     * @param context
+     * @param mData
+     */
     public ShoppingListAdapter(Context context, ArrayList<Ingredient> mData) {
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
     }
 
-    // inflates the row layout from xml when needed
+    /**
+     * inflates the row layout from xml when needed
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.shoppinglist_content, parent, false);
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
+    /**
+     * binds the data to the TextView in each row
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -80,14 +106,18 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     }
 
-    // total number of rows
+    /**
+     * total number of rows
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mData.size();
     }
 
-
-    // stores and recycles views as they are scrolled off screen
+    /**
+     * stores and recycles views as they are scrolled off screen
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView shopDescription;
         TextView shopAmount;
@@ -113,17 +143,26 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         }
     }
 
-    // convenience method for getting data at click position
+    /**
+     * convenience method for getting data at click position
+     * @param id
+     * @return
+     */
     String getItem(int id) {
         return mData.get(id).getDescription();
     }
 
-    // allows clicks events to be caught
+    /**
+     * allows clicks events to be caught
+     * @param itemClickListener
+     */
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
+    /**
+     * parent activity will implement this method to respond to click events
+     */
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
