@@ -73,7 +73,6 @@
             android:layout_height="match_parent"
             android:text="Units"
             android:textStyle="bold"
-            android:inputType="number"
             android:textSize="20dp"
             android:textColor="@color/black"
             android:id="@+id/Unit">
