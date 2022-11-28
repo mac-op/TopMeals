@@ -40,7 +40,7 @@ public class IngredientRecipe extends AppCompatActivity {
     /**
      * An {@link ArrayList} that holds {@link Ingredient} objects.
      */
-    private ArrayList<Ingredient> ingredientsRecipeBook;
+    public ArrayList<Ingredient> ingredientsRecipeBook;
 
     /**
      * A custom {@link android.widget.ArrayAdapter} of type {@link IngredientRecipeAdapter} that handles the view
