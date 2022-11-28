@@ -63,7 +63,7 @@ public class MealPlanTest {
     public void addMealTest() {
         // Go to AddMealActivity
         solo.assertCurrentActivity("Not in Meal Planner", MealPlan.class);
-        solo.clickOnButton("Add");
+        solo.clickOnButton("Add Meal");
         solo.assertCurrentActivity("Not in Add Meal", AddMealActivity.class);
 
         ExpandableListView view = (ExpandableListView) solo.getView(R.id.expandable_meal_plan);
@@ -73,16 +73,8 @@ public class MealPlanTest {
         solo.clickOnView(solo.getView(R.id.meal_date));
         solo.clickOnButton("OK");
 
-        View view1 = solo.getView(Spinner.class, 0);
-        solo.clickOnView(view1);
-        solo.scrollToTop();
-        solo.clickOnView(solo.getView(TextView.class, 1));
-
-        View view2 = solo.getView(Spinner.class, 1);
-        solo.clickOnView(view2);
-        solo.scrollToTop();
-        solo.clickOnView(solo.getView(TextView.class, 1));
-
+        solo.pressSpinnerItem(0, 1);
+        solo.pressSpinnerItem(1, 0);
         solo.enterText((EditText) solo.getView(R.id.meal_serving), "2");
 
         solo.clickOnButton("Save");
