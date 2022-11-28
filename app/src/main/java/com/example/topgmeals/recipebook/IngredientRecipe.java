@@ -32,10 +32,26 @@ import java.util.Map;
  */
 public class IngredientRecipe extends AppCompatActivity {
 
-    ListView ingredientsList;
-    ArrayList<Ingredient> ingredientsRecipeBook;
-    IngredientRecipeAdapter ingredientListAdapter;
+    /**
+     * {@link ListView} to hold ingredientsList
+     */
+    private ListView ingredientsList;
 
+    /**
+     * An {@link ArrayList} that holds {@link Ingredient} objects.
+     */
+    private ArrayList<Ingredient> ingredientsRecipeBook;
+
+    /**
+     * A custom {@link android.widget.ArrayAdapter} of type {@link IngredientRecipeAdapter} that handles the view
+     * of the list of ingredients in recipes.
+     */
+    private IngredientRecipeAdapter ingredientListAdapter;
+
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for the Activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +65,6 @@ public class IngredientRecipe extends AppCompatActivity {
         String RecipeID = itemIntent.getExtras().getString("RECIPE_ID");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //getCurrentUserRecipes(uid, db);
-
         final CollectionReference RecipeRef = db.collection("recipeIngredients");
         SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
@@ -60,11 +74,7 @@ public class IngredientRecipe extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
                         for (QueryDocumentSnapshot doc : value){
-                            // refList.add(doc.getId());
                             Map<String, Object> rData = doc.getData();
-//                            Date cur = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1, new ParsePosition(0));
-//                            Log.e("HEEEEYYYYYYYYY", cur.toString());
-
                             float temp = 0;
                             try{
                                 temp = (float)(double)rData.get("amount");
@@ -89,13 +99,7 @@ public class IngredientRecipe extends AppCompatActivity {
                     }
                 });
 
-
-        // ingredientsRecipeBook.add(beef);
-
         ingredientsList.setAdapter(ingredientListAdapter);
-
-
-
         IngredientRecipe currentClass = IngredientRecipe.this;
 
         ActivityResultLauncher<Intent> viewIngredient = registerForActivityResult(
@@ -137,9 +141,7 @@ public class IngredientRecipe extends AppCompatActivity {
             }
         });
 
-
-
-
+        /* Performing adding ingredient to a recipe button functionality */
         Button addIngredient = (Button) findViewById(R.id.add_ingredient_recipe);
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,10 +152,7 @@ public class IngredientRecipe extends AppCompatActivity {
             }
         });
 
-
-
-
-
+        /* Performing back button functionality */
         Button backButton = (Button) findViewById(R.id.back_button_ingredient_recipe);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

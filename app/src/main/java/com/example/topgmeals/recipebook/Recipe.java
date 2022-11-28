@@ -10,25 +10,52 @@ import android.os.Parcel;
  * between Activities.
  */
 public class Recipe implements Serializable {
+    /**
+     * The Recipe's title.
+     */
     private String title;
+
+    /**
+     * The Recipe's preparation time.
+     */
     private String prepTime;
+
+    /**
+     * Servings of the recipe.
+     */
     private Integer servings;
+
+    /**
+     * The Recipe's category.
+     */
     private String category;
+
+    /**
+     * Comments of the recipe.
+     */
     private String comments;
+
+    /**
+     * The Recipe's picture.
+     */
     private ImageView picture;
+
+    /**
+     * Document ID of the recipe.
+     */
     private String documentID;
 
     /**
      * Constructor for {@link Recipe}
      */
-    public Recipe (String title, String prepTime, int servings, String category, String comments, String id) {
+    public Recipe (String title, String prepTime, Integer servings, String category, String comments, String id) {
         this.title = title;
         this.prepTime = prepTime;
         this.servings = servings;
         this.category = category;
         this.comments = comments;
         this.documentID = id;
-        //this.picture = picture;
+
 
     }
 
@@ -88,7 +115,7 @@ public class Recipe implements Serializable {
      * Sets the serving value of the recipe
      * @param servings
      */
-    public void setServings(int servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
     }
 
@@ -143,10 +170,19 @@ public class Recipe implements Serializable {
         this.picture = picture;
     }
 
+    /**
+     * Gets the document ID of the recipe
+     *  @return
+     *      Returns document ID of recipe
+     */
     public String getDocumentID() {
         return documentID;
     }
 
+    /**
+     * Sets the document ID for the recipe
+     * @param documentID
+     */
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }

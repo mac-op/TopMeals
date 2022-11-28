@@ -24,13 +24,18 @@ public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
     private int resource;
 
-
+    /**
+     * Constructor for {@link IngredientRecipeAdapter}
+     */
     public IngredientRecipeAdapter(@NonNull Context context, int resource, @NonNull List<Ingredient> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
     }
 
+    /**
+     * A {@link View} class to get the view of an {@link Ingredient} object
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
