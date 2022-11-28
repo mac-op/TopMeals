@@ -76,9 +76,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
                 // Got the download URL for 'users/me/profile.png'
 
                 Log.e("madeit", uri.toString());
-                //temp[0] = uri;
                 Glide.with(context).load(uri.toString()).into(recImg);
-                //title_display.setText(title.toString());
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -87,8 +85,6 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
                 // Handle any errors
             }
         });
-
-        // recImg.setImageURI(temp[0]);
 
         title_display.setText(title.toString());
         prep_time_display.setText(prep_time.toString());
