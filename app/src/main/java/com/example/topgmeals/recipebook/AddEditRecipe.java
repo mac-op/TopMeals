@@ -168,7 +168,7 @@ public class AddEditRecipe extends AppCompatActivity {
         Button cancel_recipe = findViewById(R.id.cancel_recipe_button);
         cancel_recipe.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditRecipe.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Recipe Book?").setCancelable(true)
+            cancelDialog.setMessage("Do you want to discard changes and return to Recipes Book?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

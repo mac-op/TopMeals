@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:entries="@array/ingredient_sort"
             android:backgroundTint="@color/black" />
-
     </LinearLayout>
 
     <View
@@ -66,8 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Add Ingredient"
             android:fontFamily="@font/satoshi_bold"
-            android:textSize="18sp">
-        </Button>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -83,6 +81,7 @@
     <include
         android:id="@+id/include4"
         layout="@layout/activity_bottomswitchbuttons"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ingredient_list" />
 

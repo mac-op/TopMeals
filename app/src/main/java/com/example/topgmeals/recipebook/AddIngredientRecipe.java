@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.topgmeals.R;
+import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,12 +42,13 @@ public class AddIngredientRecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_ingredient_recipee);
         AddIngredientRecipe currentClass = AddIngredientRecipe.this;
+        setTitle("New Ingredient Information");
 
         Intent Rintent = getIntent();
         RecipeID = Rintent.getExtras().getString("rID");
 
         /* Performing the add ingredient button functionality */
-        Button addIngredient = (Button) findViewById(R.id.add_ingredient);
+        Button addIngredient = findViewById(R.id.add_ingredient);
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,10 +120,29 @@ public class AddIngredientRecipe extends AppCompatActivity {
 
                 intentAddIngredient.putExtra("RECIPE_ID", RecipeID);
                 startActivity(intentAddIngredient);
-
-
             }
         });
 
+        // When the user wants to discard changes and go back to Ingredients For Recipe
+        Button cancel = findViewById(R.id.cancel_ingredient_recipe_button);
+        cancel.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddIngredientRecipe.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to Ingredients For Recipe?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Discard Changes");
+            alertCancel.show();
+        });
     }
 }

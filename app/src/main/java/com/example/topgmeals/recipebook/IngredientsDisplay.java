@@ -33,9 +33,9 @@ public class IngredientsDisplay extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_ingredient);
+
         IngredientsDisplay currentClass = IngredientsDisplay.this;
 
         EditText description = (EditText) findViewById(R.id.description_editText);
