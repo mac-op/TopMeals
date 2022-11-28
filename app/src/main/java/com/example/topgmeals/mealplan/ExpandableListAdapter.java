@@ -34,6 +34,7 @@ import java.util.Map;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
+    private final OnDeletePressedListener listener;
 
     /**
      * {@link ArrayList} to hold the groups, ie. the dates.
@@ -45,13 +46,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
      */
     private final HashMap<String, ArrayList<Meal>> mealsByDate;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    final CollectionReference colRef = db.collection("mealplan");
-
 
     public ExpandableListAdapter(Context context, ArrayList<String> dateList,
                                  HashMap<String, ArrayList<Meal>> mealsByDate){
         this.context = context;
+        this.listener = (OnDeletePressedListener) context;
         this.dateList = dateList;
         this.mealsByDate = mealsByDate;
     }
@@ -138,11 +137,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ImageView delete = view.findViewById(R.id.delete_meal_item);
         delete.setOnClickListener(view1 -> {
             String docRef = mealItem.getDocRef();
-            Log.d("Docref", docRef);
 
-            colRef.document(docRef).delete()
-                    .addOnSuccessListener(unused -> Log.d("DELETE MEAL", "Delete success"))
-                    .addOnFailureListener(e -> Log.d("DELETE MEAL", "Delete failed"));
+            listener.deleteMeal(docRef);
         });
         return view;
     }
@@ -150,5 +146,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true ;
+    }
+
+    public interface OnDeletePressedListener{
+        void deleteMeal(String docRef);
     }
 }
