@@ -54,8 +54,9 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:maxLength="3"
             android:hint="Preparation Time"
+            android:inputType="numberDecimal"
             android:textAlignment="center"
             android:id="@+id/prep_time_editText">
 
@@ -83,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
+            android:maxLength="3"
             android:hint="Serving "
             android:textAlignment="center"
             android:id="@+id/serving_editText">
