@@ -1,194 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/option_background"
+    android:paddingTop="10dp" >
 
-    <LinearLayout
+
+    <TableRow
+        android:id="@+id/description_"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/back_button_modify_ingredient"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back">
-
-        </Button>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Modify Ingredient"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textColor="@color/black"
-            android:textStyle="bold">
-
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            android:textStyle="bold"
-            android:textSize="30dp">
-
-        </TextView>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:text="Description"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Description">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/description_editText">
+            android:id="@+id/description_editText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Amount"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Amount">
-
-        </TextView>
+            android:textSize="20sp"  />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:inputType="numberDecimal"
-            android:id="@+id/amount_editText">
+            android:id="@+id/amount_editText"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:inputType="numberSigned"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Unit"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Unit">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/unit_editText">
+            android:id="@+id/unit_editText"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:inputType="text"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Category"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Category">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/Category_editText">
+            android:id="@+id/Category_editText"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:inputType="text"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:layout_gravity="center">
 
-            android:textStyle="bold"
-            android:textSize="70dp">
-
-
-        </TextView>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
         <Button
             android:id="@+id/delete_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete Ingredient"
-            android:layout_marginLeft="5dp"
-            >
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:text="DELETE"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
 
-        </Button>
         <Button
             android:id="@+id/update_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update Ingredient"
-            android:layout_marginLeft="30dp">
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:text="UPDATE"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
+    </TableRow>
 
-        </Button>
-
-    </LinearLayout>
-
-</LinearLayout>
+</TableLayout>
