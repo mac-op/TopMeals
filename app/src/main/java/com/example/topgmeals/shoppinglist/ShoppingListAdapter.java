@@ -51,8 +51,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         String ingredientCategory = mData.get(position).getCategory();
 
         holder.shopDescription.setText(ingredientDescription);
-        holder.shopAmount.setText(ingredientAmount);
-        holder.shopUnit.setText(ingredientUnit);
+        holder.shopAmount.setText(ingredientAmount + " " + ingredientUnit);
         holder.shopCategory.setText(ingredientCategory);
 
         final CheckBox cb = holder.itemChecked;
@@ -99,7 +98,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             super(itemView);
             shopDescription = (TextView) itemView.findViewById(R.id.shoppingListDescription);
             shopAmount = (TextView) itemView.findViewById(R.id.shoppingListAmount);
-            shopUnit = (TextView) itemView.findViewById(R.id.shoppingListUnit);
             shopCategory = (TextView) itemView.findViewById(R.id.shoppingListIngredientCategory);
             itemChecked = (CheckBox) itemView.findViewById(R.id.checkItem);
             itemView.setOnClickListener(this);
