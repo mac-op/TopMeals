@@ -187,7 +187,7 @@
     <ImageView
         android:id="@+id/recipeImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="125dp"
         tools:srcCompat="@tools:sample/avatars" />
 
 
