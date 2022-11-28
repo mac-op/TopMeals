@@ -4,9 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 
 import com.example.topgmeals.R;
 
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,15 +61,13 @@ public class AddEditRecipe extends AppCompatActivity {
 
         /* Performing the add recipe button functionality */
         Button add_new = findViewById(R.id.save_recipe_button);
-        add_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_add = new Intent(currentClass, RecipeBook.class);
-                EditText title = findViewById(R.id.title_editText);
-                EditText prep_time = findViewById(R.id.prep_time_editText);
-                EditText serving = findViewById(R.id.serving_editText);
-                EditText category = findViewById(R.id.Category_editText);
-                EditText comments = findViewById(R.id.Comments_editText);
+        add_new.setOnClickListener(view -> {
+            Intent intent_add = new Intent(currentClass, RecipeBook.class);
+            EditText title = (EditText) findViewById(R.id.title_editText);
+            EditText prep_time = (EditText) findViewById(R.id.prep_time_editText);
+            EditText serving = (EditText) findViewById(R.id.serving_editText);
+            EditText category = (EditText) findViewById(R.id.Category_editText);
+            EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
             // region input validation
             String title_text = title.getText().toString();
@@ -80,26 +77,28 @@ public class AddEditRecipe extends AppCompatActivity {
                 return;
             }
 
-                String prep_time_text = prep_time.getText().toString().trim();
-                if (prep_time_text.isEmpty()) {
-                    prep_time.setError("Preparation time is required!");
-                    prep_time.requestFocus();
-                    return;
-                }
-                if (Integer.parseInt(prep_time_text) == 0){
-                    prep_time.setError("Preparation time cannot be 0!");
-                    prep_time.requestFocus();
-                    return;
-                }
+            String prep_time_text = prep_time.getText().toString().trim();
+            if (prep_time_text.isEmpty()) {
+                prep_time.setError("Preparation time is required!");
+                prep_time.requestFocus();
+                return;
+            }
 
-            if (serving.getText().toString().equals("")) {
+            if (Integer.parseInt(prep_time_text) == 0){
+                prep_time.setError("Preparation time cannot be 0!");
+                prep_time.requestFocus();
+                return;
+            }
+
+            if ((serving.getText().toString().trim()).isEmpty()) {
                 serving.setError("Servings is required!");
                 serving.requestFocus();
                 return;
             }
+
             Integer serving_text = Integer.parseInt(serving.getText().toString());
             if (serving_text.equals(0)) {
-                serving.setError("Servings Cannot be 0!");
+                serving.setError("Servings cannot be 0!");
                 serving.requestFocus();
                 return;
             }
@@ -178,8 +177,8 @@ public class AddEditRecipe extends AppCompatActivity {
                 openFileChooser();
             }
         });
-    }
 
+    }
     private void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
