@@ -76,15 +76,15 @@ public class RecipeDisplay extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
-
-                Log.e("madeit", uri.toString());
-                Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
-
+                try {
+                    Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
+                } catch (Exception e){
+                    Log.e("Error", e.toString());
+                }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+        }).addOnFailureListener(exception -> {
+            if (recImg.getDrawable() == null){
+                recImg.setImageResource(R.drawable.mealplan);
             }
         });
 
