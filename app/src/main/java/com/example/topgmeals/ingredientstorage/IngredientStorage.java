@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +25,13 @@ import com.example.topgmeals.R;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.recipebook.RecipeBook;
 import com.example.topgmeals.shoppinglist.ShoppingList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -66,11 +70,6 @@ public class IngredientStorage extends AppCompatActivity {
      */
     private String id;
 
-    /**
-     * An {@link ArrayList} of unique {@link DocumentReference} objects that belong to a user and point to
-     * that user's ingredients
-     */
-    private ArrayList<String> refList = new ArrayList<>();
 
     /**
      * {@link RecyclerView} to hold ingredientList
@@ -90,6 +89,8 @@ public class IngredientStorage extends AppCompatActivity {
         app = FirebaseApp.initializeApp(IngredientStorage.this);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
+        CollectionReference mealCol = db.collection("mealplan");
+
 
         // Get the user ID with FirebaseAuth
         id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -151,28 +152,23 @@ public class IngredientStorage extends AppCompatActivity {
                     if (result.getResultCode() == 2) {
                         // Get Intent from child Activity and the position of the item to delete
                         Intent deleteIntent = result.getData();
-                        int pos = deleteIntent.getIntExtra("delete_position", -1);
-                        assert (pos!=-1);
 
-                        // Get DocumentReference of the item in the database according to its position
-                        // in refList and remove it
-                        String deleteRef = refList.get(pos);
+                        // Get DocumentReference of the item in the database and remove it
+                        String deleteRef = deleteIntent.getStringExtra("deleted_ref");
                         ingredientsDb.document(deleteRef).delete()
                                 .addOnSuccessListener(unused -> Log.d("Delete item", "Delete success"))
                                 .addOnFailureListener(e -> Log.d("Delete item", "Delete failed"));
+
                     }
                     // When EDIT is chosen
                     else if (result.getResultCode() == Activity.RESULT_OK){
                         Intent editIntent = result.getData();
                         Ingredient ingredient = editIntent.getParcelableExtra("edited_ingredient");
-                        int pos = editIntent.getIntExtra("edited_position", -1);
-                        assert (pos != -1);
 
                         // Get DocumentReference of the item in the database according to its position
                         // in refList and replace it with the edited object
-                        String editRef = refList.get(pos);
                         HashMap<String,Object> edited = toHashMap(ingredient);
-                        ingredientsDb.document(editRef).set(edited)
+                        ingredientsDb.document(ingredient.getDocumentID()).update(edited)
                                 .addOnSuccessListener(unused -> Log.d("Edit item", "Edit success"))
                                 .addOnFailureListener(e -> Log.d("Edit item", "Edit failed with Exception"+ e.getMessage()));
                     }
@@ -189,7 +185,7 @@ public class IngredientStorage extends AppCompatActivity {
             Intent intent = new Intent(getBaseContext(), AddEditIngredientActivity.class);
             intent.putExtra("purpose", "EDIT");
             intent.putExtra("ingredient_object",ingredient);
-            intent.putExtra("position", pos);
+//            intent.putExtra("position", pos);
             editActivityResultLauncher.launch(intent);
         };
         adapter.setOnItemClickListener(onItemClickListener);
@@ -210,7 +206,6 @@ public class IngredientStorage extends AppCompatActivity {
                         addedRef.set(added)
                                 .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))
                                 .addOnFailureListener(e -> Log.d("failure", "failed"));
-                        refList.add(addedRef.getId());
                     }
                 });
 
@@ -229,11 +224,10 @@ public class IngredientStorage extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         ingredientList.clear();
-                        refList.clear();
                         assert value != null;
                         for (QueryDocumentSnapshot doc : value){
-                            refList.add(doc.getId());
                             Ingredient ingredient = doc.toObject(Ingredient.class);
+                            ingredient.setDocumentID(doc.getId());
                             ingredientList.add(ingredient);
                         }
                         adapter.notifyDataSetChanged();

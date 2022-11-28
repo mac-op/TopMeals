@@ -29,6 +29,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * This class is an Activity that
+ */
 public class AddMealActivity extends AppCompatActivity {
 
     EditText mealDate;
@@ -39,10 +42,12 @@ public class AddMealActivity extends AppCompatActivity {
     Button save;
     final String[] mealTypes = {"Recipe", "Ingredient"};
     ArrayList<String> mealNames = new ArrayList<>();
+    ArrayList<String> refList = new ArrayList<>();
     final private Calendar myCalendar = Calendar.getInstance();
     private DateFormat format = new DateFormat();
     private String userID;
     CollectionReference selectionCollection;
+    boolean isRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +94,13 @@ public class AddMealActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0){
                     selectionCollection = db.collection("recipes");
+                    isRecipe = true;
                 } else {
                     selectionCollection = db.collection("ingredients");
+                    isRecipe = false;
                 }
                 mealNames.clear();
+                refList.clear();
                 selectionCollection.whereEqualTo("id", userID).get()
                         .addOnSuccessListener(queryDocumentSnapshots -> {
                             if (queryDocumentSnapshots.isEmpty()){
@@ -103,6 +111,7 @@ public class AddMealActivity extends AppCompatActivity {
                                     if (i == 0){ name = (String)doc.get("title"); }
                                     else{ name = (String) doc.get("description"); }
                                     mealNames.add(name);
+                                    refList.add(doc.getId());
                                 }
                                 selectionAdapter.notifyDataSetChanged();
 
@@ -132,6 +141,8 @@ public class AddMealActivity extends AppCompatActivity {
             item.put("date", date1);
             item.put("mealName", mealName);
             item.put("numServings", numServings);
+            item.put("ref", refList.get(selection.getSelectedItemPosition()));
+            item.put("isRecipe", isRecipe);
 
             docRef.set(item)
                     .addOnSuccessListener(unused -> Log.d("success", "Added successfully"))

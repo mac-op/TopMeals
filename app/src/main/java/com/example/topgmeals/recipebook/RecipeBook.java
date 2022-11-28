@@ -144,9 +144,7 @@ public class RecipeBook extends AppCompatActivity {
             recipeBook.add(new_recipe);
         }
 
-
-
-        // Begin Region ButtonSwapping
+        // region buttonswapping
         Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,8 +179,8 @@ public class RecipeBook extends AppCompatActivity {
                 startActivity(new Intent(RecipeBook.this, RecipeBook.class));
             }
         });
-
-        // End Region ButtonSwapping
+        // endregion
+    }
 
         // Sorting recipes
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner_recipe);

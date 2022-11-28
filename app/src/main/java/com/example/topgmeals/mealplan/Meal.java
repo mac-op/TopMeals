@@ -5,12 +5,23 @@ public class Meal {
     private int numServings;
     private String docRef;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    private String type;
+
     public Meal(){}
 
-    public Meal(String mealName, int numServings, String docRef) {
+    public Meal(String mealName, int numServings, String docRef, String type) {
         this.mealName = mealName;
         this.numServings = numServings;
         this.docRef = docRef;
+        this.type = type;
     }
 
     public String getMealName() {
