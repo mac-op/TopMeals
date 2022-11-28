@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 
 import com.example.topgmeals.R;
 
+import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,22 +54,23 @@ public class AddEditRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
+        setTitle("Add Recipe");
         AddEditRecipe currentClass = AddEditRecipe.this;
 
         mImageView = findViewById(R.id.recipeImage);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         /* Performing the add recipe button functionality */
-        Button add_new = findViewById(R.id.add_recipe);
+        Button add_new = findViewById(R.id.save_recipe_button);
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent_add = new Intent(currentClass, RecipeBook.class);
-                EditText title = (EditText) findViewById(R.id.title_editText);
-                EditText prep_time = (EditText) findViewById(R.id.prep_time_editText);
-                EditText serving = (EditText) findViewById(R.id.serving_editText);
-                EditText category = (EditText) findViewById(R.id.Category_editText);
-                EditText comments = (EditText) findViewById(R.id.Comments_editText);
+                EditText title = findViewById(R.id.title_editText);
+                EditText prep_time = findViewById(R.id.prep_time_editText);
+                EditText serving = findViewById(R.id.serving_editText);
+                EditText category = findViewById(R.id.Category_editText);
+                EditText comments = findViewById(R.id.Comments_editText);
 
                 String title_text = title.getText().toString();
                 if (title_text.isEmpty()) {
@@ -75,14 +79,14 @@ public class AddEditRecipe extends AppCompatActivity {
                     return;
                 }
 
-                String prep_time_text = prep_time.getText().toString();
+                String prep_time_text = prep_time.getText().toString().trim();
                 if (prep_time_text.isEmpty()) {
                     prep_time.setError("Preparation time is required!");
                     prep_time.requestFocus();
                     return;
                 }
-                if (prep_time_text.compareTo("0 mins")==0){
-                    prep_time.setError("Preparation time Cannot be 0!");
+                if (Integer.parseInt(prep_time_text) == 0){
+                    prep_time.setError("Preparation time cannot be 0!");
                     prep_time.requestFocus();
                     return;
                 }
@@ -160,6 +164,28 @@ public class AddEditRecipe extends AppCompatActivity {
             }
         });
 
+        // When the user wants to discard changes and go back to RecipeBook
+        Button cancel_recipe = findViewById(R.id.cancel_recipe_button);
+        cancel_recipe.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditRecipe.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to Recipe Book?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Discard Changes");
+            alertCancel.show();
+        });
+
         // Importing picture for recipe
         Button ImportImage = findViewById(R.id.import_button);
         ImportImage.setOnClickListener(new View.OnClickListener() {
@@ -168,8 +194,8 @@ public class AddEditRecipe extends AppCompatActivity {
                 openFileChooser();
             }
         });
-
     }
+
     private void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");

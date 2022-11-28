@@ -72,14 +72,18 @@
         </activity>
         <activity
             android:name=".recipebook.RecipeDisplay"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.RecipeBook">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".recipebook.AddEditRecipe"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".recipebook.RecipeBook">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

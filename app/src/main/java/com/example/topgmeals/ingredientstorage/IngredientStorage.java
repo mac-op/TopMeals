@@ -107,7 +107,6 @@ public class IngredientStorage extends AppCompatActivity {
                 layoutManager.getOrientation());
         ingredientView.addItemDecoration(dividerItemDecoration);
 
-
         // Set Sort Spinner
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner);
         ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(this,

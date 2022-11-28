@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -14,47 +13,97 @@
         <ImageView
             android:id="@+id/recipeBookImage"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/recipe_title_id"
-            android:layout_width="166dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:paddingLeft="5dp"
             android:paddingTop="5dp"
-            android:text="TextView"
-            android:textSize="30sp" />
+            android:paddingBottom="5dp"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:autoSizeTextType="uniform" >
+
+            <TextView
+                android:id="@+id/prep_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:text="Prep Time:"
+                android:fontFamily="@font/satoshi_regular"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/prep_time_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="15dp"
-                android:text="TextView"
-                />
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="None"
+                android:fontFamily="@font/satoshi_bold"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/serving_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:text="Serving:"
+                android:fontFamily="@font/satoshi_regular"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/serving_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="15dp"
-                android:text="TextView" />
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="None"
+                android:fontFamily="@font/satoshi_bold"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:text="Category:"
+                android:fontFamily="@font/satoshi_regular"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/category_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="15dp"
-                android:text="TextView"
-                />
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="None"
+                android:fontFamily="@font/satoshi_bold"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

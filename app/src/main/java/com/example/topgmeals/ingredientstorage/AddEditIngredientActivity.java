@@ -152,7 +152,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 amount.requestFocus();
                 return;
             } else if (Float.parseFloat(amount.getText().toString()) == 0) {
-                amount.setError("Amount cannot be zero!");
+                amount.setError("Amount cannot be 0!");
                 amount.requestFocus();
                 return;
             } else {
