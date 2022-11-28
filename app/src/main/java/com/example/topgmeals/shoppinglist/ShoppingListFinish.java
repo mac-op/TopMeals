@@ -89,12 +89,17 @@ public class ShoppingListFinish extends AppCompatActivity {
                     if (result.getResultCode() == 2) {
                         // Get Intent from child Activity and the position of the item to delete
                         Intent deleteIntent = result.getData();
-                        int pos = deleteIntent.getIntExtra("delete_position", -1);
-                        assert (pos!=-1);
+                        Ingredient ingredient = deleteIntent.getParcelableExtra("edited_ingredient");
 
+                        for (Ingredient i : inCart){
+                            if (i.getDescription().equals(ingredient.getDescription())){
+                                inCart.remove(i);
+                                break;
+
+                            }
+                        }
                         // Get DocumentReference of the item in the database according to its position
                         // in refList and remove it
-                        inCart.remove(pos);
                         ingredientAdapter.notifyDataSetChanged();
 
                     }
@@ -103,8 +108,8 @@ public class ShoppingListFinish extends AppCompatActivity {
                         Log.e("t", "THOMAS");
                         Intent editIntent = result.getData();
                         Ingredient ingredient = editIntent.getParcelableExtra("edited_ingredient");
-                        int pos = editIntent.getIntExtra("edited_position", -1);
-                        assert (pos != -1);
+
+
 
                         Boolean unique = true;
                         String DocID = "";
@@ -152,7 +157,14 @@ public class ShoppingListFinish extends AppCompatActivity {
                                     });
                         }
 
-                        inCart.remove(pos);
+                        for (Ingredient i : inCart){
+                            if (i.getDescription().equals(ingredient.getDescription())){
+                                inCart.remove(i);
+                                break;
+
+                            }
+                        }
+
                         ingredientAdapter.notifyDataSetChanged();
 
                     }

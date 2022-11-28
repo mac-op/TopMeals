@@ -33,9 +33,10 @@ import java.util.Map;
 
 
 /**
- * This class is an Activity that handles the ADD functionality of the Recipe Book menu.
+ * This class is an Activity that handles the ADD functionality of the Recipe Book menu where user can add a
+ * new {@link Recipe}. Called by {@link RecipeBook}
  */
-public class addEditRecipe extends AppCompatActivity {
+public class AddEditRecipe extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri mImageUri;
@@ -43,16 +44,19 @@ public class addEditRecipe extends AppCompatActivity {
     private ImageView mImageView;
     private StorageReference mStorageRef;
 
-
+    /**
+     * Method to handle layout of the Activity when it is created
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
-        addEditRecipe currentClass = addEditRecipe.this;
+        AddEditRecipe currentClass = AddEditRecipe.this;
 
         mImageView = findViewById(R.id.recipeImage);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        /* Performing the add recipe button functionality */
         Button add_new = findViewById(R.id.add_recipe);
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +69,49 @@ public class addEditRecipe extends AppCompatActivity {
                 EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
                 String title_text = title.getText().toString();
-                String prep_time_text = prep_time.getText().toString();
-                Integer serving_text = Integer.parseInt(serving.getText().toString());
-                String category_text = category.getText().toString();
-                String comments_text = comments.getText().toString();
+                if (title_text.isEmpty()) {
+                    title.setError("Title is required!");
+                    title.requestFocus();
+                    return;
+                }
 
+                String prep_time_text = prep_time.getText().toString();
+                if (prep_time_text.isEmpty()) {
+                    prep_time.setError("Preparation time is required!");
+                    prep_time.requestFocus();
+                    return;
+                }
+                if (prep_time_text.compareTo("0 mins")==0){
+                    prep_time.setError("Preparation time Cannot be 0!");
+                    prep_time.requestFocus();
+                    return;
+                }
+
+                if (serving.getText().toString().equals("")) {
+                    serving.setError("Servings is required!");
+                    serving.requestFocus();
+                    return;
+                }
+                Integer serving_text = Integer.parseInt(serving.getText().toString());
+                if (serving_text.equals(0)) {
+                    serving.setError("Servings Cannot be 0!");
+                    serving.requestFocus();
+                    return;
+                }
+
+                String category_text = category.getText().toString();
+                if (category_text.isEmpty()) {
+                    category.setError("Category is required!");
+                    category.requestFocus();
+                    return;
+                }
+
+                String comments_text = comments.getText().toString();
+                if (comments_text.isEmpty()) {
+                    comments.setError("Comments is required!");
+                    comments.requestFocus();
+                    return;
+                }
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -114,15 +156,11 @@ public class addEditRecipe extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-
-                // Recipe new_recipe =new Recipe(title_text,prep_time_text,3,category_text,comments_text, "si");
-
                 startActivity(intent_add);
-
-
             }
         });
 
+        // Importing picture for recipe
         Button ImportImage = findViewById(R.id.import_button);
         ImportImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,9 +169,7 @@ public class addEditRecipe extends AppCompatActivity {
             }
         });
 
-
     }
-
     private void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -144,13 +180,10 @@ public class addEditRecipe extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("TT", "AYOO");
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
-
             mImageView.setImageURI(mImageUri);
-            Log.e("TT", "IMAGE");
+
 
         }
     }

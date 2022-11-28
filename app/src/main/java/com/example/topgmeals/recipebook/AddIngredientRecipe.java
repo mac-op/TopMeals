@@ -24,11 +24,16 @@ import java.util.Map;
 
 import com.example.topgmeals.ingredientstorage.Ingredient;
 /**
- * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe.
+ * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe where user can add a
+ *  * new {@link Ingredient} to a {@link Recipe}. Called by {@link IngredientRecipe}
  */
 public class AddIngredientRecipe extends AppCompatActivity {
 
     String RecipeID;
+
+    /**
+     * Method to handle layout of the Activity when it is created
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
         Intent Rintent = getIntent();
         RecipeID = Rintent.getExtras().getString("rID");
 
-
+        /* Performing the add ingredient button functionality */
         Button addIngredient = (Button) findViewById(R.id.add_ingredient);
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,9 +55,37 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 EditText category = (EditText) findViewById(R.id.category_editText);
 
                 String descriptionText = description.getText().toString();
+                if (descriptionText.isEmpty()) {
+                    description.setError("Description is required!");
+                    description.requestFocus();
+                    return;
+                }
+
+                if (amount.getText().toString().equals("")) {
+                    amount.setError("Amount is required!");
+                    amount.requestFocus();
+                    return;
+                }
                 Float amountText = Float.parseFloat(amount.getText().toString());
+
                 String unitText = unit.getText().toString();
+                if (unitText.isEmpty()) {
+                    unit.setError("Unit is required!");
+                    unit.requestFocus();
+                    return;
+                }
+                if (unitText.compareTo("0")==0){
+                    unit.setError("Units Cannot be 0!");
+                    unit.requestFocus();
+                    return;
+                }
+
                 String categoryText = category.getText().toString();
+                if (categoryText.isEmpty()) {
+                    category.setError("Category is required!");
+                    category.requestFocus();
+                    return;
+                }
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -81,10 +114,6 @@ public class AddIngredientRecipe extends AppCompatActivity {
                             }
                         });
 
-
-
-                // Ingredient new_ingredient = new Ingredient(descriptionText,new java.util.Date(System.currentTimeMillis()),null,amountText,unitText,categoryText, "ape");
-                // intentAddIngredient.putExtra("NEW", new_ingredient);
                 intentAddIngredient.putExtra("RECIPE_ID", RecipeID);
                 startActivity(intentAddIngredient);
 

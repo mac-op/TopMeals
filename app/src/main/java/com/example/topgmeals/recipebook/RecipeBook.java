@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,9 +43,20 @@ import java.util.Map;
  */
 public class RecipeBook extends AppCompatActivity {
 
+    /**
+     * {@link ListView} to hold recipeList
+     */
     private ListView recipeList;
+
+    /**
+     * An {@link ArrayList} that holds {@link Recipe} objects.
+     */
     private ArrayList<Recipe> recipeBook;
-    private Boolean check=Boolean.FALSE;
+
+    /**
+     * A custom {@link android.widget.ArrayAdapter} of type {@link RecipeAdapter} that handles the view
+     * of the list of recipes.
+     */
     private RecipeAdapter recipeListAdapter;
 
     /**
@@ -71,12 +84,12 @@ public class RecipeBook extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        for (QueryDocumentSnapshot doc : value){
+                        for (QueryDocumentSnapshot doc : value) {
                             // refList.add(doc.getId());
                             Map<String, Object> rData = doc.getData();
                             Recipe curRecipe = new Recipe(rData.get("title").toString(),
                                     rData.get("prepTime").toString(),
-                                    (int)(long)rData.get("servings") ,
+                                    (int) (long) rData.get("servings"),
                                     rData.get("category").toString(),
                                     rData.get("comments").toString(),
                                     doc.getId());
@@ -98,15 +111,15 @@ public class RecipeBook extends AppCompatActivity {
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
                 Integer servings = recipeBook.get(i).getServings();
-                String s_servings=servings.toString();
+                String s_servings = servings.toString();
                 String category = recipeBook.get(i).getCategory();
                 String comments = recipeBook.get(i).getComments();
 
-                intent.putExtra("TITLE",title);
-                intent.putExtra("PREP_TIME",prep_time);
-                intent.putExtra("SERVINGS",s_servings);
-                intent.putExtra("CATEGORY",category);
-                intent.putExtra("COMMENTS",comments);
+                intent.putExtra("TITLE", title);
+                intent.putExtra("PREP_TIME", prep_time);
+                intent.putExtra("SERVINGS", s_servings);
+                intent.putExtra("CATEGORY", category);
+                intent.putExtra("COMMENTS", comments);
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
 
                 startActivity(intent);
@@ -114,32 +127,24 @@ public class RecipeBook extends AppCompatActivity {
             }
         });
 
-        Button titleSort = (Button) findViewById(R.id.title_sort2);
-        sortRecipe(titleSort, 0);
-        Button timeSort = (Button) findViewById(R.id.time_sort2);
-        sortRecipe(timeSort, 1);
-        Button servingSort = (Button) findViewById(R.id.serving_sort);
-        sortRecipe(servingSort, 2);
-        Button categorySort = (Button) findViewById(R.id.category2);
-        sortRecipe(categorySort, 3);
 
         // Add recipe
-        Button add_recipe=(Button) findViewById(R.id.add_button);
+        Button add_recipe = (Button) findViewById(R.id.add_button);
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecipeBook.this, addEditRecipe.class);
+                Intent intent = new Intent(RecipeBook.this, AddEditRecipe.class);
                 startActivity(intent);
             }
         });
 
         // Adding a recipe to recipeBook
-        Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
-        if (new_recipe!=null){
+        Recipe new_recipe = (Recipe) getIntent().getSerializableExtra("NEW");
+        if (new_recipe != null) {
             recipeBook.add(new_recipe);
         }
 
-        // Begin Region ButtonSwapping
+        // region buttonswapping
         Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,8 +179,47 @@ public class RecipeBook extends AppCompatActivity {
                 startActivity(new Intent(RecipeBook.this, RecipeBook.class));
             }
         });
-        // End Region ButtonSwapping
+        // endregion
+
+
+        // Sorting recipes
+        Spinner sortSpinner = findViewById(R.id.sort_by_spinner_recipe);
+        ArrayAdapter<CharSequence> sortAdapter = ArrayAdapter.createFromResource(this,
+                R.array.recipe_sort, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        sortAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(sortAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Comparator<Recipe> comparator = null;
+                switch (pos) {
+                    case 0:
+                        comparator = Comparator.comparing(Recipe::getTitle);
+                        break;
+                    case 1:
+                        comparator = Comparator.comparing(Recipe::getPrepTime);
+                        break;
+                    case 2:
+                        comparator = Comparator.comparing(Recipe::getServings);
+                        break;
+                    case 3:
+                        comparator = Comparator.comparing(Recipe::getCategory);
+                        break;
+                }
+                recipeBook.sort(comparator);
+                recipeListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+
+        });
     }
+
+
 
     private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
         CollectionReference RecipeRef = db.collection("recipes");
@@ -196,31 +240,5 @@ public class RecipeBook extends AppCompatActivity {
         });
     }
 
-    private void sortRecipe(Button sortButton, int criterion){
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                Comparator<Recipe> comparator = null;
-                switch (criterion) {
-                    case 0:
-                        comparator = Comparator.comparing(Recipe::getTitle);
-                        break;
-                    case 1:
-                        //TODO: Change preptime to int and set time unit to minutes
-                        comparator = Comparator.comparing(Recipe::getPrepTime);
-                        break;
-                    case 2:
-                        comparator = Comparator.comparing(Recipe::getServings);
-                        break;
-                    case 3:
-                        comparator = Comparator.comparing(Recipe::getCategory);
-                        break;
-                }
-                recipeBook.sort(comparator);
-                recipeListAdapter.notifyDataSetChanged();
 
-            }
-        });
-    }
 }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.utils.DateFormat;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -32,6 +33,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     private EditText category;
     private Button cancel;
     private Button save;
+
+    private String userID;
 
     private Intent intent;
     final private Calendar myCalendar = Calendar.getInstance();
@@ -55,22 +58,23 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel_delete_button);
         save = findViewById(R.id.save_button);
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         intent = getIntent();
         String purpose = intent.getStringExtra("purpose");              // purpose is either add or edit/delete
-        int pos = intent.getIntExtra("position", -1);        // position of item to edit/delete. -1 if purpose is add
 
 
         if (purpose.equals("ADD")){
             addMenu();
         } else if (purpose.equals("EDIT")){
-            editMenu(pos);
+            editMenu();
         } else if (purpose.equals("UPDATE")){
-            updateMenu(pos);
+            updateMenu();
         }
     }
 
-    public void updateMenu(int pos) {
+    public void updateMenu() {
         setTitle("Update Storage");
         cancel.setText("Delete");
         save.setText("Update/Save");
@@ -86,9 +90,18 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
+            String description_ = description.getText().toString();
+            Date bbDate_ = myCalendar.getTime();
+            String location_ = location.getText().toString();
+            float amount_ = Float.parseFloat(amount.getText().toString());
+            String unit_ = unit.getText().toString();
+            String category_ = category.getText().toString();
+
+            //TODO: Input validation
             Intent deleteIntent = new Intent();
-            assert (pos != -1);
-            deleteIntent.putExtra("delete_position", pos);
+
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+            deleteIntent.putExtra("edited_ingredient", ingredient1);
             setResult(2, deleteIntent);
             finish();
         });
@@ -109,7 +122,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
             Intent editIntent = new Intent();
             editIntent.putExtra("edited_ingredient", ingredient1);
-            editIntent.putExtra("edited_position", pos);
             setResult(RESULT_OK, editIntent);
             finish();
         });
@@ -117,9 +129,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
     /**
      * This method is invoked if the purpose of the Activity is to edit/delete an existing {@link Ingredient}
-     * @param pos: position of item to edit/delete
      */
-    public void editMenu(int pos) {
+    public void editMenu() {
         setTitle("Edit Ingredient");
         cancel.setText("Delete");
         save.setText("Save");
@@ -136,8 +147,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
             Intent deleteIntent = new Intent();
-            assert (pos != -1);
-            deleteIntent.putExtra("delete_position", pos);
+            deleteIntent.putExtra("deleted_ref", ingredient.getDocumentID());
             setResult(2, deleteIntent);
             finish();
         });
@@ -145,7 +155,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
          to update **/
         save.setOnClickListener(view -> {
-            //TODO: Separate method to collect text??
             String description_ = description.getText().toString();
             Date bbDate_ = myCalendar.getTime();
             String location_ = location.getText().toString();
@@ -155,10 +164,10 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
             //TODO: Input validation
 
-            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_,
+                    unit_, category_, ingredient.getDocumentID());
             Intent editIntent = new Intent();
             editIntent.putExtra("edited_ingredient", ingredient1);
-            editIntent.putExtra("edited_position", pos);
             setResult(RESULT_OK, editIntent);
             finish();
         });

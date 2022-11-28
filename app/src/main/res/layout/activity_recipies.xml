@@ -8,52 +8,20 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent">
 
-    <LinearLayout
-        android:id="@+id/sort_buttons"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/sort_by_spinner_recipe"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/title_sort2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title">
-
-        </Button>
-
-        <Button
-            android:id="@+id/time_sort2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time">
-
-        </Button>
-
-        <Button
-            android:id="@+id/serving_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serving">
-
-        </Button>
-
-        <Button
-            android:id="@+id/category2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category">
-
-        </Button>
-
-    </LinearLayout>
+        android:entries="@array/recipe_sort"
+        android:layout_marginEnd="6dp"
+        tools:ignore="MissingConstraints" />
 
     <ListView
         android:id="@+id/recipe_book"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/sort_buttons"
+        app:layout_constraintTop_toBottomOf="@id/sort_by_spinner_recipe"
         app:layout_constraintBottom_toTopOf="@id/add_button">
 
     </ListView>

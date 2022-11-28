@@ -30,27 +30,48 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class is an Activity that handles the Meal Planner menu. The user will be able to see
+ * a list of planned meals grouped by their dates and can choose to add or delete each meal.
+ */
 public class MealPlan extends AppCompatActivity {
+
+    /**
+     * {@link ArrayList} that holds the dates where there are meals.
+     */
     ArrayList<String> dates;
+
+    /**
+     * {@link HashMap} where each key is a date that has meals, and each value is an {@link ArrayList}
+     * of {@link Meal} that belong to each date.
+     */
     HashMap<String, ArrayList<Meal>> mealList;
+
+    /**
+     * The Firestore authentication ID of the user.
+     */
     String userID;
 
+    /**
+     *  This method gets called when the Activity is created. It creates the layouts
+     *  and handles the logic for the Activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mealplan);
         setTitle("Meal Planner");
 
+        // Initialize variables
         dates = new ArrayList<>();
         mealList = new HashMap<>();
 
-//        http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/
+        // Set adapter for ExpandableListView
         ExpandableListView mealListView = findViewById(R.id.expandable_meal_plan);
-        MealPlan currentClass = MealPlan.this;
-
         ExpandableListAdapter adapter = new ExpandableListAdapter(this, dates, mealList);
         mealListView.setAdapter(adapter);
 
+        // Set up Firestore connection and Snapshot listener
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference mealCollection = db.collection("mealplan");
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -72,6 +93,7 @@ public class MealPlan extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         });
 
+        // Add Button. Calls AddMealActivity where the user can add a new meal
         Button addButton = findViewById(R.id.add_meal_button);
         addButton.setOnClickListener(view -> {
             Intent addIntent = new Intent(getBaseContext(), AddMealActivity.class);
@@ -80,38 +102,24 @@ public class MealPlan extends AppCompatActivity {
 
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
-        IngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MealPlan.this, IngredientStorage.class));
-                finish();
-            }
+        IngredientButton.setOnClickListener(view -> {
+            startActivity(new Intent(MealPlan.this, IngredientStorage.class));
+            finish();
         });
 
         Button btnShoppingList = findViewById(R.id.switchToShoppingList);
-        btnShoppingList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MealPlan.this, ShoppingList.class));
-                finish();
-            }
+        btnShoppingList.setOnClickListener(view -> {
+            startActivity(new Intent(MealPlan.this, ShoppingList.class));
+            finish();
         });
 
         Button btnMealPlanner = findViewById(R.id.switchToMealPlan);
-        btnMealPlanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MealPlan.this, MealPlan.class));
-            }
-        });
+        btnMealPlanner.setOnClickListener(view -> startActivity(new Intent(MealPlan.this, MealPlan.class)));
 
         Button btnRecipesBook = findViewById(R.id.switchToRecipes);
-        btnRecipesBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MealPlan.this, RecipeBook.class));
-                finish();
-            }
+        btnRecipesBook.setOnClickListener(view -> {
+            startActivity(new Intent(MealPlan.this, RecipeBook.class));
+            finish();
         });
         // endregion
     }

@@ -70,24 +70,13 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         Log.e("TTT", "uploads/" + recID);
 
-//        try {
-//            Log.e("e", mStorageRef.child("uploads/" + recID).getDownloadUrl().getResult().toString());
-//            Glide.with(context).load(mStorageRef.child("uploads/" + recID).getDownloadUrl()).into(recImg);
-//            Log.e("s", "SUCC");
-//        }
-//        catch (Exception ex){
-//
-//        }
-//        final Uri[] temp = {null};
         mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
 
                 Log.e("madeit", uri.toString());
-                //temp[0] = uri;
                 Glide.with(context).load(uri.toString()).into(recImg);
-                //title_display.setText(title.toString());
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -96,8 +85,6 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
                 // Handle any errors
             }
         });
-
-        // recImg.setImageURI(temp[0]);
 
         title_display.setText(title.toString());
         prep_time_display.setText(prep_time.toString());

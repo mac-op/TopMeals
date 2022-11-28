@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewRegister;
 
     /**
+     *
      * This method handles the layout and logic of the Activity. Called on Activity creation.
      */
     @Override
