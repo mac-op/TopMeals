@@ -2,9 +2,13 @@ package com.example.topgmeals;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,7 +31,9 @@ import org.junit.runner.RunWith;
 /**
  * This class tests the functionality of {@link com.example.topgmeals.mealplan.MealPlan}
  * Please log in to an account that has at least one ingredient in {@link IngredientStorage}
- * or one recipe in {@link com.example.topgmeals.recipebook.RecipeBook}. Otherwise, there's no meal to add.
+ * or one recipe in {@link com.example.topgmeals.recipebook.RecipeBook}.
+ * Otherwise, there's no meal to add.
+ * In addition, there should be no meal present in MealPlan before the test is conducted.
  */
 @RunWith(AndroidJUnit4.class)
 public class MealPlanTest {
@@ -54,11 +60,14 @@ public class MealPlanTest {
      * This method tests the functionality to add a new meal.
      */
     @Test
-    public void addMealTest(){
+    public void addMealTest() {
         // Go to AddMealActivity
         solo.assertCurrentActivity("Not in Meal Planner", MealPlan.class);
         solo.clickOnButton("Add");
         solo.assertCurrentActivity("Not in Add Meal", AddMealActivity.class);
+
+        ExpandableListView view = (ExpandableListView) solo.getView(R.id.expandable_meal_plan);
+        int oldCount = view.getCount();
 
         // Set contents and Save
         solo.clickOnView(solo.getView(R.id.meal_date));
@@ -77,6 +86,11 @@ public class MealPlanTest {
         solo.enterText((EditText) solo.getView(R.id.meal_serving), "2");
 
         solo.clickOnButton("Save");
+
+        solo.assertCurrentActivity("Not in Meal Planner", MealPlan.class);
+        solo.sleep(200);
+        int newCount = view.getCount();
+        assertEquals(oldCount+1, newCount);
     }
 
     /**
@@ -84,12 +98,19 @@ public class MealPlanTest {
      * one meal.
      */
     @Test
-    public void deleteMealTest(){
+    public void deleteMealTest() {
         solo.assertCurrentActivity("Not in Meal Planner", MealPlan.class);
 
+        ExpandableListView view = (ExpandableListView) solo.getView(R.id.expandable_meal_plan);
+        int oldCount = view.getChildCount();
+        assertTrue(oldCount > 0);
         // Expand a list
         solo.clickInList(0);
         // Click on Delete
         solo.clickOnImage(0);
+
+        solo.sleep(200);
+        int newCount = view.getChildCount();
+        assertEquals(oldCount-1, newCount);
     }
 }

@@ -2,6 +2,7 @@ package com.example.topgmeals.shoppinglist;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -17,15 +18,31 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.mealplan.Meal;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.R;
 import com.example.topgmeals.recipebook.Recipe;
 import com.example.topgmeals.recipebook.RecipeAdapter;
 import com.example.topgmeals.recipebook.RecipeBook;
 import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.utils.DateFormat;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class ShoppingList extends AppCompatActivity implements ShoppingListAdapter.ItemClickListener {
 
@@ -34,6 +51,11 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
     private ArrayList<Ingredient> fullshoppingList;
     private Boolean check=Boolean.FALSE;
     private ShoppingListAdapter shoppingListAdapter;
+    private FirebaseApp app;
+    private ArrayList<Meal> mealList;
+    private String id;
+    private  ArrayList<Recipe> recipeBook;
+    private ArrayList<Ingredient> ingredientsList;
 
 
     @Override
@@ -49,26 +71,91 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                 new DividerItemDecoration(this, null));
         shoppingList = new ArrayList<>();
         shoppingListAdapter = new ShoppingListAdapter(this, shoppingList);
+        fullshoppingList = new ArrayList<Ingredient>();
+        mealList = new ArrayList<>();
+        recipeBook = new ArrayList<>();
+        ingredientsList = new ArrayList<>();
 
 
-        Ingredient burger = new Ingredient("Ice Cream Manyoasasdasdds", null, "freezer", (float)2.3, "4 lbs", "Dairyatrozics", "s");
-        Ingredient pizza = new Ingredient("Steak", null, "freezer", (float)8.9, "2kg", "Meat", "s");
-        Ingredient burger2 = new Ingredient("Ice Cream", null, "freezer", (float)2.3, "4 lbs", "Dairy", "s");
-        Ingredient burger3 = new Ingredient("Ice Cream", null, "freezer", (float)2.3, "4 lbs", "Abrs", "s");
-        Ingredient burger4 = new Ingredient("Ace Cream", null, "freezer", (float)2.3, "4 lbs", "stakle", "s");
-        Ingredient burger5 = new Ingredient("ice Cream", null, "freezer", (float)2.3, "4 lbs", "sno", "s");
-        Ingredient burger6 = new Ingredient("Ays", null, "freezer", (float)2.3, "4 lbs", "Pleas", "s");
+        // Get Shit
+        // Math  Get All Meals, get All Ingredients, get All Recipes
 
-        shoppingList.add(burger);
+        // Connect to the Firestore database and get the Reference to the ingredients collection
+        app = FirebaseApp.initializeApp(ShoppingList.this);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference ingredientsDb = db.collection("ingredients");
+        final CollectionReference mealCollection = db.collection("mealplan");
+        final CollectionReference RecipeRef = db.collection("recipes");
 
-        shoppingList.add(pizza);
-        shoppingList.add(burger2);
-        shoppingList.add(burger3);
-        shoppingList.add(burger4);
-        shoppingList.add(burger5);
-        shoppingList.add(burger6);
 
-        fullshoppingList = (ArrayList<Ingredient> ) shoppingList.clone();
+
+        // Get the user ID with FirebaseAuth
+        id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        ingredientsDb.whereEqualTo("id", id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ingredientsList.clear();
+                        assert value != null;
+                        for (QueryDocumentSnapshot doc : value){
+                            Ingredient ingredient = doc.toObject(Ingredient.class);
+                            ingredient.setDocumentID(doc.getId());
+                            ingredientsList.add(ingredient);
+                        }
+
+                        ShoppingGlobalVars.getInstance().setcurIngredientsList(ingredientsList);
+
+                    }
+                });
+
+
+        mealCollection.whereEqualTo("id", id).addSnapshotListener((value, error) -> {
+//            dates.clear();
+//            mealList.clear();
+            for (QueryDocumentSnapshot doc: value){
+                Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(doc.getString("date"), new ParsePosition(0));
+                Date cur = new Date();
+                Log.e("t", date1.toString());
+                Log.e("t", cur.toString());
+                if (date1.after(cur)){
+                    Log.e("t", "PASS");
+                }
+
+                Meal meal = doc.toObject(Meal.class);
+                meal.setDocRef(doc.getId());
+                mealList.add(meal);
+
+            }
+//            adapter.notifyDataSetChanged();
+        });
+
+        RecipeRef.whereEqualTo("id", id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                        for (QueryDocumentSnapshot doc : value){
+                            // refList.add(doc.getId());
+                            Map<String, Object> rData = doc.getData();
+                            Recipe curRecipe = new Recipe(rData.get("title").toString(),
+                                    rData.get("prepTime").toString(),
+                                    (int)(long)rData.get("servings") ,
+                                    rData.get("category").toString(),
+                                    rData.get("comments").toString(),
+                                    doc.getId());
+
+                            recipeBook.add(curRecipe);
+
+                        }
+                        Log.e("t", "ENER");
+                        Doshit(db);
+
+                    }
+                });
+
+
+        Log.e("t", "load" + Integer.toString( shoppingList.size()));
 
         shoppingListAdapter.setClickListener(this);
         Log.e("t", "load" + Integer.toString( shoppingList.size()));
@@ -120,16 +207,28 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         finishShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
-//
-//                Log.e("e",Integer.toString( shoppingList.size()));
-//                Log.e("e",Integer.toString( fullshoppingList.size()));
-//
-//                intent.putExtra("Endshoplist", shoppingList);
-//                intent.putExtra("Fullshoplist", fullshoppingList);
-//
-//                startActivity(intent);
-//                finish();
+                Log.e("t","SHOPLIST SIZE " + Integer.toString( shoppingList.size()));
+
+                Intent intent = new Intent(ShoppingList.this, ShoppingListFinish.class);
+
+                Log.e("t","SHOPLIST SIZE " + Integer.toString( shoppingList.size()));
+                Log.e("t",Integer.toString( fullshoppingList.size()));
+
+                ArrayList<Ingredient> inCart = new ArrayList<Ingredient>();
+                for (Ingredient i : fullshoppingList){
+                    inCart.add(i);
+                }
+
+                if (shoppingList.size() != 0){
+                    for (Ingredient i : shoppingList) {
+                        inCart.remove(i);
+                    }
+                }
+
+                ShoppingGlobalVars.getInstance().setList(inCart);
+
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -181,6 +280,141 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
             }
         });
         //endregion
+
+    }
+
+    private void Doshit(FirebaseFirestore db){
+        final CollectionReference RecipeIngRef = db.collection("recipeIngredients");
+
+        Set<String> SeenIngredients = new HashSet<String>();
+        for ( Meal m : mealList) {
+            for (Ingredient i : ingredientsList){
+                if (i.getDescription().equals(m.getMealName())){
+
+                    if (SeenIngredients.contains(i.getDescription())){
+
+                        for (Ingredient is: shoppingList){
+                            if (is.getDescription().equals(i.getDescription())){
+                                is.setAmount(is.getAmount() + (float)m.getNumServings());
+                            }
+                            break;
+                        }
+
+                        break;
+                    }
+
+                    Log.e("t", i.getDescription() + String.valueOf(m.getNumServings()) + " " + String.valueOf(i.getAmount()));
+                    if (m.getNumServings() > i.getAmount()){
+                        Ingredient curI = new Ingredient(m.getMealName(), new Date(), i.getLocation(), (float)m.getNumServings() - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
+                        shoppingList.add(curI);
+                        fullshoppingList.add(curI);
+                        SeenIngredients.add(m.getMealName());
+
+                    }
+
+                    break;
+
+                }
+            }
+
+            // Else must be a Recipe
+            for (Recipe r : recipeBook){
+                if (r.getTitle().equals(m.getMealName())){
+                    SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+                    ArrayList<Ingredient> RecIngredientList = new ArrayList<>();
+                    Log.e("T", "HEHEHEHEH");
+                    RecipeIngRef.whereEqualTo("id", r.getDocumentID())
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                                for (QueryDocumentSnapshot doc : value){
+                                    // refList.add(doc.getId());
+                                    Map<String, Object> rData = doc.getData();
+
+                                    float temp = 0;
+                                    try{
+                                        temp = (float)(double)rData.get("amount");
+                                    }
+                                    catch (Exception ex){
+                                        temp = (long)rData.get("amount");
+                                    }
+                                    Ingredient curIng = new Ingredient(
+                                            rData.get("description").toString(),
+                                            new SimpleDateFormat("MM/dd/yyyy").parse(rData.get("bestBefore").toString(), new ParsePosition(0)),
+                                            rData.get("location").toString(),
+                                            temp,
+                                            rData.get("unit").toString(),
+                                            rData.get("category").toString(),
+                                            doc.getId());
+
+                                    RecIngredientList.add(curIng);
+
+                                }
+
+                                Boolean NA = true;
+                                for (Ingredient ir : RecIngredientList) {
+                                    NA = true;
+                                    Log.e("t", ir.getDescription());
+                                    for (Ingredient i : ingredientsList) {
+                                        if (ir.getDescription().equals(i.getDescription())) {
+
+                                            float tempTot = (float) m.getNumServings() * (float) ir.getAmount();
+
+                                            if (SeenIngredients.contains(ir.getDescription())){
+                                                Log.e("t", "SEEN " + ir.getDescription() );
+                                                for (Ingredient is: shoppingList){
+                                                    if (is.getDescription().equals(ir.getDescription())){
+                                                        Log.e("t", "b4 " + String.valueOf(is.getAmount()) );
+                                                        is.setAmount(is.getAmount() + tempTot);
+                                                        Log.e("t", "a4 " + String.valueOf(is.getAmount()) );
+                                                        break;
+
+                                                    }
+                                                }
+
+                                                NA = false;
+                                                break;
+                                            }
+
+
+
+                                            if (tempTot > i.getAmount()) {
+                                                Ingredient curI = new Ingredient(ir.getDescription(), new Date(), i.getLocation(), (float)tempTot - (float)i.getAmount(), i.getUnit(), i.getCategory(), "s");
+                                                shoppingList.add(curI);
+                                                fullshoppingList.add(curI);
+                                                SeenIngredients.add(ir.getDescription());
+                                            }
+                                            NA = false;
+                                            break;
+                                        }
+                                    }
+
+                                    // Add new Ig if not in list
+                                    if (NA) {
+                                        Ingredient curI = new Ingredient(ir.getDescription(), new Date(), ir.getLocation(), (float) m.getNumServings() * (float) ir.getAmount(), ir.getUnit(), ir.getCategory(), "s");
+                                        shoppingList.add(curI);
+                                        fullshoppingList.add(curI);
+                                        shoppingListAdapter.notifyDataSetChanged();
+                                        Log.e("t", "SHOPLIST SIZE: " + String.valueOf(shoppingList.size()));
+                                        SeenIngredients.add(ir.getDescription());
+
+                                    }
+
+                                }
+
+
+
+                            }
+                        });
+
+                }
+            }
+
+        }
+        shoppingListAdapter.notifyDataSetChanged();
+
 
     }
 

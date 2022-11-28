@@ -216,7 +216,6 @@ public class IngredientStorage extends AppCompatActivity {
             addActivityResultLauncher.launch(intent);
         });
 
-
         // SnapshotListener to update the list everytime the documents with the user's ID are changed
         ingredientsDb.whereEqualTo("id", id)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

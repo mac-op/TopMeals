@@ -55,7 +55,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             description = itemView.findViewById(R.id.description_content);
             bestBefore = itemView.findViewById(R.id.best_before);
             count = itemView.findViewById(R.id.count);
-            category = itemView.findViewById(R.id.category);
+            category = itemView.findViewById(R.id.category_);
             location = itemView.findViewById(R.id.location );
 
             itemView.setTag(this);
