@@ -79,15 +79,8 @@ public class IngredientStorageTest {
         solo.enterText((EditText) solo.getView(R.id.set_location), "Mock Location");
         solo.enterText((EditText) solo.getView(R.id.amount), "12");
 
-        View view1 = solo.getView(Spinner.class, 0);
-        solo.clickOnView(view1);
-        solo.scrollToTop();
-        solo.clickOnView(solo.getView(TextView.class, 1));
-
-        View view2 = solo.getView(Spinner.class, 1);
-        solo.clickOnView(view2);
-        solo.scrollToTop();
-        solo.clickOnView(solo.getView(TextView.class, 1));
+        solo.enterText((EditText) solo.getView(R.id.category), "Mock Category");
+        solo.enterText((EditText) solo.getView(R.id.unit), "Mock Unit");
 
         //Save and go back to Ingredients
         solo.clickOnButton("Save");
