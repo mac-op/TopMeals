@@ -19,7 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * This Activity is the first entry point to the app. Allows the user to log in or create an account.
+ * This Activity is the first entry point to the app. Allows the user to log in or create an
+ * account.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewRegister;
 
     /**
-     *
      * This method handles the layout and logic of the Activity. Called on Activity creation.
      */
     @Override
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * The following executes an appropriate activity / process based on user click.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -81,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * This method validates the user's login credentials and either signs them in or shows failed
+     * to login message.
+     */
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -108,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(MainActivity.this, MainOptions.class));
+                            startActivity(new Intent(MainActivity.this,
+                                    MainOptions.class));
                         } else {
                             Toast.makeText(MainActivity.this,
                                     "Failed to login! Please check your credentials!",
@@ -116,6 +124,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
-
     }
 }

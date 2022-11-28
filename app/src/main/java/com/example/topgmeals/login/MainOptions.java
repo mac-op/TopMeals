@@ -24,7 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 /**
- * This class handles the menu after the user successfully logs in, where they can choose between 4 Activities
+ * This Activity allows the signed-in user to choose from 4 main Activities (entities): Ingredient
+ * Storage, Shopping List, Meal Planner, or Recipes Book.
  */
 public class MainOptions extends AppCompatActivity {
     private TextView textViewUsername;
@@ -70,7 +71,8 @@ public class MainOptions extends AppCompatActivity {
                     }
                 });
 
-        // 4 buttons that point to Ingredient Storage, Shopping List, Meal Planner and Recipe Book respectively
+        // 4 buttons that start the Ingredient Storage, Shopping List, Meal Planner and Recipe Book
+        // activity respectively
         btnIngredientStorage = findViewById(R.id.btnOptionIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,12 +16,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This Activity allows the user to enter their email to receive an email from Firebase to reset
+ * their password.
+ */
 public class MainForgotPassword extends AppCompatActivity {
-
     private EditText editTextEmail;
     private Button btnResetPassword;
     private FirebaseAuth mAuth;
 
+    /**
+     * This method handles the layout and logic of the Activity. Called on Activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,10 @@ public class MainForgotPassword extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method validates if the user has entered an appropriate email address and either sends
+     * the user an email containing a reset password link or shows failed to send email message.
+     */
     private void resetPassword() {
         String email = editTextEmail.getText().toString();
 
