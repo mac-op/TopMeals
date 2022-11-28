@@ -177,3 +177,9 @@ classes.
 Total = 8.11
 
 ## NB.. These values are not final
+
+## Demo Rubric
+
+## Demo Rubric
+
+Demo ability / Polished / Clear and coherent / Motivated / Compelling, holds attention, tells a story / Coverage of features logically organized by customer usage / Well explained user interface / Easy to follow user roles / Realistic data and inputs / All members present / Team well coordinated in demo / Within time limit / No misspellings / Clear vocals from everyone / Eye contact, rarely consulting or reading notes / Involves the audience / Good and concise responses to questions
