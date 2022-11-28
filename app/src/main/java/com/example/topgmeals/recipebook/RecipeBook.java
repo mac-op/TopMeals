@@ -84,12 +84,12 @@ public class RecipeBook extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        for (QueryDocumentSnapshot doc : value){
+                        for (QueryDocumentSnapshot doc : value) {
                             // refList.add(doc.getId());
                             Map<String, Object> rData = doc.getData();
                             Recipe curRecipe = new Recipe(rData.get("title").toString(),
                                     rData.get("prepTime").toString(),
-                                    (int)(long)rData.get("servings") ,
+                                    (int) (long) rData.get("servings"),
                                     rData.get("category").toString(),
                                     rData.get("comments").toString(),
                                     doc.getId());
@@ -111,15 +111,15 @@ public class RecipeBook extends AppCompatActivity {
                 String title = recipeBook.get(i).getTitle();
                 String prep_time = recipeBook.get(i).getPrepTime();
                 Integer servings = recipeBook.get(i).getServings();
-                String s_servings=servings.toString();
+                String s_servings = servings.toString();
                 String category = recipeBook.get(i).getCategory();
                 String comments = recipeBook.get(i).getComments();
 
-                intent.putExtra("TITLE",title);
-                intent.putExtra("PREP_TIME",prep_time);
-                intent.putExtra("SERVINGS",s_servings);
-                intent.putExtra("CATEGORY",category);
-                intent.putExtra("COMMENTS",comments);
+                intent.putExtra("TITLE", title);
+                intent.putExtra("PREP_TIME", prep_time);
+                intent.putExtra("SERVINGS", s_servings);
+                intent.putExtra("CATEGORY", category);
+                intent.putExtra("COMMENTS", comments);
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
 
                 startActivity(intent);
@@ -129,7 +129,7 @@ public class RecipeBook extends AppCompatActivity {
 
 
         // Add recipe
-        Button add_recipe=(Button) findViewById(R.id.add_button);
+        Button add_recipe = (Button) findViewById(R.id.add_button);
         add_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,8 +139,8 @@ public class RecipeBook extends AppCompatActivity {
         });
 
         // Adding a recipe to recipeBook
-        Recipe new_recipe=(Recipe) getIntent().getSerializableExtra("NEW");
-        if (new_recipe!=null){
+        Recipe new_recipe = (Recipe) getIntent().getSerializableExtra("NEW");
+        if (new_recipe != null) {
             recipeBook.add(new_recipe);
         }
 
@@ -180,7 +180,7 @@ public class RecipeBook extends AppCompatActivity {
             }
         });
         // endregion
-    }
+
 
         // Sorting recipes
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner_recipe);
@@ -213,11 +213,12 @@ public class RecipeBook extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
 
         });
-
     }
+
 
 
     private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
