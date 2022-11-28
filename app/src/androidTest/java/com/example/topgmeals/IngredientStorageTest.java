@@ -65,6 +65,7 @@ public class IngredientStorageTest {
 
         //Go back to Ingredients
         solo.clickOnButton("Cancel");
+        solo.clickOnButton("Yes");
 
         //Go to Add Ingredient menu
         solo.assertCurrentActivity("Not in Ingredient Storage",IngredientStorage.class);
@@ -134,6 +135,7 @@ public class IngredientStorageTest {
 
         //Click on Delete button
         solo.clickOnButton("Delete");
+        solo.clickOnButton("Yes");
 
         //Check size of list upon returning to Ingredient Storage
         solo.waitForActivity(IngredientStorage.class);
