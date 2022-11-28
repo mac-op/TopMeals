@@ -25,13 +25,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@link ExpandableListAdapter} to hold the meals where they are grouped by date.
+ * Code adapted from this
+ * <a href="http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/">
+ * tutorial </a>
+ */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
+
+    /**
+     * {@link ArrayList} to hold the groups, ie. the dates.
+     */
     private final ArrayList<String> dateList;
+
+    /**
+     * {@link HashMap} to hold each group's items, ie. each meal associated with the dates.
+     */
     private final HashMap<String, ArrayList<Meal>> mealsByDate;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference colRef = db.collection("mealplan");
+
 
     public ExpandableListAdapter(Context context, ArrayList<String> dateList,
                                  HashMap<String, ArrayList<Meal>> mealsByDate){
@@ -46,18 +62,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public int getChildrenCount(int i) {
-        return mealsByDate.get(getGroup(i)).size();
+    public int getChildrenCount(int groupPos) {
+        return mealsByDate.get(getGroup(groupPos)).size();
     }
 
     @Override
-    public String getGroup(int i) {
-        return dateList.get(i);
+    public String getGroup(int groupPos) {
+        return dateList.get(groupPos);
     }
 
     @Override
-    public Meal getChild(int listPos, int expandedListPos) {
-        return mealsByDate.get(dateList.get(listPos)).get(expandedListPos);
+    public Meal getChild(int groupPos, int expandedListPos) {
+        return mealsByDate.get(dateList.get(groupPos)).get(expandedListPos);
     }
 
     @Override
@@ -75,6 +91,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    /**
+     * This method handles the view for each group in the list, ie. each date.
+     * @param i position of the item in the list
+     * @param b whether the view is expanded
+     * @param view the view to use
+     * @param viewGroup the parent of this view
+     * @return created view
+     */
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         String selectedDate = getGroup(i);
@@ -88,6 +112,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return view;
     }
 
+    /**
+     * This methods handles the view for each item in each group, ie. each meal in a date.
+     * @param listPos position of date in the list
+     * @param expandedListPos position of meal in the date
+     * @param b whether the view is expanded
+     * @param view the view to use
+     * @param viewGroup the parent of the view
+     * @return created view
+     */
     @Override
     public View getChildView(int listPos, int expandedListPos, boolean b, View view, ViewGroup viewGroup) {
         Meal mealItem = getChild(listPos, expandedListPos);
@@ -101,6 +134,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView  mealServing = view.findViewById(R.id.num_serving);
         mealServing.setText(String.format("Servings: %d", mealItem.getNumServings()));
 
+        // Set delete Button
         ImageView delete = view.findViewById(R.id.delete_meal_item);
         delete.setOnClickListener(view1 -> {
             String docRef = mealItem.getDocRef();
