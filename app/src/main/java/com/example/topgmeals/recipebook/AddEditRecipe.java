@@ -81,11 +81,23 @@ public class AddEditRecipe extends AppCompatActivity {
                     prep_time.requestFocus();
                     return;
                 }
-                if (prep_time_text.compareTo("0 mins")==0){
+                if (prep_time_text.compareTo("0")==0){
                     prep_time.setError("Preparation time Cannot be 0!");
                     prep_time.requestFocus();
                     return;
                 }
+                if (prep_time_text.compareTo("00")==0){
+                    prep_time.setError("Preparation time Cannot be 0!");
+                    prep_time.requestFocus();
+                    return;
+                }
+                if (prep_time_text.compareTo("000")==0){
+                    prep_time.setError("Preparation time Cannot be 0!");
+                    prep_time.requestFocus();
+                    return;
+                }
+
+
 
                 if (serving.getText().toString().equals("")) {
                     serving.setError("Servings is required!");
@@ -93,7 +105,7 @@ public class AddEditRecipe extends AppCompatActivity {
                     return;
                 }
                 Integer serving_text = Integer.parseInt(serving.getText().toString());
-                if (serving_text.equals(0)) {
+                if (serving_text.equals(0) || serving_text.equals(00) || serving_text.equals(000)) {
                     serving.setError("Servings Cannot be 0!");
                     serving.requestFocus();
                     return;

@@ -82,11 +82,51 @@ public class IngredientsDisplay extends AppCompatActivity {
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("description", description.getText().toString());
+                if (description.getText().toString().isEmpty()) {
+                    description.setError("Description is required!");
+                    description.requestFocus();
+                    return;
+                }
+
                 data.put("bestBefore", "11/11/22");
+
                 data.put("location", "fridge");
+
                 data.put("amount", Float.valueOf(amount.getText().toString()));
+                if (Float.valueOf(amount.getText().toString()).equals("")) {
+                    amount.setError("Amount is required!");
+                    amount.requestFocus();
+                    return;
+                }
                 data.put("unit", units.getText().toString());
+                if (units.getText().toString().isEmpty()) {
+                    units.setError("Unit is required!");
+                    units.requestFocus();
+                    return;
+                }
+                if (units.getText().toString().compareTo("0")==0){
+                    units.setError("Units Cannot be 0!");
+                    units.requestFocus();
+                    return;
+                }
+                if (units.getText().toString().compareTo("00")==0){
+                    units.setError("Units Cannot be 0!");
+                    units.requestFocus();
+                    return;
+                }
+                if (units.getText().toString().compareTo("000")==0){
+                    units.setError("Units Cannot be 0!");
+                    units.requestFocus();
+                    return;
+                }
+
                 data.put("category", category.getText().toString());
+                if (category.getText().toString().isEmpty()) {
+                    category.setError("Category is required!");
+                    category.requestFocus();
+                    return;
+                }
+
                 data.put("id", recipeId);
 
                 db.collection("recipeIngredients").document(ingredientId)

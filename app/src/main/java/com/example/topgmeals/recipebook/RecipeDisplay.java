@@ -111,10 +111,59 @@ public class RecipeDisplay extends AppCompatActivity {
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("title", title.getText().toString());
+                if (title.getText().toString().isEmpty()) {
+                    title.setError("Title is required!");
+                    title.requestFocus();
+                    return;
+                }
+
                 data.put("prepTime", prepTime.getText().toString());
+                if (prepTime.getText().toString().isEmpty()){
+                    prepTime.setError("Preparation time is required!");
+                    prepTime.requestFocus();
+                    return;
+                }
+                if (prepTime.getText().toString().compareTo("0")==0){
+                    prepTime.setError("Preparation time Cannot be 0!");
+                    prepTime.requestFocus();
+                    return;
+                }
+                if (prepTime.getText().toString().compareTo("00")==0){
+                    prepTime.setError("Preparation time Cannot be 0!");
+                    prepTime.requestFocus();
+                    return;
+                }
+                if (prepTime.getText().toString().compareTo("000")==0){
+                    prepTime.setError("Preparation time Cannot be 0!");
+                    prepTime.requestFocus();
+                    return;
+                }
+
                 data.put("servings", Integer.valueOf(servings.getText().toString()));
+                if (Integer.valueOf(servings.getText().toString()).equals("")) {
+                    servings.setError("Servings is required!");
+                    servings.requestFocus();
+                    return;
+                }
+                if (Integer.valueOf(servings.getText().toString()).equals(0) || Integer.valueOf(servings.getText().toString()).equals(00) || Integer.valueOf(servings.getText().toString()).equals(000)) {
+                    servings.setError("Servings Cannot be 0!");
+                    servings.requestFocus();
+                    return;
+                }
+
                 data.put("category", category.getText().toString());
+                if (category.getText().toString().isEmpty()) {
+                    category.setError("Category is required!");
+                    category.requestFocus();
+                    return;
+                }
+
                 data.put("comments", comments.getText().toString());
+                if (comments.getText().toString().isEmpty()) {
+                    comments.setError("Category is required!");
+                    comments.requestFocus();
+                    return;
+                }
                 data.put("id", uid);
 
                 db.collection("recipes").document(recipeID)
