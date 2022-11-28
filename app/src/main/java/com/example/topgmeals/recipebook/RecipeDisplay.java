@@ -130,7 +130,6 @@ public class RecipeDisplay extends AppCompatActivity {
                 }
 
                 // Serving validation
-                data.put("servings", Integer.valueOf(servings.getText().toString()));
                 if ((servings.getText().toString().trim()).isEmpty()) {
                     servings.setError("Servings is required!");
                     servings.requestFocus();
@@ -140,6 +139,7 @@ public class RecipeDisplay extends AppCompatActivity {
                     servings.requestFocus();
                     return;
                 }
+                data.put("servings", Integer.valueOf(servings.getText().toString()));
 
                 // Category validation
                 data.put("category", category.getText().toString());

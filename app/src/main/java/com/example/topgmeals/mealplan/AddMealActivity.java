@@ -1,7 +1,5 @@
 package com.example.topgmeals.mealplan;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -14,17 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.example.topgmeals.utils.DateFormat;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,12 +28,11 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * This class is an {@link AppCompatActivity} that is created when the user chooses to add a new meal
- * from {@link MealPlan}. Allows the user to plan a new meal. They can choose a date, whether the meal
- * is an ingredient or a recipe and the number of servings.
+ * This class is an {@link AppCompatActivity} that is created when the user chooses to add a new
+ * meal from {@link MealPlan}. Allows the user to plan a new meal. They can choose a date, whether
+ * the meal is an ingredient or a recipe and the number of servings.
  */
 public class AddMealActivity extends AppCompatActivity {
-
     /**
      * {@link EditText} where the user chooses the date of the meal
      */
@@ -230,12 +225,10 @@ public class AddMealActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * This method updates the mealDate {@link EditText} to the date of myCalendar
      */
     private void updateLabel(){
         mealDate.setText(format.parse(myCalendar.getTime()));
     }
-
 }

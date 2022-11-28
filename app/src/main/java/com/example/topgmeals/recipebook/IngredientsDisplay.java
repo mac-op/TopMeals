@@ -2,9 +2,6 @@ package com.example.topgmeals.recipebook;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,47 +70,42 @@ public class IngredientsDisplay extends AppCompatActivity {
             public void onClick(View view) {
 
                 Map<String, Object> data = new HashMap<>();
+
+                // Description validation
                 data.put("description", description.getText().toString());
-                if (description.getText().toString().isEmpty()) {
+                if ((description.getText().toString().trim()).isEmpty()) {
                     description.setError("Description is required!");
                     description.requestFocus();
                     return;
                 }
 
+                // Need to provide default values for best before and location
                 data.put("bestBefore", "11/11/22");
+                data.put("location", "N/A");
 
-                data.put("location", "fridge");
-
-                data.put("amount", Float.valueOf(amount.getText().toString()));
-                if (Float.valueOf(amount.getText().toString()).equals("")) {
+                // Amount validation and setting its value
+                if ((amount.getText().toString().trim()).isEmpty()) {
                     amount.setError("Amount is required!");
                     amount.requestFocus();
                     return;
+                } else if (Float.parseFloat(amount.getText().toString()) == 0) {
+                    amount.setError("Amount cannot be 0!");
+                    amount.requestFocus();
+                    return;
                 }
+                data.put("amount", Float.valueOf(amount.getText().toString()));
+
+                // Unit validation
                 data.put("unit", units.getText().toString());
-                if (units.getText().toString().isEmpty()) {
+                if ((units.getText().toString().trim()).isEmpty()) {
                     units.setError("Unit is required!");
                     units.requestFocus();
                     return;
                 }
-                if (units.getText().toString().compareTo("0")==0){
-                    units.setError("Units Cannot be 0!");
-                    units.requestFocus();
-                    return;
-                }
-                if (units.getText().toString().compareTo("00")==0){
-                    units.setError("Units Cannot be 0!");
-                    units.requestFocus();
-                    return;
-                }
-                if (units.getText().toString().compareTo("000")==0){
-                    units.setError("Units Cannot be 0!");
-                    units.requestFocus();
-                    return;
-                }
 
+                // Category validation
                 data.put("category", category.getText().toString());
-                if (category.getText().toString().isEmpty()) {
+                if ((category.getText().toString().trim()).isEmpty()) {
                     category.setError("Category is required!");
                     category.requestFocus();
                     return;
@@ -143,8 +137,10 @@ public class IngredientsDisplay extends AppCompatActivity {
         /* Performs the delete ingredient button functionality */
         Button delete = findViewById(R.id.delete_ingredient);
         delete.setOnClickListener(view -> {
-            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(IngredientsDisplay.this);
-            cancelDialog.setMessage("Are you sure you want to delete this recipe ingredient?").setCancelable(true)
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(IngredientsDisplay.this);
+            cancelDialog.setMessage("Are you sure you want to delete this recipe " +
+                            "ingredient?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
