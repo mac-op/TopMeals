@@ -87,7 +87,7 @@ public class RecipeDisplay extends AppCompatActivity {
             }
         }).addOnFailureListener(exception -> {
             if (recImg.getDrawable() == null){
-                recImg.setImageResource(R.drawable.mealplan);
+                recImg.setImageResource(R.drawable.meal_plan_64);
             }
         });
 
