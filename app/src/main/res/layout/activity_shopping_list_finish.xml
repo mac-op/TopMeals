@@ -23,36 +23,29 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shoppingFinishListView"
-        android:layout_width="409dp"
-        android:layout_height="489dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/finishShopping"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shoppingFinishText">
+        app:layout_constraintTop_toBottomOf="@+id/shoppingFinishText"
+        app:layout_constraintBottom_toTopOf="@id/shopFinishShopping2">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <LinearLayout
-        android:id="@+id/finishShopping"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/shopFinishShopping2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Finish Adding"
+        app:layout_constraintTop_toBottomOf="@id/shoppingFinishListView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        >
 
-        android:background="#10f7f7f7"
-        android:gravity="center"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="607dp"
-        app:layout_constraintTop_toBottomOf="@id/shoppingFinishListView">
-
-        <Button
-            android:id="@+id/shopFinishShopping2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Finish Adding">
-
-        </Button>
-    </LinearLayout>
+    </Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
