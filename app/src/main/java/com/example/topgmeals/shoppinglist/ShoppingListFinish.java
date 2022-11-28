@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
@@ -44,11 +47,12 @@ public class ShoppingListFinish extends AppCompatActivity {
     private RecyclerView ingredientView;
     private String id;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list_finish);
+        setTitle("Picked Up Ingredients");
+        Toast.makeText(this, "Select a picked up ingredient to update your Ingredient Storage", Toast.LENGTH_LONG).show();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
@@ -70,17 +74,13 @@ public class ShoppingListFinish extends AppCompatActivity {
         ingredientAdapter = new IngredientAdapter(inCart);
         ingredientView.setAdapter(ingredientAdapter);
 
-
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         ingredientView.setLayoutManager(layoutManager);
         androidx.recyclerview.widget.DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ingredientView.getContext(),
                 layoutManager.getOrientation());
         ingredientView.addItemDecoration(dividerItemDecoration);
 
-
         ingredientAdapter.notifyDataSetChanged();
-
 
         ActivityResultLauncher<Intent> editActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -161,12 +161,9 @@ public class ShoppingListFinish extends AppCompatActivity {
                             if (i.getDescription().equals(ingredient.getDescription())){
                                 inCart.remove(i);
                                 break;
-
                             }
                         }
-
                         ingredientAdapter.notifyDataSetChanged();
-
                     }
                 });
 
@@ -188,17 +185,26 @@ public class ShoppingListFinish extends AppCompatActivity {
 
 
         Button finishShopping = (Button) findViewById(R.id.shopFinishShopping2);
-        finishShopping.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ShoppingListFinish.this, IngredientStorage.class);
-
-                startActivity(intent);
-                finish();
-
-            }
+        finishShopping.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(ShoppingListFinish.this);
+            cancelDialog.setMessage("Please confirm that ingredient storage has been updated and " +
+                            "any remaining ingredients in the list will be unpicked.").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Updating Ingredient Storage");
+            alertCancel.show();
         });
-
     }
 
     private HashMap<String, Object> toHashMap(Ingredient ingredient){

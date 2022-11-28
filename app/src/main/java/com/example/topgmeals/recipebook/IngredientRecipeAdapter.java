@@ -48,14 +48,12 @@ public class IngredientRecipeAdapter extends ArrayAdapter<Ingredient> {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource,parent,false);
 
-        TextView description_display = (TextView) convertView.findViewById(R.id.ingredient_description);
-        TextView amount_display = (TextView) convertView.findViewById(R.id.ingredient_amount);
-        TextView unit_display = (TextView) convertView.findViewById(R.id.ingredient_unit);
-        TextView category_display = (TextView) convertView.findViewById(R.id.ingredient_category_id);
+        TextView description_display = convertView.findViewById(R.id.ingredient_description);
+        TextView amount_unit_display = convertView.findViewById(R.id.ingredient_amount_unit);
+        TextView category_display = convertView.findViewById(R.id.ingredient_category_id);
 
         description_display.setText(description);
-        amount_display.setText(amount.toString());
-        unit_display.setText(unit);
+        amount_unit_display.setText(amount.toString() + " " + unit);
         category_display.setText(category);
 
         return convertView;

@@ -2,7 +2,9 @@ package com.example.topgmeals.mealplan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -138,14 +140,14 @@ public class AddMealActivity extends AppCompatActivity {
 
         // Set adapter for selection Spinner
         ArrayAdapter<String> selectionAdapter = new ArrayAdapter<>(getBaseContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealNames);
-        selectionAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                R.layout.meal_selector_drop_down, mealNames);
+        selectionAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
         selection.setAdapter(selectionAdapter);
 
         // Set adapter for type Spinner. The selection list is updated every time the user switches type
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, mealTypes);
-        typeAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                R.layout.meal_selector_drop_down, mealTypes);
+        typeAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
         type.setAdapter(typeAdapter);
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -180,14 +182,29 @@ public class AddMealActivity extends AppCompatActivity {
 
                 Log.d("MealName", String.valueOf(mealNames));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-
-
-        cancel.setOnClickListener(view -> finish());
+        cancel.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddMealActivity.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to Meal Planner?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Discard Changes");
+            alertCancel.show();
+        });
 
         // Add new meal to Firestore
         save.setOnClickListener(view -> {

@@ -56,6 +56,7 @@ public class IngredientRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
+        setTitle("Ingredients For Recipe");
 
         ingredientsList = (ListView) findViewById(R.id.ingredient_recipe);
         ingredientsRecipeBook = new ArrayList<>();
@@ -152,25 +153,10 @@ public class IngredientRecipe extends AppCompatActivity {
             }
         });
 
-        /* Performing back button functionality */
-        Button backButton = (Button) findViewById(R.id.back_button_ingredient_recipe);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(currentClass, RecipeBook.class);
-                startActivity(intent);
-                currentClass.finish();
-            }
-        });
-
         // Adding a ingredient for a recipe
         Ingredient new_ingredient= (Ingredient) getIntent().getParcelableExtra("NEW");
         if (new_ingredient!=null){
             ingredientsRecipeBook.add(new_ingredient);
-
         }
-
-
-
     }
 }

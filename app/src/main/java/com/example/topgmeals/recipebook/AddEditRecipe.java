@@ -4,8 +4,10 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -51,125 +53,120 @@ public class AddEditRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipee);
+        setTitle("Add Recipe");
         AddEditRecipe currentClass = AddEditRecipe.this;
 
         mImageView = findViewById(R.id.recipeImage);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         /* Performing the add recipe button functionality */
-        Button add_new = findViewById(R.id.add_recipe);
-        add_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent_add = new Intent(currentClass, RecipeBook.class);
-                EditText title = (EditText) findViewById(R.id.title_editText);
-                EditText prep_time = (EditText) findViewById(R.id.prep_time_editText);
-                EditText serving = (EditText) findViewById(R.id.serving_editText);
-                EditText category = (EditText) findViewById(R.id.Category_editText);
-                EditText comments = (EditText) findViewById(R.id.Comments_editText);
+        Button add_new = findViewById(R.id.save_recipe_button);
+        add_new.setOnClickListener(view -> {
+            Intent intent_add = new Intent(currentClass, RecipeBook.class);
+            EditText title = (EditText) findViewById(R.id.title_editText);
+            EditText prep_time = (EditText) findViewById(R.id.prep_time_editText);
+            EditText serving = (EditText) findViewById(R.id.serving_editText);
+            EditText category = (EditText) findViewById(R.id.Category_editText);
+            EditText comments = (EditText) findViewById(R.id.Comments_editText);
 
-                String title_text = title.getText().toString();
-                if (title_text.isEmpty()) {
-                    title.setError("Title is required!");
-                    title.requestFocus();
-                    return;
-                }
-
-                String prep_time_text = prep_time.getText().toString();
-                if (prep_time_text.isEmpty()) {
-                    prep_time.setError("Preparation time is required!");
-                    prep_time.requestFocus();
-                    return;
-                }
-                if (prep_time_text.compareTo("0")==0){
-                    prep_time.setError("Preparation time Cannot be 0!");
-                    prep_time.requestFocus();
-                    return;
-                }
-                if (prep_time_text.compareTo("00")==0){
-                    prep_time.setError("Preparation time Cannot be 0!");
-                    prep_time.requestFocus();
-                    return;
-                }
-                if (prep_time_text.compareTo("000")==0){
-                    prep_time.setError("Preparation time Cannot be 0!");
-                    prep_time.requestFocus();
-                    return;
-                }
-
-
-
-                if (serving.getText().toString().equals("")) {
-                    serving.setError("Servings is required!");
-                    serving.requestFocus();
-                    return;
-                }
-                Integer serving_text = Integer.parseInt(serving.getText().toString());
-                if (serving_text.equals(0) || serving_text.equals(00) || serving_text.equals(000)) {
-                    serving.setError("Servings Cannot be 0!");
-                    serving.requestFocus();
-                    return;
-                }
-
-                String category_text = category.getText().toString();
-                if (category_text.isEmpty()) {
-                    category.setError("Category is required!");
-                    category.requestFocus();
-                    return;
-                }
-
-                String comments_text = comments.getText().toString();
-                if (comments_text.isEmpty()) {
-                    comments.setError("Comments is required!");
-                    comments.requestFocus();
-                    return;
-                }
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                Map<String, Object> data = new HashMap<>();
-                data.put("title", title_text);
-                data.put("prepTime", prep_time_text);
-                data.put("servings", serving_text);
-                data.put("category", category_text);
-                data.put("comments", comments_text);
-                data.put("id", uid);
-
-                db.collection("recipes")
-                        .add(data)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-                                StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId().toString());
-                                UploadTask uploadTask = uploadRef.putFile(mImageUri);
-
-
-                                // Register observers to listen for when the download is done or if it fails
-                                uploadTask.addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception exception) {
-                                        // Handle unsuccessful uploads
-                                    }
-                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                                        // ...
-                                    }
-                                });
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-                startActivity(intent_add);
+            // region input validation
+            String title_text = title.getText().toString();
+            if (title_text.isEmpty()) {
+                title.setError("Title is required!");
+                title.requestFocus();
+                return;
             }
+
+            String prep_time_text = prep_time.getText().toString().trim();
+            if (prep_time_text.isEmpty()) {
+                prep_time.setError("Preparation time is required!");
+                prep_time.requestFocus();
+                return;
+            }
+
+            if (Integer.parseInt(prep_time_text) == 0){
+                prep_time.setError("Preparation time cannot be 0!");
+                prep_time.requestFocus();
+                return;
+            }
+
+            if ((serving.getText().toString().trim()).isEmpty()) {
+                serving.setError("Servings is required!");
+                serving.requestFocus();
+                return;
+            }
+
+            Integer serving_text = Integer.parseInt(serving.getText().toString());
+            if (serving_text.equals(0)) {
+                serving.setError("Servings cannot be 0!");
+                serving.requestFocus();
+                return;
+            }
+
+            String category_text = category.getText().toString();
+            if (category_text.isEmpty()) {
+                category.setError("Category is required!");
+                category.requestFocus();
+                return;
+            }
+
+            String comments_text = comments.getText().toString();
+            if (comments_text.isEmpty()) {
+                comments.setError("Comments is required!");
+                comments.requestFocus();
+                return;
+            }
+            // endregion
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("title", title_text);
+            data.put("prepTime", prep_time_text);
+            data.put("servings", serving_text);
+            data.put("category", category_text);
+            data.put("comments", comments_text);
+            data.put("id", uid);
+
+            db.collection("recipes")
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+                        StorageReference uploadRef = mStorageRef.child("uploads/" + documentReference.getId());
+
+                        if (mImageUri!=null) {
+                            UploadTask uploadTask = uploadRef.putFile(mImageUri);
+                            // Register observers to listen for when the download is done or if it fails
+                            uploadTask.addOnFailureListener(exception -> {})
+                                    .addOnSuccessListener(taskSnapshot -> {});
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+            startActivity(intent_add);
+        });
+
+        // When the user wants to discard changes and go back to RecipeBook
+        Button cancel_recipe = findViewById(R.id.cancel_recipe_button);
+        cancel_recipe.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditRecipe.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to Recipes Book?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Discard Changes");
+            alertCancel.show();
         });
 
         // Importing picture for recipe
@@ -195,8 +192,6 @@ public class AddEditRecipe extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             mImageUri = data.getData();
             mImageView.setImageURI(mImageUri);
-
-
         }
     }
 }

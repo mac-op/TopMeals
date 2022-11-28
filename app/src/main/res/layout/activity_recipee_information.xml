@@ -1,268 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/option_background"
+    android:paddingTop="10dp" >
 
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/button_back"
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back">
-
-        </Button>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recipe Information"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="30dp">
-
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:textSize="30dp">
-
-        </TextView>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:fontFamily="@font/satoshi_bold"
             android:text="Title"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:id="@+id/title">
+            android:textSize="20sp" />
 
-        </TextView>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/title_editText">
+            android:id="@+id/title_editText"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"  />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="70dp"
+        android:layout_marginTop="10dp">
 
         <TextView
+            android:id="@+id/PreparationTime"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Preparation Time(mins)"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:text="Preparation\nTime (mins)"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/PreparationTime">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:maxLength="3"
-            android:inputType="numberDecimal"
-            android:id="@+id/PreparationTime_editText">
+            android:id="@+id/PreparationTime_editText"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:inputType="numberSigned"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp">
 
         <TextView
+            android:id="@+id/Servings"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Number of Serving"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:text="Serving"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Servings">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textAlignment="center"
-            android:id="@+id/servings_editText">
+            android:id="@+id/servings_editText"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:inputType="numberSigned"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp">
 
         <TextView
+            android:id="@+id/Category"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Category"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Category">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/Category_editText">
+            android:id="@+id/Category_editText"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
+            android:id="@+id/Comments"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Comments"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/Comments">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:id="@+id/Comments_editText">
+            android:id="@+id/Comments_editText"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:fontFamily="@font/satoshi_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </TableRow>
 
-        </EditText>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
+            android:id="@+id/picture"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Picture"
-            android:textStyle="bold"
-            android:textSize="20dp"
+            android:layout_weight="2"
+            android:textAlignment="center"
+            android:fontFamily="@font/satoshi_bold"
             android:textColor="@color/black"
-            android:id="@+id/picture">
-
-        </TextView>
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/recImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:layout_marginRight="10dp" />
+    </TableRow>
 
-        </ImageView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:textStyle="bold"
-                android:textSize="30dp">
-
-            </TextView>
-
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
-
-        <Button
-            android:id="@+id/delete_recipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete Recipe"
-            android:layout_marginLeft="5sp"
-            >
-
-        </Button>
-
-        <Button
-            android:id="@+id/edit_recipe_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Edit Recipe"
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="5sp"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop= "30dp"
+        android:gravity="center">
 
         <Button
             android:id="@+id/ingredients_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingredients"
-            android:layout_marginRight="5sp">
+            android:text="View Ingredients"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
+    </TableRow>
 
-        </Button>
-    </LinearLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin= "30dp"
+        android:layout_gravity="center" >
 
+        <Button
+            android:id="@+id/delete_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="Delete"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/update_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="3"
+            android:text="Update"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="20sp" />
+    </TableRow>
 
-
-
-
-
-
-
-
-</LinearLayout>
+</TableLayout>

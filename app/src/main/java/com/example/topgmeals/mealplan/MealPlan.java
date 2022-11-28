@@ -100,7 +100,7 @@ public class MealPlan extends AppCompatActivity implements ExpandableListAdapter
         addButton.setOnClickListener(view -> {
             Intent addIntent = new Intent(getBaseContext(), AddMealActivity.class);
             startActivity(addIntent);
-       });
+        });
 
         //region ButtonSwapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);

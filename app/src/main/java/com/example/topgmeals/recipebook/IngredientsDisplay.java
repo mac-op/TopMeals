@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.topgmeals.R;
+import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,15 +36,16 @@ public class IngredientsDisplay extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_ingredient);
+        setTitle("Modify Recipe Ingredient");
+
         IngredientsDisplay currentClass = IngredientsDisplay.this;
 
-        EditText description = (EditText) findViewById(R.id.description_editText);
-        EditText amount = (EditText) findViewById(R.id.amount_editText);
-        EditText units = (EditText) findViewById(R.id.unit_editText);
-        EditText category = (EditText) findViewById(R.id.Category_editText);
+        EditText description = findViewById(R.id.description_editText);
+        EditText amount = findViewById(R.id.amount_editText);
+        EditText units = findViewById(R.id.unit_editText);
+        EditText category = findViewById(R.id.Category_editText);
 
         Intent getIntent = getIntent();
 
@@ -60,19 +64,6 @@ public class IngredientsDisplay extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-        /* Performs the back button functionality */
-        Button backButton = (Button) findViewById(R.id.back_button_modify_ingredient);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(currentClass, IngredientRecipe.class);
-                intent.putExtra("RECIPE_ID", recipeId);
-                startActivity(intent);
-                currentClass.finish();
-            }
-        });
 
         /* Performs the update ingredient button functionality */
         Button update = (Button) findViewById(R.id.update_ingredient);
@@ -151,34 +142,43 @@ public class IngredientsDisplay extends AppCompatActivity {
         });
 
         /* Performs the delete ingredient button functionality */
-        Button delete = (Button) findViewById(R.id.delete_ingredient);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        Button delete = findViewById(R.id.delete_ingredient);
+        delete.setOnClickListener(view -> {
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(IngredientsDisplay.this);
+            cancelDialog.setMessage("Are you sure you want to delete this recipe ingredient?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            db.collection("recipeIngredients").document(ingredientId)
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error deleting document", e);
+                                        }
+                                    });
 
-                db.collection("recipeIngredients").document(ingredientId)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error deleting document", e);
-                            }
-                        });
-
-
-                Intent intent = new Intent(currentClass, IngredientRecipe.class);
-                intent.putExtra("RECIPE_ID", recipeId);
-                startActivity(intent);
-                currentClass.finish();
-
-            }
+                            Intent intent = new Intent(currentClass, IngredientRecipe.class);
+                            intent.putExtra("RECIPE_ID", recipeId);
+                            startActivity(intent);
+                            currentClass.finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Delete Confirmation");
+            alertCancel.show();
         });
-
     }
 }
