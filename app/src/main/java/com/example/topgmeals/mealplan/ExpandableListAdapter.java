@@ -1,38 +1,28 @@
 package com.example.topgmeals.mealplan;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.topgmeals.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * {@link ExpandableListAdapter} to hold the meals where they are grouped by date.
+ *
  * Code adapted from this
  * <a href="http://theopentutorials.com/tutorials/android/listview/android-expandable-list-view-example/">
  * tutorial </a>
  */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-
     private final Context context;
     private final OnDeletePressedListener listener;
 
@@ -45,7 +35,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
      * {@link HashMap} to hold each group's items, ie. each meal associated with the dates.
      */
     private final HashMap<String, ArrayList<Meal>> mealsByDate;
-
 
     public ExpandableListAdapter(Context context, ArrayList<String> dateList,
                                  HashMap<String, ArrayList<Meal>> mealsByDate){
@@ -103,7 +92,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         String selectedDate = getGroup(i);
 
         if (view == null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater =
+                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.meal_group, null);
         }
         TextView dateText = view.findViewById(R.id.meal_date_text);
@@ -121,10 +111,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
      * @return created view
      */
     @Override
-    public View getChildView(int listPos, int expandedListPos, boolean b, View view, ViewGroup viewGroup) {
+    public View getChildView(int listPos, int expandedListPos, boolean b, View view,
+                             ViewGroup viewGroup) {
         Meal mealItem = getChild(listPos, expandedListPos);
         if (view == null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater =
+                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.meal_item, null);
         }
         TextView mealName = view.findViewById(R.id.meal_name);
@@ -136,9 +128,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         // Set delete Button
         ImageView delete = view.findViewById(R.id.delete_meal_item);
         delete.setOnClickListener(view1 -> {
-            String docRef = mealItem.getDocRef();
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(view1.getContext());
+            cancelDialog.setMessage("Are you sure you want to delete this " +
+                            "meal?").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String docRef = mealItem.getDocRef();
 
-            listener.deleteMeal(docRef);
+                            listener.deleteMeal(docRef);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Delete Confirmation");
+            alertCancel.show();
         });
         return view;
     }

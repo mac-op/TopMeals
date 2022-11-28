@@ -139,7 +139,8 @@ public class AddMealActivity extends AppCompatActivity {
         selectionAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
         selection.setAdapter(selectionAdapter);
 
-        // Set adapter for type Spinner. The selection list is updated every time the user switches type
+        // Set adapter for type Spinner. The selection list is updated every time the user switches
+        // type
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,
                 R.layout.meal_selector_drop_down, mealTypes);
         typeAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
@@ -183,7 +184,8 @@ public class AddMealActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddMealActivity.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Meal Planner?").setCancelable(true)
+            cancelDialog.setMessage("Do you want to discard changes and return to Meal " +
+                            "Planner?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -205,6 +207,17 @@ public class AddMealActivity extends AppCompatActivity {
         save.setOnClickListener(view -> {
             String date1 = mealDate.getText().toString();
             String mealName = selection.getSelectedItem().toString();
+
+            // Servings validation
+            if ((serving.getText().toString().trim()).isEmpty()) {
+                serving.setError("Servings is required!");
+                serving.requestFocus();
+                return;
+            } else if (Integer.valueOf(serving.getText().toString()) == 0) {
+                serving.setError("Servings Cannot be 0!");
+                serving.requestFocus();
+                return;
+            }
             int numServings = Integer.parseInt(serving.getText().toString());
 
             DocumentReference docRef = mealCollection.document();

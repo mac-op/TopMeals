@@ -129,7 +129,7 @@ public class RecipeDisplay extends AppCompatActivity {
                     return;
                 }
 
-                // Serving validation
+                // Servings validation
                 if ((servings.getText().toString().trim()).isEmpty()) {
                     servings.setError("Servings is required!");
                     servings.requestFocus();
