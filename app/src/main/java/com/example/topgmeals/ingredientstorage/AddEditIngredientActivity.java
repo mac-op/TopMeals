@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
+import com.example.topgmeals.shoppinglist.ShoppingListFinish;
 import com.example.topgmeals.utils.DateFormat;
 
 import java.util.Calendar;
@@ -67,9 +68,9 @@ public class AddEditIngredientActivity extends AppCompatActivity {
     }
 
     public void updateMenu() {
-        setTitle("Update Storage");
+        setTitle("Update Ingredient Storage");
         cancel.setText("Delete");
-        save.setText("Update/Save");
+        save.setText("Update");
 
         // Get the Ingredient from Intent and set the fields to its content
         Ingredient ingredient = intent.getParcelableExtra("ingredient_object");
@@ -82,34 +83,46 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
-            String description_ = description.getText().toString();
-            Date bbDate_ = myCalendar.getTime();
-            String location_ = location.getText().toString();
-            float amount_ = Float.parseFloat(amount.getText().toString());
-            String unit_ = unit.getText().toString();
-            String category_ = category.getText().toString();
+            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddEditIngredientActivity.this);
+            cancelDialog.setMessage("Do you want to remove this ingredient from the Shopping List?.").setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String description_ = description.getText().toString();
+                            Date bbDate_ = myCalendar.getTime();
+                            String location_ = location.getText().toString();
+                            float amount_ = Float.parseFloat(amount.getText().toString());
+                            String unit_ = unit.getText().toString();
+                            String category_ = category.getText().toString();
 
-            //TODO: Input validation
-            Intent deleteIntent = new Intent();
+                            Intent deleteIntent = new Intent();
 
-            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
-            deleteIntent.putExtra("edited_ingredient", ingredient1);
-            setResult(2, deleteIntent);
-            finish();
+                            Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
+                            deleteIntent.putExtra("edited_ingredient", ingredient1);
+                            setResult(2, deleteIntent);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertCancel = cancelDialog.create();
+            alertCancel.setTitle("Delete Ingredient");
+            alertCancel.show();
         });
 
         /* Set button to send the position of the Ingredient and its new content back to IngredientStorage
          to update **/
         save.setOnClickListener(view -> {
-            //TODO: Separate method to collect text??
             String description_ = description.getText().toString();
             Date bbDate_ = myCalendar.getTime();
             String location_ = location.getText().toString();
             float amount_ = Float.parseFloat(amount.getText().toString());
             String unit_ = unit.getText().toString();
             String category_ = category.getText().toString();
-
-            //TODO: Input validation
 
             Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_, unit_, category_, "TEMP");
             Intent editIntent = new Intent();
