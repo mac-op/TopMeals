@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

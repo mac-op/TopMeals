@@ -1,4 +1,4 @@
-package com.example.topgmeals.mealplan.ingredientstorage;
+package com.example.topgmeals.ingredientstorage;
 
 import android.app.Activity;
 import android.content.Intent;

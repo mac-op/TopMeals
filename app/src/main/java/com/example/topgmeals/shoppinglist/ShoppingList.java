@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
-import com.example.topgmeals.mealplan.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.IngredientStorage;
 import com.example.topgmeals.mealplan.Meal;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.recipebook.Recipe;

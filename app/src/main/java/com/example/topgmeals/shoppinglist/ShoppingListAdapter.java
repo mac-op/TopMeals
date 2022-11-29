@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.Ingredient;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

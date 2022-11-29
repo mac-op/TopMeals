@@ -1,6 +1,6 @@
 package com.example.topgmeals.shoppinglist;
 
-import com.example.topgmeals.mealplan.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.Ingredient;
 
 import java.util.ArrayList;
 
