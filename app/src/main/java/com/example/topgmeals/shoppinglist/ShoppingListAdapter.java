@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
  * Custom Adapter to fit {@link Ingredient} objects into {@link RecyclerView}
  */
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
-
     /**
      * List of {@link Ingredient} objects to display
      */
@@ -98,7 +97,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         });
         //in some cases, it will prevent unwanted situations
         cb.setOnCheckedChangeListener(null);
-
     }
 
     /**

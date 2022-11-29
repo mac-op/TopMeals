@@ -99,7 +99,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 Map<String, Object> data = new HashMap<>();
                 data.put("description", descriptionText);
                 data.put("bestBefore", "11/11/22");
-                data.put("location", "fridge");
+                data.put("location", "N/A");
                 data.put("amount", amountText);
                 data.put("unit", unitText);
                 data.put("category", categoryText);
