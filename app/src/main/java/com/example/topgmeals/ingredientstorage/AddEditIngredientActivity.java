@@ -80,6 +80,23 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         unit.setText(ingredient.getUnit());
         category.setText(ingredient.getCategory());
 
+        myCalendar.setTime(ingredient.getBestBefore());
+        DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
+            updateLabel();
+        };
+
+        bestBefore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(AddEditIngredientActivity.this,date,
+                        myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         /* Set button to send the position of the Ingredient back to IngredientStorage to delete */
         cancel.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog =
@@ -122,9 +139,48 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             String description_ = description.getText().toString();
             Date bbDate_ = myCalendar.getTime();
             String location_ = location.getText().toString();
-            float amount_ = Float.parseFloat(amount.getText().toString());
             String unit_ = unit.getText().toString();
             String category_ = category.getText().toString();
+
+            // Description validation
+            if ((description_.trim()).isEmpty()) {
+                description.setError("Description is required!");
+                description.requestFocus();
+                return;
+            }
+
+            // Location validation
+            if ((location_.trim()).isEmpty()) {
+                location.setError("Location is required!");
+                location.requestFocus();
+                return;
+            }
+
+            // Amount validation and setting its value
+            if ((amount.getText().toString().trim()).isEmpty()) {
+                amount.setError("Amount is required!");
+                amount.requestFocus();
+                return;
+            } else if (Float.parseFloat(amount.getText().toString()) == 0) {
+                amount.setError("Amount cannot be 0!");
+                amount.requestFocus();
+                return;
+            }
+            float amount_ = Float.parseFloat(amount.getText().toString());
+
+            // Unit validation
+            if ((unit_.trim()).isEmpty()) {
+                unit.setError("Unit is required!");
+                unit.requestFocus();
+                return;
+            }
+
+            // Category validation
+            if ((category_.trim()).isEmpty()) {
+                category.setError("Category is required!");
+                category.requestFocus();
+                return;
+            }
 
             Ingredient ingredient1 = new Ingredient(description_, bbDate_, location_, amount_,
                     unit_, category_, "TEMP");
@@ -220,7 +276,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
 
             // Amount validation and setting its value
-            float amount_;
             if ((amount.getText().toString().trim()).isEmpty()) {
                 amount.setError("Amount is required!");
                 amount.requestFocus();
@@ -229,9 +284,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 amount.setError("Amount cannot be 0!");
                 amount.requestFocus();
                 return;
-            } else {
-                amount_ = Float.parseFloat(amount.getText().toString());
             }
+            float amount_ = Float.parseFloat(amount.getText().toString());
 
             // Unit validation
             if ((unit_.trim()).isEmpty()) {
@@ -332,7 +386,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             }
 
             // Amount validation and setting its value
-            float amount_;
             if ((amount.getText().toString().trim()).isEmpty()) {
                 amount.setError("Amount is required!");
                 amount.requestFocus();
@@ -341,9 +394,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                 amount.setError("Amount cannot be 0!");
                 amount.requestFocus();
                 return;
-            } else {
-                amount_ = Float.parseFloat(amount.getText().toString());
             }
+            float amount_ = Float.parseFloat(amount.getText().toString());
 
             // Unit validation
             if ((unit_.trim()).isEmpty()) {

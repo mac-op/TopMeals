@@ -24,6 +24,9 @@ import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.example.topgmeals.ingredientstorage.IngredientAdapter;
+import com.example.topgmeals.ingredientstorage.IngredientStorage;
+import com.example.topgmeals.login.MainOptions;
+import com.example.topgmeals.mealplan.MealPlan;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -185,6 +188,7 @@ public class ShoppingListFinish extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(ShoppingListFinish.this, MainOptions.class));
                             finish();
                         }
                     })
