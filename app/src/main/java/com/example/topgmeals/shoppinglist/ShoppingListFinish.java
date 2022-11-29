@@ -37,14 +37,42 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class acts as a Final checkpoint for items in the shopping list and allows the user
+ * to update Ingredient Storage based on their shopping Activity
+ */
 public class ShoppingListFinish extends AppCompatActivity {
 
+    /**
+     * An {@link ArrayList} that holds the current {@link Ingredient} objects.
+     */
     private ArrayList<Ingredient> inCart;
+
+    /**
+     * An {@link ArrayList} that holds the current {@link Ingredient} objects.
+     */
     private ArrayList<Ingredient> ingredientList;
+
+    /**
+     * An {@link IngredientAdapter} that binds array to listview
+     */
     private IngredientAdapter ingredientAdapter;
+
+    /**
+     * An {@link RecyclerView.Adapter} that holds {@link Ingredient} objects.
+     */
     private RecyclerView ingredientView;
+
+    /**
+     * An {@link String} that holds the current user Firebase ID
+     */
     private String id;
 
+    /**
+     * This creates the ShoppingListFinish session and displays in a List all the items that
+     * the user picked up while shopping and allows them to update them in the Ingredient Storage
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,6 +232,12 @@ public class ShoppingListFinish extends AppCompatActivity {
         });
     }
 
+    /**
+     * This allows for easy Mapping and data collection and combing when
+     * pushing or getting new data from Firebase
+     * @param ingredient
+     * @return
+     */
     private HashMap<String, Object> toHashMap(Ingredient ingredient){
         HashMap<String,Object> map = new HashMap<>();
         map.put("id", id);

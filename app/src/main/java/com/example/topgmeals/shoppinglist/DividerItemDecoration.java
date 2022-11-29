@@ -11,6 +11,10 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * This class is used to help visually display the {@link RecyclerView.Adapter} items
+ * This code was sorced from online sources
+ */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private Drawable mDivider;

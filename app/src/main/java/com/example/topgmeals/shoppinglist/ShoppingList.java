@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.Ingredient;
+import com.example.topgmeals.ingredientstorage.IngredientAdapter;
 import com.example.topgmeals.ingredientstorage.IngredientStorage;
 import com.example.topgmeals.mealplan.Meal;
 import com.example.topgmeals.mealplan.MealPlan;
@@ -39,19 +40,67 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is for the Activity that is the Shopping List Menu for the App
+ */
 public class ShoppingList extends AppCompatActivity implements ShoppingListAdapter.ItemClickListener {
 
+    /**
+     * An {@link RecyclerView.Adapter} that holds {@link Ingredient} objects.
+     */
     private RecyclerView shoppingListView;
+
+    /**
+     * An {@link ArrayList} that holds the current {@link Ingredient} objects.
+     */
     private ArrayList<Ingredient> shoppingList;
+
+    /**
+     * An {@link ArrayList} that holds the initial {@link Ingredient} objects.
+     */
     private ArrayList<Ingredient> fullshoppingList;
+
+
+    /**
+     * An {@link Boolean} that acts as a flag.
+     */
     private Boolean check=Boolean.FALSE;
+
+    /**
+     * A custom {@link RecyclerView.Adapter} of type {@link IngredientAdapter} that handles the view
+     * of the list of ingredients.
+     */
     private ShoppingListAdapter shoppingListAdapter;
+
+    /**
+     * Holds firebase variable
+     */
     private FirebaseApp app;
+
+    /**
+     * An {@link ArrayList} that holds the {@link Meal} objects.
+     */
     private ArrayList<Meal> mealList;
+
+    /**
+     * An {@link String} that holds the firebase user ID.
+     */
     private String id;
-    private  ArrayList<Recipe> recipeBook;
+
+    /**
+     * An {@link ArrayList} that holds the {@link Recipe} objects.
+     */
+    private ArrayList<Recipe> recipeBook;
+
+    /**
+     * An {@link ArrayList} that holds the {@link Ingredient} objects.
+     */
     private ArrayList<Ingredient> ingredientsList;
 
+    /**
+     * The onCreate Method creates the
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,6 +285,11 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         // End Region Activity Swapping
     }
 
+    /**
+     * This function takes all the ArraysList from IngredientStorage and Recipies and
+     * creates a Shopping list based on the needs of the customer
+     * @param db
+     */
     private void load(FirebaseFirestore db){
         final CollectionReference RecipeIngRef = db.collection("recipeIngredients");
 
@@ -365,6 +419,11 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         shoppingListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Used for onItemClickEvents
+     * @param view
+     * @param position
+     */
     @Override
     public void onItemClick(View view, int position) {
     }
