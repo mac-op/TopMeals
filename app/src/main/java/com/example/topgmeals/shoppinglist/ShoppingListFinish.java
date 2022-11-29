@@ -2,14 +2,6 @@ package com.example.topgmeals.shoppinglist;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,21 +12,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.example.topgmeals.ingredientstorage.IngredientAdapter;
 import com.example.topgmeals.ingredientstorage.IngredientStorage;
-import com.example.topgmeals.recipebook.RecipeAdapter;
+import com.example.topgmeals.login.MainOptions;
+import com.example.topgmeals.mealplan.MealPlan;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +78,8 @@ public class ShoppingListFinish extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list_finish);
         setTitle("Picked Up Ingredients");
-        Toast.makeText(this, "Select a picked up ingredient to update your Ingredient Storage", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Select a picked up ingredient to update your " +
+                "Ingredient Storage", Toast.LENGTH_LONG).show();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");
@@ -104,7 +103,8 @@ public class ShoppingListFinish extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         ingredientView.setLayoutManager(layoutManager);
-        androidx.recyclerview.widget.DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ingredientView.getContext(),
+        androidx.recyclerview.widget.DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(ingredientView.getContext(),
                 layoutManager.getOrientation());
         ingredientView.addItemDecoration(dividerItemDecoration);
 
@@ -117,7 +117,8 @@ public class ShoppingListFinish extends AppCompatActivity {
                     if (result.getResultCode() == 2) {
                         // Get Intent from child Activity and the position of the item to delete
                         Intent deleteIntent = result.getData();
-                        Ingredient ingredient = deleteIntent.getParcelableExtra("edited_ingredient");
+                        Ingredient ingredient =
+                                deleteIntent.getParcelableExtra("edited_ingredient");
 
                         for (Ingredient i : inCart){
                             if (i.getDescription().equals(ingredient.getDescription())){
@@ -135,9 +136,8 @@ public class ShoppingListFinish extends AppCompatActivity {
                     else if (result.getResultCode() == Activity.RESULT_OK){
                         Log.e("t", "THOMAS");
                         Intent editIntent = result.getData();
-                        Ingredient ingredient = editIntent.getParcelableExtra("edited_ingredient");
-
-
+                        Ingredient ingredient =
+                                editIntent.getParcelableExtra("edited_ingredient");
 
                         Boolean unique = true;
                         String DocID = "";
@@ -148,9 +148,7 @@ public class ShoppingListFinish extends AppCompatActivity {
                                 break;
                             }
                         }
-
                         HashMap<String,Object> data = toHashMap(ingredient);
-
 
                         if (unique) {
                             db.collection("ingredients")
@@ -158,7 +156,8 @@ public class ShoppingListFinish extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
-                                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                                            Log.d(TAG, "DocumentSnapshot written with ID: "
+                                                    + documentReference.getId());
 
                                         }
                                     })
@@ -184,7 +183,6 @@ public class ShoppingListFinish extends AppCompatActivity {
                                         }
                                     });
                         }
-
                         for (Ingredient i : inCart){
                             if (i.getDescription().equals(ingredient.getDescription())){
                                 inCart.remove(i);
@@ -194,7 +192,6 @@ public class ShoppingListFinish extends AppCompatActivity {
                         ingredientAdapter.notifyDataSetChanged();
                     }
                 });
-
 
         View.OnClickListener onItemClickListener = view -> {
             // Get the position of the clicked item
@@ -211,7 +208,6 @@ public class ShoppingListFinish extends AppCompatActivity {
         };
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
 
-
         Button finishShopping = (Button) findViewById(R.id.shopFinishShopping2);
         finishShopping.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog = new AlertDialog.Builder(ShoppingListFinish.this);
@@ -220,6 +216,7 @@ public class ShoppingListFinish extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(ShoppingListFinish.this, MainOptions.class));
                             finish();
                         }
                     })

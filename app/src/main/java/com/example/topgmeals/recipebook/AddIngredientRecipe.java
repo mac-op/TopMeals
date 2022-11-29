@@ -2,9 +2,6 @@ package com.example.topgmeals.recipebook;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
+import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,18 +24,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.example.topgmeals.ingredientstorage.Ingredient;
 /**
- * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe where user can add a
- *  * new {@link Ingredient} to a {@link Recipe}. Called by {@link IngredientRecipe}
+ * This class is an Activity that handles the ADD functionality of the Ingredients of a Recipe where
+ * user can add a new {@link Ingredient} to a {@link Recipe}. Called by {@link IngredientRecipe}
  */
 public class AddIngredientRecipe extends AppCompatActivity {
-
     String RecipeID;
 
     /**
-     * Method to handle layout of the Activity when it is created
+     * Method to handle layout of the Activity when it is created.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,44 +55,39 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 EditText unit = (EditText) findViewById(R.id.unit_editText);
                 EditText category = (EditText) findViewById(R.id.category_editText);
 
+                // Description validation
                 String descriptionText = description.getText().toString();
-                if (descriptionText.isEmpty()) {
+                if ((descriptionText.trim()).isEmpty()) {
                     description.setError("Description is required!");
                     description.requestFocus();
                     return;
                 }
 
-                if (amount.getText().toString().equals("")) {
+                // Amount validation and setting its value
+                float amountText;
+                if ((amount.getText().toString().trim()).isEmpty()) {
                     amount.setError("Amount is required!");
                     amount.requestFocus();
                     return;
+                } else if (Float.parseFloat(amount.getText().toString()) == 0) {
+                    amount.setError("Amount cannot be 0!");
+                    amount.requestFocus();
+                    return;
+                } else {
+                    amountText = Float.parseFloat(amount.getText().toString());
                 }
-                Float amountText = Float.parseFloat(amount.getText().toString());
 
+                // Unit validation
                 String unitText = unit.getText().toString();
-                if (unitText.isEmpty()) {
+                if ((unitText.trim()).isEmpty()) {
                     unit.setError("Unit is required!");
                     unit.requestFocus();
                     return;
                 }
-                if (unitText.compareTo("0")==0){
-                    unit.setError("Units Cannot be 0!");
-                    unit.requestFocus();
-                    return;
-                }
-                if (unitText.compareTo("00")==0){
-                    unit.setError("Units Cannot be 0!");
-                    unit.requestFocus();
-                    return;
-                }
-                if (unitText.compareTo("000")==0){
-                    unit.setError("Units Cannot be 0!");
-                    unit.requestFocus();
-                    return;
-                }
 
+                // Category validation
                 String categoryText = category.getText().toString();
-                if (categoryText.isEmpty()) {
+                if ((categoryText.trim()).isEmpty()) {
                     category.setError("Category is required!");
                     category.requestFocus();
                     return;
@@ -107,7 +99,7 @@ public class AddIngredientRecipe extends AppCompatActivity {
                 Map<String, Object> data = new HashMap<>();
                 data.put("description", descriptionText);
                 data.put("bestBefore", "11/11/22");
-                data.put("location", "fridge");
+                data.put("location", "N/A");
                 data.put("amount", amountText);
                 data.put("unit", unitText);
                 data.put("category", categoryText);
@@ -118,7 +110,8 @@ public class AddIngredientRecipe extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                                Log.d(TAG, "DocumentSnapshot written with ID: " +
+                                        documentReference.getId());
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -127,7 +120,6 @@ public class AddIngredientRecipe extends AppCompatActivity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
-
                 intentAddIngredient.putExtra("RECIPE_ID", RecipeID);
                 startActivity(intentAddIngredient);
             }
@@ -136,8 +128,10 @@ public class AddIngredientRecipe extends AppCompatActivity {
         // When the user wants to discard changes and go back to Ingredients For Recipe
         Button cancel = findViewById(R.id.cancel_ingredient_recipe_button);
         cancel.setOnClickListener(view -> {
-            AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddIngredientRecipe.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Ingredients For Recipe?").setCancelable(true)
+            AlertDialog.Builder cancelDialog =
+                    new AlertDialog.Builder(AddIngredientRecipe.this);
+            cancelDialog.setMessage("Do you want to discard changes and return to Ingredients " +
+                            "For Recipe?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

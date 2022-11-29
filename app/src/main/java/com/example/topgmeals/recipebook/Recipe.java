@@ -4,7 +4,6 @@ import android.widget.ImageView;
 import java.io.Serializable;
 import android.os.Parcel;
 
-
 /**
  * This is a class to represent a recipe. It implements interface {@link Serializable} to be sent
  * between Activities.
@@ -48,15 +47,14 @@ public class Recipe implements Serializable {
     /**
      * Constructor for {@link Recipe}
      */
-    public Recipe (String title, String prepTime, Integer servings, String category, String comments, String id) {
+    public Recipe (String title, String prepTime, Integer servings, String category,
+                   String comments, String id) {
         this.title = title;
         this.prepTime = prepTime;
         this.servings = servings;
         this.category = category;
         this.comments = comments;
         this.documentID = id;
-
-
     }
 
     protected Recipe(Parcel in) {
@@ -186,5 +184,4 @@ public class Recipe implements Serializable {
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }
-
 }

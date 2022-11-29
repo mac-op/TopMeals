@@ -1,11 +1,8 @@
 package com.example.topgmeals.recipebook;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,18 +10,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.Ingredient;
 import com.example.topgmeals.ingredientstorage.IngredientStorage;
 import com.example.topgmeals.mealplan.MealPlan;
 import com.example.topgmeals.shoppinglist.ShoppingList;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -42,7 +35,6 @@ import java.util.Map;
  * a list of recipes and their information and add a new recipe.
  */
 public class RecipeBook extends AppCompatActivity {
-
     /**
      * {@link ListView} to hold recipeList
      */
@@ -54,8 +46,8 @@ public class RecipeBook extends AppCompatActivity {
     public ArrayList<Recipe> recipeBook;
 
     /**
-     * A custom {@link android.widget.ArrayAdapter} of type {@link RecipeAdapter} that handles the view
-     * of the list of recipes.
+     * A custom {@link android.widget.ArrayAdapter} of type {@link RecipeAdapter} that handles the
+     * view of the list of recipes.
      */
     private RecipeAdapter recipeListAdapter;
 
@@ -72,7 +64,8 @@ public class RecipeBook extends AppCompatActivity {
         recipeList = (ListView) findViewById(R.id.recipe_book);
         recipeBook = new ArrayList<>();
 
-        recipeListAdapter = new RecipeAdapter(this, R.layout.recipee_book_content, recipeBook);
+        recipeListAdapter = new RecipeAdapter(this, R.layout.recipee_book_content,
+                recipeBook);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -82,7 +75,8 @@ public class RecipeBook extends AppCompatActivity {
         RecipeRef.whereEqualTo("id", uid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
 
                         for (QueryDocumentSnapshot doc : value) {
                             // refList.add(doc.getId());
@@ -123,10 +117,8 @@ public class RecipeBook extends AppCompatActivity {
                 intent.putExtra("RecipeID", recipeBook.get(i).getDocumentID());
 
                 startActivity(intent);
-
             }
         });
-
 
         // Add recipe
         Button add_recipe = (Button) findViewById(R.id.add_button);
@@ -144,7 +136,7 @@ public class RecipeBook extends AppCompatActivity {
             recipeBook.add(new_recipe);
         }
 
-        // region buttonswapping
+        // Begin Region Activity Swapping
         Button btnIngredientStorage = findViewById(R.id.switchToIngredientStorage);
         btnIngredientStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +171,7 @@ public class RecipeBook extends AppCompatActivity {
                 startActivity(new Intent(RecipeBook.this, RecipeBook.class));
             }
         });
-        // endregion
+        // End Region Activity Swapping
 
         // Sorting recipes
         Spinner sortSpinner = findViewById(R.id.sort_by_spinner_recipe);
@@ -210,34 +202,9 @@ public class RecipeBook extends AppCompatActivity {
                 recipeBook.sort(comparator);
                 recipeListAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-
         });
     }
-
-
-
-    private void getCurrentUserRecipes(String uid, FirebaseFirestore db){
-        CollectionReference RecipeRef = db.collection("recipes");
-        RecipeRef.whereEqualTo("id", uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.e("SUI", "here");
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }
-                    Log.e("END", "sor");
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
-
-
 }

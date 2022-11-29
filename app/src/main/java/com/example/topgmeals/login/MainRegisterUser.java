@@ -23,6 +23,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is an Activity allows a user to create an account by providing name, email address
+ * and password.
+ */
 public class MainRegisterUser extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText editTextName;
@@ -30,6 +34,9 @@ public class MainRegisterUser extends AppCompatActivity {
     private EditText editTextPassword;
     private Button createAccountBtn;
 
+    /**
+     * This method handles the layout and logic of the Activity. Called on Activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,10 @@ public class MainRegisterUser extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method validates the user's name, email address, and password and either creates an
+     * account or shows failed to create account message.
+     */
     private void registerUser() {
         String userName = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();

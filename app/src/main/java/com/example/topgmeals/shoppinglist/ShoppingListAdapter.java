@@ -6,26 +6,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.Ingredient;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Custom Adapter to fit {@link Ingredient} objects into {@link RecyclerView}
  */
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ViewHolder> {
-
     /**
      * List of {@link Ingredient} objects to display
      */
@@ -77,8 +72,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         String ingredientCategory = mData.get(position).getCategory();
 
         holder.shopDescription.setText(ingredientDescription);
-        holder.shopAmount.setText(ingredientAmount);
-        holder.shopUnit.setText(ingredientUnit);
+        holder.shopAmount.setText(ingredientAmount + " " + ingredientUnit);
         holder.shopCategory.setText(ingredientCategory);
 
         final CheckBox cb = holder.itemChecked;
@@ -101,9 +95,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 // Inform to Activity or the Fragment where the RecyclerView reside.
             }
         });
-//in some cases, it will prevent unwanted situations
+        //in some cases, it will prevent unwanted situations
         cb.setOnCheckedChangeListener(null);
-
     }
 
     /**
@@ -121,7 +114,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView shopDescription;
         TextView shopAmount;
-        TextView shopUnit;
         TextView shopCategory;
         CheckBox itemChecked;
 
@@ -129,7 +121,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             super(itemView);
             shopDescription = (TextView) itemView.findViewById(R.id.shoppingListDescription);
             shopAmount = (TextView) itemView.findViewById(R.id.shoppingListAmount);
-            shopUnit = (TextView) itemView.findViewById(R.id.shoppingListUnit);
             shopCategory = (TextView) itemView.findViewById(R.id.shoppingListIngredientCategory);
             itemChecked = (CheckBox) itemView.findViewById(R.id.checkItem);
             itemView.setOnClickListener(this);
@@ -139,7 +130,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
             Log.e("us", "CLIKBAIT");
-
         }
     }
 
@@ -166,32 +156,4 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
-
-
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//
-//        String ingredientDescription = getItem(position).getDescription();
-//        String ingredientAmount = Float.toString(getItem(position).getAmount());
-//        String ingredientUnit = getItem(position).getUnit();
-//        String ingredientCategory = getItem(position).getCategory();
-//
-//
-//        LayoutInflater inflater = LayoutInflater.from(context);
-//        convertView = inflater.inflate(resource,parent,false);
-//
-//        TextView shopDescription = (TextView) convertView.findViewById(R.id.shoppingListDescription);
-//        TextView shopAmount = (TextView) convertView.findViewById(R.id.shoppingListAmount);
-//        TextView shopUnit = (TextView) convertView.findViewById(R.id.shoppingListUnit);
-//        TextView shopCategory = (TextView) convertView.findViewById(R.id.shoppingListIngredientCategory);
-//
-//        shopDescription.setText(ingredientDescription);
-//        shopAmount.setText(ingredientAmount);
-//        shopUnit.setText(ingredientUnit);
-//        shopCategory.setText(ingredientCategory);
-//
-//        return convertView;
-//    }
-
 }

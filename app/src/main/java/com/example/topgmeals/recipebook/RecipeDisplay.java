@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,18 +71,15 @@ public class RecipeDisplay extends AppCompatActivity {
         comments.setText(commentsToDisplay);
 
         ImageView recImg = findViewById(R.id.recImage);
-        mStorageRef.child("uploads/" + recipeID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Log.e("madeit", uri.toString());
-                Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
+        mStorageRef.child("uploads/" + recipeID).getDownloadUrl().addOnSuccessListener(uri -> {
+            // Got the download URL for 'users/me/profile.png'
+            Log.e("madeit", uri.toString());
+            Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
 
-                try {
-                    Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
-                } catch (Exception e){
-                    Log.e("Error", e.toString());
-                }
+            try {
+                Glide.with(RecipeDisplay.this).load(uri.toString()).into(recImg);
+            } catch (Exception e){
+                Log.e("Error", e.toString());
             }
         }).addOnFailureListener(exception -> {
             if (recImg.getDrawable() == null){
@@ -112,57 +108,51 @@ public class RecipeDisplay extends AppCompatActivity {
             public void onClick(View view) {
 
                 Map<String, Object> data = new HashMap<>();
+
+                // Title validation
                 data.put("title", title.getText().toString());
-                if (title.getText().toString().isEmpty()) {
+                if ((title.getText().toString().trim()).isEmpty()) {
                     title.setError("Title is required!");
                     title.requestFocus();
                     return;
                 }
 
+                // Prep time validation
                 data.put("prepTime", prepTime.getText().toString());
-                if (prepTime.getText().toString().isEmpty()){
+                if ((prepTime.getText().toString()).isEmpty()) {
                     prepTime.setError("Preparation time is required!");
                     prepTime.requestFocus();
                     return;
-                }
-                if (prepTime.getText().toString().compareTo("0")==0){
-                    prepTime.setError("Preparation time Cannot be 0!");
-                    prepTime.requestFocus();
-                    return;
-                }
-                if (prepTime.getText().toString().compareTo("00")==0){
-                    prepTime.setError("Preparation time Cannot be 0!");
-                    prepTime.requestFocus();
-                    return;
-                }
-                if (prepTime.getText().toString().compareTo("000")==0){
-                    prepTime.setError("Preparation time Cannot be 0!");
+                } else if (Integer.parseInt(prepTime.getText().toString()) == 0){
+                    prepTime.setError("Preparation time cannot be 0!");
                     prepTime.requestFocus();
                     return;
                 }
 
-                data.put("servings", Integer.valueOf(servings.getText().toString()));
-                if (Integer.valueOf(servings.getText().toString()).equals("")) {
+                // Servings validation
+                if ((servings.getText().toString().trim()).isEmpty()) {
                     servings.setError("Servings is required!");
                     servings.requestFocus();
                     return;
-                }
-                if (Integer.valueOf(servings.getText().toString()).equals(0) || Integer.valueOf(servings.getText().toString()).equals(00) || Integer.valueOf(servings.getText().toString()).equals(000)) {
+                } else if (Integer.valueOf(servings.getText().toString()) == 0) {
                     servings.setError("Servings Cannot be 0!");
                     servings.requestFocus();
                     return;
                 }
+                data.put("servings", Integer.valueOf(servings.getText().toString()));
 
+                // Category validation
                 data.put("category", category.getText().toString());
-                if (category.getText().toString().isEmpty()) {
+                if ((category.getText().toString().trim()).isEmpty()) {
                     category.setError("Category is required!");
                     category.requestFocus();
                     return;
                 }
 
+                // Comments validation
                 data.put("comments", comments.getText().toString());
-                if (comments.getText().toString().isEmpty()) {
-                    comments.setError("Category is required!");
+                if ((comments.getText().toString().trim()).isEmpty()) {
+                    comments.setError("Comments is required!");
                     comments.requestFocus();
                     return;
                 }
@@ -190,14 +180,17 @@ public class RecipeDisplay extends AppCompatActivity {
         /* Performs the delete recipe button functionality */
         Button delete = findViewById(R.id.delete_recipe);
         delete.setOnClickListener(view -> {
-            AlertDialog.Builder deleteDialog = new AlertDialog.Builder(RecipeDisplay.this);
-            deleteDialog.setMessage("Are you sure you want to delete this recipe?").setCancelable(true)
+            AlertDialog.Builder deleteDialog =
+                    new AlertDialog.Builder(RecipeDisplay.this);
+            deleteDialog.setMessage("Are you sure you want to delete this " +
+                            "recipe?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             db.collection("recipes").document(recipeID)
                                     .delete()
-                                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully deleted!"))
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG,
+                                            "DocumentSnapshot successfully deleted!"))
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
@@ -213,7 +206,9 @@ public class RecipeDisplay extends AppCompatActivity {
                                                 db.collection("mealplan").document(document.getId()).delete();
                                             }
                                         } else {
-                                            Log.d("DELETE MEAL", "Error getting documents: ", task.getException());
+                                            Log.d("DELETE MEAL",
+                                                    "Error getting documents: ",
+                                                    task.getException());
                                         }
                                     });
                             Intent intent = new Intent(currentClass, RecipeBook.class);

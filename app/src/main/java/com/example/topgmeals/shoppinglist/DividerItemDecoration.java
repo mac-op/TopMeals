@@ -21,7 +21,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private boolean mShowFirstDivider = false;
     private boolean mShowLastDivider = false;
 
-
     public DividerItemDecoration(Context context, AttributeSet attrs) {
         final TypedArray a = context
                 .obtainStyledAttributes(attrs, new int[]{android.R.attr.listDivider});

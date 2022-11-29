@@ -1,7 +1,5 @@
 package com.example.topgmeals.mealplan;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -14,17 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.topgmeals.R;
-import com.example.topgmeals.ingredientstorage.AddEditIngredientActivity;
 import com.example.topgmeals.utils.DateFormat;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,12 +28,11 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * This class is an {@link AppCompatActivity} that is created when the user chooses to add a new meal
- * from {@link MealPlan}. Allows the user to plan a new meal. They can choose a date, whether the meal
- * is an ingredient or a recipe and the number of servings.
+ * This class is an {@link AppCompatActivity} that is created when the user chooses to add a new
+ * meal from {@link MealPlan}. Allows the user to plan a new meal. They can choose a date, whether
+ * the meal is an ingredient or a recipe and the number of servings.
  */
 public class AddMealActivity extends AppCompatActivity {
-
     /**
      * {@link EditText} where the user chooses the date of the meal
      */
@@ -144,7 +139,8 @@ public class AddMealActivity extends AppCompatActivity {
         selectionAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
         selection.setAdapter(selectionAdapter);
 
-        // Set adapter for type Spinner. The selection list is updated every time the user switches type
+        // Set adapter for type Spinner. The selection list is updated every time the user switches
+        // type
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,
                 R.layout.meal_selector_drop_down, mealTypes);
         typeAdapter.setDropDownViewResource(R.layout.meal_selector_drop_down);
@@ -188,7 +184,8 @@ public class AddMealActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(view -> {
             AlertDialog.Builder cancelDialog = new AlertDialog.Builder(AddMealActivity.this);
-            cancelDialog.setMessage("Do you want to discard changes and return to Meal Planner?").setCancelable(true)
+            cancelDialog.setMessage("Do you want to discard changes and return to Meal " +
+                            "Planner?").setCancelable(true)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -210,6 +207,17 @@ public class AddMealActivity extends AppCompatActivity {
         save.setOnClickListener(view -> {
             String date1 = mealDate.getText().toString();
             String mealName = selection.getSelectedItem().toString();
+
+            // Servings validation
+            if ((serving.getText().toString().trim()).isEmpty()) {
+                serving.setError("Servings is required!");
+                serving.requestFocus();
+                return;
+            } else if (Integer.valueOf(serving.getText().toString()) == 0) {
+                serving.setError("Servings Cannot be 0!");
+                serving.requestFocus();
+                return;
+            }
             int numServings = Integer.parseInt(serving.getText().toString());
 
             DocumentReference docRef = mealCollection.document();
@@ -230,12 +238,10 @@ public class AddMealActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * This method updates the mealDate {@link EditText} to the date of myCalendar
      */
     private void updateLabel(){
         mealDate.setText(format.parse(myCalendar.getTime()));
     }
-
 }

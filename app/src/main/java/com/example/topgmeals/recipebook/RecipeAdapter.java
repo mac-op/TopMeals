@@ -1,7 +1,6 @@
 package com.example.topgmeals.recipebook;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.example.topgmeals.R;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -26,13 +24,11 @@ import java.util.List;
  * Recipe Adapter to fit {@link Recipe} objects into {@link ArrayAdapter}
  */
 public class RecipeAdapter extends ArrayAdapter<Recipe> {
-
     private static final String TAG = "RecipeListAdapter";
     private Context context;
     private int resource;
 
     private StorageReference mStorageRef;
-
 
     /**
      * Constructor for {@link RecipeAdapter}
@@ -49,7 +45,6 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         String title = getItem(position).getTitle();
         String prep_time = getItem(position).getPrepTime();
         Integer servings = getItem(position).getServings();
@@ -70,22 +65,17 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         Log.e("TTT", "uploads/" + recID);
 
-        mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
+        mStorageRef.child("uploads/" + recID).getDownloadUrl().addOnSuccessListener(uri -> {
+            // Got the download URL for 'users/me/profile.png'
+            Log.e("madeit", uri.toString());
+            Glide.with(context).load(uri.toString()).into(recImg);
 
-                Log.e("madeit", uri.toString());
-                Glide.with(context).load(uri.toString()).into(recImg);
-
-            }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 if (recImg.getDrawable() == null){
                     recImg.setImageResource(R.drawable.defaultrecipe);
                 }
-                // Handle any errors
             }
         });
 
@@ -97,4 +87,3 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         return convertView;
     }
 }
-

@@ -1,16 +1,12 @@
 package com.example.topgmeals.mealplan;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.topgmeals.R;
 import com.example.topgmeals.ingredientstorage.IngredientStorage;
@@ -18,18 +14,11 @@ import com.example.topgmeals.recipebook.RecipeBook;
 import com.example.topgmeals.shoppinglist.ShoppingList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class is an Activity that handles the Meal Planner menu. The user will be able to see
@@ -43,8 +32,8 @@ public class MealPlan extends AppCompatActivity implements ExpandableListAdapter
     ArrayList<String> dates;
 
     /**
-     * {@link HashMap} where each key is a date that has meals, and each value is an {@link ArrayList}
-     * of {@link Meal} that belong to each date.
+     * {@link HashMap} where each key is a date that has meals, and each value is an
+     * {@link ArrayList} of {@link Meal} that belong to each date.
      */
     HashMap<String, ArrayList<Meal>> mealList;
 
@@ -102,7 +91,7 @@ public class MealPlan extends AppCompatActivity implements ExpandableListAdapter
             startActivity(addIntent);
         });
 
-        //region ButtonSwapping
+        // Begin Region Activity Swapping
         Button IngredientButton = (Button) findViewById(R.id.switchToIngredientStorage);
         IngredientButton.setOnClickListener(view -> {
             startActivity(new Intent(MealPlan.this, IngredientStorage.class));
@@ -116,14 +105,16 @@ public class MealPlan extends AppCompatActivity implements ExpandableListAdapter
         });
 
         Button btnMealPlanner = findViewById(R.id.switchToMealPlan);
-        btnMealPlanner.setOnClickListener(view -> startActivity(new Intent(MealPlan.this, MealPlan.class)));
+        btnMealPlanner.setOnClickListener(view -> {
+            startActivity(new Intent(MealPlan.this, MealPlan.class));
+        });
 
         Button btnRecipesBook = findViewById(R.id.switchToRecipes);
         btnRecipesBook.setOnClickListener(view -> {
             startActivity(new Intent(MealPlan.this, RecipeBook.class));
             finish();
         });
-        // endregion
+        // End Region Activity Swapping
     }
 
     @Override

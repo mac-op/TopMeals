@@ -43,8 +43,8 @@ public class IngredientRecipe extends AppCompatActivity {
     public ArrayList<Ingredient> ingredientsRecipeBook;
 
     /**
-     * A custom {@link android.widget.ArrayAdapter} of type {@link IngredientRecipeAdapter} that handles the view
-     * of the list of ingredients in recipes.
+     * A custom {@link android.widget.ArrayAdapter} of type {@link IngredientRecipeAdapter}
+     * that handles the view of the list of ingredients in recipes.
      */
     private IngredientRecipeAdapter ingredientListAdapter;
 
@@ -60,7 +60,8 @@ public class IngredientRecipe extends AppCompatActivity {
 
         ingredientsList = (ListView) findViewById(R.id.ingredient_recipe);
         ingredientsRecipeBook = new ArrayList<>();
-        ingredientListAdapter = new IngredientRecipeAdapter(this, R.layout.ingredients_recipe_content, ingredientsRecipeBook);
+        ingredientListAdapter = new IngredientRecipeAdapter(this,
+                R.layout.ingredients_recipe_content, ingredientsRecipeBook);
 
         Intent itemIntent = getIntent();
         String RecipeID = itemIntent.getExtras().getString("RECIPE_ID");
@@ -72,7 +73,8 @@ public class IngredientRecipe extends AppCompatActivity {
         RecipeRef.whereEqualTo("id", RecipeID)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
 
                         for (QueryDocumentSnapshot doc : value){
                             Map<String, Object> rData = doc.getData();
@@ -91,12 +93,9 @@ public class IngredientRecipe extends AppCompatActivity {
                                     rData.get("unit").toString(),
                                     rData.get("category").toString(),
                                     doc.getId());
-
                             ingredientsRecipeBook.add(curIng);
-
                         }
                         ingredientsList.setAdapter(ingredientListAdapter);
-
                     }
                 });
 
@@ -113,9 +112,7 @@ public class IngredientRecipe extends AppCompatActivity {
                         ingredientsRecipeBook.remove(position);
                         ingredientListAdapter.notifyDataSetChanged();
                     }
-
                 }
-
         );
 
         ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

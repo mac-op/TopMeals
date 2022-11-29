@@ -17,7 +17,6 @@ import java.util.ArrayList;
  * Custom Adapter to fit {@link Ingredient} objects into {@link RecyclerView}
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
-
     /**
      * List of {@link Ingredient} objects to display
      */
@@ -114,5 +113,4 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public int getItemCount() {
         return ingredientList.size();
     }
-
 }
