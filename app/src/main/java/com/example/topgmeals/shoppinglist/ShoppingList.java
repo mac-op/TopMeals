@@ -228,8 +228,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         sortByCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Collections.sort(shoppingList,
-                        (d1, d2) -> d1.getCategory().compareTo(d2.getCategory()));
+                Collections.sort(shoppingList, (d1, d2) -> d2.getCategory().compareTo(d1.getCategory()));
                 shoppingListAdapter.notifyDataSetChanged();
 
             }
