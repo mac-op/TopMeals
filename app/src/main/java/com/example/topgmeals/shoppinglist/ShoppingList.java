@@ -150,15 +150,21 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
             for (QueryDocumentSnapshot doc: value){
                 Date date1=new SimpleDateFormat("MM/dd/yyyy").parse(doc.getString("date"),
                         new ParsePosition(0));
+
+                Date New = new Date(date1.getTime() + (1000 * 60 * 60 * 24));
                 Date cur = new Date();
-                Log.e("t", date1.toString());
-                Log.e("t", cur.toString());
-                if (date1.after(cur)){
+
+                if (New.after(cur)){
+                    Log.e("t", date1.toString());
+                    Log.e("t", New.toString());
+
+                    Log.e("t", cur.toString());
                     Log.e("t", "PASS");
+                    Meal meal = doc.toObject(Meal.class);
+                    meal.setDocRef(doc.getId());
+                    mealList.add(meal);
                 }
-                Meal meal = doc.toObject(Meal.class);
-                meal.setDocRef(doc.getId());
-                mealList.add(meal);
+
             }
         });
 
