@@ -190,7 +190,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
         shoppingListView.setAdapter(shoppingListAdapter);
 
         Toast.makeText(this, "Swipe right or check the Checkbox to cross off the " +
-                "item. Press 'Done Shopping when finished.", Toast.LENGTH_LONG).show();
+                "item.", Toast.LENGTH_LONG).show();
 
         ItemTouchHelper itemTouchHelper =
                 new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -302,6 +302,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                         for (Ingredient is: shoppingList){
                             if (is.getDescription().equals(i.getDescription())){
                                 is.setAmount(is.getAmount() + (float)m.getNumServings());
+                                shoppingListAdapter.notifyDataSetChanged();
                             }
                             break;
                         }
@@ -376,6 +377,7 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                                                         Log.e("t", "b4 " + String.valueOf(is.getAmount()) );
                                                         is.setAmount(is.getAmount() + tempTot);
                                                         Log.e("t", "a4 " + String.valueOf(is.getAmount()) );
+                                                        shoppingListAdapter.notifyDataSetChanged();
                                                         break;
 
                                                     }
@@ -399,15 +401,34 @@ public class ShoppingList extends AppCompatActivity implements ShoppingListAdapt
                                     }
                                     // Add new Ig if not in list
                                     if (NA) {
-                                        Ingredient curI = new Ingredient(ir.getDescription(),
-                                                new Date(), ir.getLocation(),
-                                                (float) m.getNumServings() * (float) ir.getAmount(),
-                                                ir.getUnit(), ir.getCategory(), "s");
-                                        shoppingList.add(curI);
-                                        fullshoppingList.add(curI);
-                                        shoppingListAdapter.notifyDataSetChanged();
-                                        Log.e("t", "SHOPLIST SIZE: " + String.valueOf(shoppingList.size()));
-                                        SeenIngredients.add(ir.getDescription());
+
+                                        if (SeenIngredients.contains(ir.getDescription())) {
+                                            float tempTot = (float) m.getNumServings() * (float) ir.getAmount();
+                                            Log.e("t", "SEEN " + ir.getDescription());
+                                            for (Ingredient is : shoppingList) {
+                                                if (is.getDescription().equals(ir.getDescription())) {
+                                                    Log.e("t", "b4 " + String.valueOf(is.getAmount()));
+                                                    is.setAmount(is.getAmount() + tempTot);
+                                                    Log.e("t", "a4 " + String.valueOf(is.getAmount()));
+                                                    shoppingListAdapter.notifyDataSetChanged();
+                                                    break;
+
+                                                }
+                                            }
+                                        }
+                                        else {
+
+
+                                            Ingredient curI = new Ingredient(ir.getDescription(),
+                                                    new Date(), ir.getLocation(),
+                                                    (float) m.getNumServings() * (float) ir.getAmount(),
+                                                    ir.getUnit(), ir.getCategory(), "s");
+                                            shoppingList.add(curI);
+                                            fullshoppingList.add(curI);
+                                            shoppingListAdapter.notifyDataSetChanged();
+                                            Log.e("t", "SHOPLIST SIZE: " + String.valueOf(shoppingList.size()));
+                                            SeenIngredients.add(ir.getDescription());
+                                        }
                                     }
                                 }
                             }

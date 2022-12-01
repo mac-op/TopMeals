@@ -79,7 +79,7 @@ public class ShoppingListFinish extends AppCompatActivity {
         setContentView(R.layout.activity_shopping_list_finish);
         setTitle("Picked Up Ingredients");
         Toast.makeText(this, "Select a picked up ingredient to update your " +
-                "Ingredient Storage", Toast.LENGTH_LONG).show();
+                "Ingredient Storage.", Toast.LENGTH_LONG).show();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference ingredientsDb = db.collection("ingredients");

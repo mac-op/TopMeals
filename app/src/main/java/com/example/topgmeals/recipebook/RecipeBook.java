@@ -168,6 +168,7 @@ public class RecipeBook extends AppCompatActivity {
         btnRecipesBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 startActivity(new Intent(RecipeBook.this, RecipeBook.class));
             }
         });
