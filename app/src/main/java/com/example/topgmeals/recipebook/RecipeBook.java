@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 
@@ -192,6 +193,8 @@ public class RecipeBook extends AppCompatActivity {
                         break;
                     case 1:
                         comparator = Comparator.comparing(Recipe::getPrepTime);
+                        Collections.sort(recipeBook,
+                                (d1, d2) -> Integer.parseInt(d1.getPrepTime()) - Integer.parseInt(d2.getPrepTime()));
                         break;
                     case 2:
                         comparator = Comparator.comparing(Recipe::getServings);
@@ -200,7 +203,9 @@ public class RecipeBook extends AppCompatActivity {
                         comparator = Comparator.comparing(Recipe::getCategory);
                         break;
                 }
-                recipeBook.sort(comparator);
+                if (pos != 1) {
+                    recipeBook.sort(comparator);
+                }
                 recipeListAdapter.notifyDataSetChanged();
             }
             @Override
