@@ -183,3 +183,19 @@ Total = 8.11
 ## Demo Rubric
 
 Demo ability / Polished / Clear and coherent / Motivated / Compelling, holds attention, tells a story / Coverage of features logically organized by customer usage / Well explained user interface / Easy to follow user roles / Realistic data and inputs / All members present / Team well coordinated in demo / Within time limit / No misspellings / Clear vocals from everyone / Eye contact, rarely consulting or reading notes / Involves the audience / Good and concise responses to questions
+
+## Project Part3 Updated Feedback
+
+###Product Backlog
+
+3 = 
+✓ Numbered, tracked, and organized requirements
+✓ Tracked, and organized
+✓ Comprehensive requirements
+✓ Complete story point estimates
+✓ Complete risk levels
+✓ Requirements noted for half-way checkpoint
+✓ New requirements are added to the backlog regularly
+⚠ Backlog is not accessible in GitHub's "Project" tab
+
+Upated totalscore =  9.56
